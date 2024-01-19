@@ -20,6 +20,12 @@
 		0BBCC9322B5A763B001C198D /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 0BBCC9312B5A763B001C198D /* FirebaseFirestore */; };
 		0BBCC9362B5A763B001C198D /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 0BBCC9352B5A763B001C198D /* FirebaseFirestoreSwift */; };
 		0BBCC94C2B5A763B001C198D /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 0BBCC94B2B5A763B001C198D /* FirebaseStorage */; };
+		0BBCC9552B5A7C5E001C198D /* Helvetica Neue LT GEO 55 Roman.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0BBCC9542B5A7C5E001C198D /* Helvetica Neue LT GEO 55 Roman.ttf */; };
+		0BBCC9572B5A7C66001C198D /* Helvetica Neue LT GEO 65 Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0BBCC9562B5A7C66001C198D /* Helvetica Neue LT GEO 65 Medium.ttf */; };
+		0BBCC9592B5A7C6D001C198D /* Helvetica Neue LT GEO 85 Heavy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0BBCC9582B5A7C6D001C198D /* Helvetica Neue LT GEO 85 Heavy.ttf */; };
+		0BBCC95C2B5A7DB7001C198D /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBCC95B2B5A7DB7001C198D /* FontManager.swift */; };
+		0BBCC95F2B5A8606001C198D /* ColorFromHex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBCC95E2B5A8606001C198D /* ColorFromHex.swift */; };
+		0BBCC9612B5A86D7001C198D /* ColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBCC9602B5A86D7001C198D /* ColorManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +37,12 @@
 		0BBCC9062B5A73D6001C198D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0BBCC9082B5A73D6001C198D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0BBCC9162B5A75E5001C198D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0BBCC9542B5A7C5E001C198D /* Helvetica Neue LT GEO 55 Roman.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Helvetica Neue LT GEO 55 Roman.ttf"; sourceTree = "<group>"; };
+		0BBCC9562B5A7C66001C198D /* Helvetica Neue LT GEO 65 Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Helvetica Neue LT GEO 65 Medium.ttf"; sourceTree = "<group>"; };
+		0BBCC9582B5A7C6D001C198D /* Helvetica Neue LT GEO 85 Heavy.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Helvetica Neue LT GEO 85 Heavy.ttf"; sourceTree = "<group>"; };
+		0BBCC95B2B5A7DB7001C198D /* FontManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontManager.swift; sourceTree = "<group>"; };
+		0BBCC95E2B5A8606001C198D /* ColorFromHex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorFromHex.swift; sourceTree = "<group>"; };
+		0BBCC9602B5A86D7001C198D /* ColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,7 +84,9 @@
 			children = (
 				0BBCC9112B5A7438001C198D /* App */,
 				0BBCC9132B5A7454001C198D /* Scenes */,
+				0BBCC95A2B5A7D56001C198D /* Fonts and Colors */,
 				0BBCC9122B5A7447001C198D /* Assets */,
+				0BBCC95D2B5A85F1001C198D /* Extensions */,
 				0BBCC9082B5A73D6001C198D /* Info.plist */,
 				0BBCC9162B5A75E5001C198D /* GoogleService-Info.plist */,
 			);
@@ -91,6 +105,7 @@
 		0BBCC9122B5A7447001C198D /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				0BBCC94F2B5A7A85001C198D /* Fonts */,
 				0BBCC9032B5A73D6001C198D /* Assets.xcassets */,
 				0BBCC9052B5A73D6001C198D /* LaunchScreen.storyboard */,
 			);
@@ -111,6 +126,33 @@
 				0BBCC8FE2B5A73D2001C198D /* LandingPageViewController.swift */,
 			);
 			path = LandingPage;
+			sourceTree = "<group>";
+		};
+		0BBCC94F2B5A7A85001C198D /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				0BBCC9542B5A7C5E001C198D /* Helvetica Neue LT GEO 55 Roman.ttf */,
+				0BBCC9562B5A7C66001C198D /* Helvetica Neue LT GEO 65 Medium.ttf */,
+				0BBCC9582B5A7C6D001C198D /* Helvetica Neue LT GEO 85 Heavy.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		0BBCC95A2B5A7D56001C198D /* Fonts and Colors */ = {
+			isa = PBXGroup;
+			children = (
+				0BBCC95B2B5A7DB7001C198D /* FontManager.swift */,
+				0BBCC9602B5A86D7001C198D /* ColorManager.swift */,
+			);
+			path = "Fonts and Colors";
+			sourceTree = "<group>";
+		};
+		0BBCC95D2B5A85F1001C198D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				0BBCC95E2B5A8606001C198D /* ColorFromHex.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -184,8 +226,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0BBCC9572B5A7C66001C198D /* Helvetica Neue LT GEO 65 Medium.ttf in Resources */,
 				0BBCC9072B5A73D6001C198D /* LaunchScreen.storyboard in Resources */,
 				0BBCC9042B5A73D6001C198D /* Assets.xcassets in Resources */,
+				0BBCC9592B5A7C6D001C198D /* Helvetica Neue LT GEO 85 Heavy.ttf in Resources */,
+				0BBCC9552B5A7C5E001C198D /* Helvetica Neue LT GEO 55 Roman.ttf in Resources */,
 				0BBCC9172B5A75E5001C198D /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -197,9 +242,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0BBCC95C2B5A7DB7001C198D /* FontManager.swift in Sources */,
 				0BBCC8FF2B5A73D2001C198D /* LandingPageViewController.swift in Sources */,
 				0BBCC8FB2B5A73D2001C198D /* AppDelegate.swift in Sources */,
+				0BBCC9612B5A86D7001C198D /* ColorManager.swift in Sources */,
 				0BBCC8FD2B5A73D2001C198D /* SceneDelegate.swift in Sources */,
+				0BBCC95F2B5A8606001C198D /* ColorFromHex.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
