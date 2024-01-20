@@ -13,5 +13,6 @@ class ColorManager {
     let backgroundColor = UIColor(hexString: "#F9F9F9")
     let primaryColor = UIColor(hexString: "#F55A51")
     let textGrayColor = UIColor(hexString: "#666666")
+    let textLightGray = UIColor(hexString: "#BDBDBD")
     
 }

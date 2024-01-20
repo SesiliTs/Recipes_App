@@ -42,15 +42,7 @@ final class LandingPageViewController: UIViewController {
         return label
     }()
     
-    private let categoriesViews = [
-        Category(image: "🥞".image(), categoryName: "საუზმე"),
-        Category(image: "🍜".image(), categoryName: "სადილი"),
-        Category(image: "🍰".image(), categoryName: "დესერტი"),
-        Category(image: "🍿".image(), categoryName: "ხემსი"),
-        Category(image: "🍹".image(), categoryName: "სასმელი")
-    ]
-    
-    var categoriesCollectionView: UICollectionView = {
+    private let categoriesCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -65,6 +57,16 @@ final class LandingPageViewController: UIViewController {
         label.text = "რეკომენდაციები" .uppercased()
         label.font = FontManager.shared.headlineFont
         return label
+    }()
+    
+    private let recommendationsCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        layout.minimumInteritemSpacing = 5
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.showsHorizontalScrollIndicator = false
+        return collectionView
     }()
     
     private let mainStack = {
@@ -84,6 +86,7 @@ final class LandingPageViewController: UIViewController {
         
         addViews()
         setupCategories()
+        setupRecommendations()
         addConstraints()
 
     }
@@ -96,8 +99,11 @@ final class LandingPageViewController: UIViewController {
                 
         mainStack.addArrangedSubview(labelStack)
         mainStack.addArrangedSubview(categoriesLabel)
+        mainStack.setCustomSpacing(30, after: categoriesLabel)
         mainStack.addArrangedSubview(categoriesCollectionView)
         mainStack.addArrangedSubview(recommendationsLabel)
+        mainStack.setCustomSpacing(30, after: recommendationsLabel)
+        mainStack.addArrangedSubview(recommendationsCollectionView)
         
         view.addSubview(mainStack)
 
@@ -109,11 +115,24 @@ final class LandingPageViewController: UIViewController {
         categoriesCollectionView.dataSource = self
         categoriesCollectionView.delegate = self
         categoriesCollectionView.backgroundColor = .clear
-        registerCollectionViewCell()
+        registerCategoriesCell()
     }
     
-    private func registerCollectionViewCell() {
-        categoriesCollectionView.register(CategoriesCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+    private func registerCategoriesCell() {
+        categoriesCollectionView.register(CategoriesCollectionViewCell.self, forCellWithReuseIdentifier: "categoryCell")
+    }
+    
+    //MARK: - Recommendations Setup
+    
+    private func setupRecommendations() {
+        recommendationsCollectionView.dataSource = self
+        recommendationsCollectionView.delegate = self
+        recommendationsCollectionView.backgroundColor = .clear
+        registerRecommendationsCell()
+    }
+    
+    private func registerRecommendationsCell() {
+        recommendationsCollectionView.register(RecommendedCollectionViewCell.self, forCellWithReuseIdentifier: "recommendCell")
     }
 
     
@@ -122,7 +141,10 @@ final class LandingPageViewController: UIViewController {
     private func addConstraints() {
         NSLayoutConstraint.activate([
             categoriesCollectionView.heightAnchor.constraint(equalToConstant: 120),
-            categoriesCollectionView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            categoriesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
+            recommendationsCollectionView.heightAnchor.constraint(equalToConstant: 200),
+            recommendationsCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
 
             mainStack.topAnchor.constraint(equalTo: view.topAnchor, constant: 80),
             mainStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 35),
@@ -136,21 +158,38 @@ final class LandingPageViewController: UIViewController {
 
 extension LandingPageViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        categoriesViews.count
+        if collectionView == categoriesCollectionView {
+            return categoriesViews.count
+        } else if collectionView == recommendationsCollectionView {
+            return mockRecipes.count
+        }
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CategoriesCollectionViewCell
-        let currentCategory = categoriesViews[indexPath.row]
-        cell.configure(with: currentCategory.image, label: currentCategory.categoryName)
-        return cell
+        if collectionView == categoriesCollectionView {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "categoryCell", for: indexPath) as! CategoriesCollectionViewCell
+            let currentCategory = categoriesViews[indexPath.row]
+            cell.configure(with: currentCategory.image, label: currentCategory.categoryName)
+            return cell
+        } else if collectionView == recommendationsCollectionView {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "recommendCell", for: indexPath) as! RecommendedCollectionViewCell
+            let currentRecipe = mockRecipes[indexPath.row]
+            cell.configure(with: currentRecipe.image, label: currentRecipe.name, time: currentRecipe.time)
+            return cell
+        }
+        return UICollectionViewCell()
     }
-    
 }
 
 extension LandingPageViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: 120, height: 120)
+        if collectionView == categoriesCollectionView {
+            return CGSize(width: 120, height: 120)
+        } else if collectionView == recommendationsCollectionView {
+            return CGSize(width: 120, height: 200)
+        }
+        return CGSize.zero
     }
 }
 

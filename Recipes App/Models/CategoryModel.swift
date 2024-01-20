@@ -11,3 +11,11 @@ struct Category {
     let image: UIImage?
     let categoryName: String
 }
+
+let categoriesViews = [
+    Category(image: "🥞".image(), categoryName: "საუზმე"),
+    Category(image: "🍜".image(), categoryName: "სადილი"),
+    Category(image: "🍰".image(), categoryName: "დესერტი"),
+    Category(image: "🍿".image(), categoryName: "ხემსი"),
+    Category(image: "🍹".image(), categoryName: "სასმელი")
+]
