@@ -7,7 +7,9 @@
 
 import UIKit
 
-class IngredientTableViewCell: UITableViewCell {
+final class IngredientTableViewCell: UITableViewCell {
+    
+    //MARK: - Properties
         
     private let checkboxButton = {
         let button = UIButton()
@@ -35,6 +37,8 @@ class IngredientTableViewCell: UITableViewCell {
             updateUI()
         }
     }
+    
+    //MARK: - init
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -46,6 +50,8 @@ class IngredientTableViewCell: UITableViewCell {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+    
+    //MARK: - functions
 
     private func addViews() {
                 
@@ -82,6 +88,5 @@ class IngredientTableViewCell: UITableViewCell {
     
     func configureTableViewCell(ingredient: String) {
         ingredientLabel.text = ingredient
-        updateUI()
     }
 }

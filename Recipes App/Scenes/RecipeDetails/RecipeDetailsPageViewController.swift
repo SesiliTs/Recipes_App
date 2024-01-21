@@ -13,6 +13,33 @@ final class RecipeDetailsPageViewController: UIViewController {
     
     //MARK: - Properties
     
+    private let scrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        return scrollView
+    }()
+    
+    private let scrollContainer = {
+        let container = UIView()
+        container.translatesAutoresizingMaskIntoConstraints = false
+        return container
+    }()
+    
+    private let backButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "chevron.backward"), for: .normal)
+        button.tintColor = ColorManager.shared.primaryColor
+        return button
+    }()
+    
+    let buttonBackgroundView = {
+        let buttonBackgroundView = UIView()
+        buttonBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        buttonBackgroundView.backgroundColor = ColorManager.shared.backgroundColor
+        return buttonBackgroundView
+    }()
+    
     private let nameLabel = {
         let label = UILabel()
         label.font = FontManager.shared.headlineFont
@@ -135,8 +162,10 @@ final class RecipeDetailsPageViewController: UIViewController {
         return label
     }()
     
-    private let mainStackView = {
-        let stackView = UIStackView()
+    private lazy var mainStackView = {
+        let stackView = UIStackView(arrangedSubviews: [nameLabel, imageView,
+                                                       detailsMainStack, ingredientsLabel,
+                                                       tableView, rulesLabel, recipeLabel])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 30
@@ -148,13 +177,11 @@ final class RecipeDetailsPageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = ColorManager.shared.backgroundColor
 
         addViews()
-        setupUI()
-        setupTableView()
+        setupViews()
         addConstraints()
-
+        
     }
     
 
@@ -162,27 +189,67 @@ final class RecipeDetailsPageViewController: UIViewController {
     
     private func addViews() {
         
-        view.addSubview(mainStackView)
-        
-        mainStackView.addArrangedSubview(nameLabel)
-        mainStackView.addArrangedSubview(imageView)
-        mainStackView.addArrangedSubview(detailsMainStack)
-        mainStackView.addArrangedSubview(ingredientsLabel)
-        mainStackView.addArrangedSubview(tableView)
-        mainStackView.addArrangedSubview(rulesLabel)
-        mainStackView.addArrangedSubview(recipeLabel)
+        view.addSubview(scrollView)
+        scrollView.addSubview(scrollContainer)
+        scrollContainer.addSubview(mainStackView)
+        view.addSubview(buttonBackgroundView)
+        view.addSubview(backButton)
+        view.bringSubviewToFront(backButton)
         
     }
+    
+    //MARK: - Setup Views
+    
+    private func setupViews() {
+        setupUI()
+        setupTableView()
+        setupBackButton()
+        setUpScrollView()
+    }
+
+    
+    //MARK: - Setup ScrollView
+    
+    private func setUpScrollView() {
+        scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height)
+        scrollView.contentInsetAdjustmentBehavior = .never
+    }
+    
+    //MARK: - Setup Back Button
+    
+    private func setupBackButton() {
+        backButton.addAction((UIAction(handler: { [self] _ in
+            navigationController?.popViewController(animated: true)
+        })), for: .touchUpInside)
+    }
+
     
     //MARK: - Add Constraints
     
     private func addConstraints() {
         
         NSLayoutConstraint.activate([
-            mainStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 80),
-            mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 35),
-            mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -35),
-            mainStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80),
+            mainStackView.topAnchor.constraint(equalTo: scrollContainer.topAnchor, constant: 90),
+            mainStackView.leadingAnchor.constraint(equalTo: scrollContainer.leadingAnchor, constant: 35),
+            mainStackView.trailingAnchor.constraint(equalTo: scrollContainer.trailingAnchor, constant: -35),
+            mainStackView.bottomAnchor.constraint(equalTo: scrollContainer.bottomAnchor, constant: -80),
+            
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            scrollContainer.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            scrollContainer.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            scrollContainer.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            
+            backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
+            backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 35),
+            
+            buttonBackgroundView.topAnchor.constraint(equalTo: view.topAnchor),
+            buttonBackgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            buttonBackgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            buttonBackgroundView.bottomAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 10)
             
         ])
     }
@@ -190,21 +257,36 @@ final class RecipeDetailsPageViewController: UIViewController {
     //MARK: - Setup TableView
     
     private func setupTableView() {
-        tableView.translatesAutoresizingMaskIntoConstraints = false
+        setupTableViewUI()
+        setupDelegate()
+        registerTableViewCell()
+    }
+    
+    private func registerTableViewCell() {
+        tableView.register(IngredientTableViewCell.self, forCellReuseIdentifier: "IngredientCell")
+    }
+    
+    private func setupDelegate() {
         tableView.delegate = self
         tableView.dataSource = self
+    }
+    
+    private func setupTableViewUI() {
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.isScrollEnabled = false
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
         tableView.allowsSelection = false
         let totalHeight = CGFloat(selectedRecipe?.ingredients.count ?? 0) * 40
         tableView.heightAnchor.constraint(equalToConstant: totalHeight).isActive = true
-        tableView.register(IngredientTableViewCell.self, forCellReuseIdentifier: "IngredientCell")
     }
     
     //MARK: - Setup UI
     
     private func setupUI() {
+        navigationController?.isNavigationBarHidden = true
+        view.backgroundColor = ColorManager.shared.backgroundColor
+
         nameLabel.text = selectedRecipe?.name.uppercased()
         imageView.load(urlString: selectedRecipe?.image ?? "")
         timeLabel.text = "მომზადების დრო: \(selectedRecipe?.time ?? 0) წთ"
