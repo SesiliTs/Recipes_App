@@ -21,18 +21,26 @@ final class TabBarController: UITabBarController {
     //MARK: - Setup TabBar
     
     private func setupTabs() {
-        let landing = createNavigation(image: .init(systemName: "house"), viewController: LandingPageViewController())
-        let save = createNavigation(image: .init(systemName: "bookmark"), viewController: YourRecipesPageViewController())
-        let favourites = createNavigation(image: .init(systemName: "heart"), viewController: FavouriteRecipesPageViewController())
-        let profile = createNavigation(image: .init(systemName: "person"), viewController: ProfilePageViewController())
+        let landing = createNavigation(image: UIImage(named: "House"), selectedImage: UIImage(named: "HouseFilled"), viewController: LandingPageViewController())
+        let save = createNavigation(image: UIImage(named: "Bookmark"), selectedImage: UIImage(named: "BookmarkFilled"), viewController: YourRecipesPageViewController())
+        let favourites = createNavigation(image: UIImage(named: "Heart"), selectedImage: UIImage(named: "HeartFilled"), viewController: FavouriteRecipesPageViewController())
+        let profile = createNavigation(image: UIImage(named: "Person"), selectedImage: UIImage(named: "PersonFilled"), viewController: ProfilePageViewController())
         
         setViewControllers([landing, save, favourites, profile], animated: true)
     }
+
+    private func createNavigation(image: UIImage?, selectedImage: UIImage?, viewController: UIViewController) -> UINavigationController {
+        let navigation = UINavigationController(rootViewController: viewController)
+        
+        navigation.tabBarItem.image = image?.withRenderingMode(.alwaysOriginal)
+        navigation.tabBarItem.selectedImage = selectedImage?.withRenderingMode(.alwaysOriginal)
+        
+        return navigation
+    }
+
     
     private func setupTabUI() {
         tabBar.backgroundColor = .white
-        tabBar.tintColor = ColorManager.shared.primaryColor
-        self.tabBar.unselectedItemTintColor = ColorManager.shared.textLightGray
     }
     
     private func createNavigation(image: UIImage?, viewController: UIViewController) -> UINavigationController {
