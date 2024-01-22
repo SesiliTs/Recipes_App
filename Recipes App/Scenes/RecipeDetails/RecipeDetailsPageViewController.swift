@@ -168,7 +168,7 @@ final class RecipeDetailsPageViewController: UIViewController {
                                                        tableView, rulesLabel, recipeLabel])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.spacing = 30
+        stackView.spacing = 35
         return stackView
     }()
     
@@ -205,6 +205,14 @@ final class RecipeDetailsPageViewController: UIViewController {
         setupTableView()
         setupBackButton()
         setUpScrollView()
+        setCustomSpacing()
+    }
+    
+    private func setCustomSpacing() {
+        mainStackView.setCustomSpacing(20, after: nameLabel)
+        mainStackView.setCustomSpacing(16, after: imageView)
+        mainStackView.setCustomSpacing(20, after: ingredientsLabel)
+        mainStackView.setCustomSpacing(20, after: rulesLabel)
     }
 
     
@@ -229,7 +237,7 @@ final class RecipeDetailsPageViewController: UIViewController {
     private func addConstraints() {
         
         NSLayoutConstraint.activate([
-            mainStackView.topAnchor.constraint(equalTo: scrollContainer.topAnchor, constant: 90),
+            mainStackView.topAnchor.constraint(equalTo: scrollContainer.topAnchor, constant: 100),
             mainStackView.leadingAnchor.constraint(equalTo: scrollContainer.leadingAnchor, constant: 35),
             mainStackView.trailingAnchor.constraint(equalTo: scrollContainer.trailingAnchor, constant: -35),
             mainStackView.bottomAnchor.constraint(equalTo: scrollContainer.bottomAnchor, constant: -80),
@@ -237,13 +245,13 @@ final class RecipeDetailsPageViewController: UIViewController {
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.topAnchor.constraint(equalTo: view.topAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10),
             
             scrollContainer.topAnchor.constraint(equalTo: scrollView.topAnchor),
             scrollContainer.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             scrollContainer.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
             
-            backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
+            backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 60),
             backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 35),
             
             buttonBackgroundView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -277,7 +285,7 @@ final class RecipeDetailsPageViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
         tableView.allowsSelection = false
-        let totalHeight = CGFloat(selectedRecipe?.ingredients.count ?? 0) * 40
+        let totalHeight = CGFloat(selectedRecipe?.ingredients.count ?? 0) * 30
         tableView.heightAnchor.constraint(equalToConstant: totalHeight).isActive = true
     }
     
@@ -314,7 +322,7 @@ final class RecipeDetailsPageViewController: UIViewController {
 
 extension RecipeDetailsPageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        selectedRecipe?.ingredients.count ?? 10
+        selectedRecipe?.ingredients.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -327,7 +335,7 @@ extension RecipeDetailsPageViewController: UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        40
+        30
     }
     
 }
