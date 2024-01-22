@@ -7,15 +7,16 @@
 
 import UIKit
 
-struct Category {
+struct CategoryData {
     let image: UIImage?
     let categoryName: String
 }
 
 let categoriesViews = [
-    Category(image: "🥞".image(), categoryName: "საუზმე"),
-    Category(image: "🍜".image(), categoryName: "სადილი"),
-    Category(image: "🍰".image(), categoryName: "დესერტი"),
-    Category(image: "🍿".image(), categoryName: "ხემსი"),
-    Category(image: "🍹".image(), categoryName: "სასმელი")
+    CategoryData(image: "🥞".image(), categoryName: "საუზმე"),
+    CategoryData(image: "🍜".image(), categoryName: "სადილი"),
+    CategoryData(image: "🍰".image(), categoryName: "დესერტი"),
+    CategoryData(image: "🍿".image(), categoryName: "წასახემსებელი"),
+    CategoryData(image: "🍹".image(), categoryName: "სასმელი"),
+    CategoryData(image: "🍱".image(), categoryName: "სხვა")
 ]

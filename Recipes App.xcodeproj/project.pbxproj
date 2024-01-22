@@ -39,6 +39,9 @@
 		0BBCC9842B5BE381001C198D /* ProfilePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBCC9832B5BE381001C198D /* ProfilePageViewController.swift */; };
 		0BBCC9872B5D34A9001C198D /* RecipeDetailsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBCC9862B5D34A9001C198D /* RecipeDetailsPageViewController.swift */; };
 		0BBCC98A2B5D576B001C198D /* IngredientTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBCC9892B5D576B001C198D /* IngredientTableViewCell.swift */; };
+		0BE1BC912B5EB1BB00873512 /* RecipesListComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE1BC902B5EB1BB00873512 /* RecipesListComponentView.swift */; };
+		0BE1BC932B5EB2C900873512 /* TextComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE1BC922B5EB2C900873512 /* TextComponentView.swift */; };
+		0BE1BC962B5EB82800873512 /* RecipesListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE1BC952B5EB82800873512 /* RecipesListTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +72,9 @@
 		0BBCC9832B5BE381001C198D /* ProfilePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageViewController.swift; sourceTree = "<group>"; };
 		0BBCC9862B5D34A9001C198D /* RecipeDetailsPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailsPageViewController.swift; sourceTree = "<group>"; };
 		0BBCC9892B5D576B001C198D /* IngredientTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientTableViewCell.swift; sourceTree = "<group>"; };
+		0BE1BC902B5EB1BB00873512 /* RecipesListComponentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesListComponentView.swift; sourceTree = "<group>"; };
+		0BE1BC922B5EB2C900873512 /* TextComponentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextComponentView.swift; sourceTree = "<group>"; };
+		0BE1BC952B5EB82800873512 /* RecipesListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesListTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +118,7 @@
 				0BBCC96B2B5B0AFC001C198D /* Models */,
 				0BBCC9792B5BE185001C198D /* TabBar */,
 				0BBCC9132B5A7454001C198D /* Scenes */,
+				0BBCC98E2B5EA8DD001C198D /* Components */,
 				0BBCC95D2B5A85F1001C198D /* Extensions */,
 				0BBCC95A2B5A7D56001C198D /* Fonts and Colors */,
 				0BBCC9122B5A7447001C198D /* Assets */,
@@ -258,6 +265,24 @@
 			path = TableViewCell;
 			sourceTree = "<group>";
 		};
+		0BBCC98E2B5EA8DD001C198D /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				0BE1BC942B5EB80C00873512 /* RecipesList */,
+				0BE1BC922B5EB2C900873512 /* TextComponentView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		0BE1BC942B5EB80C00873512 /* RecipesList */ = {
+			isa = PBXGroup;
+			children = (
+				0BE1BC902B5EB1BB00873512 /* RecipesListComponentView.swift */,
+				0BE1BC952B5EB82800873512 /* RecipesListTableViewCell.swift */,
+			);
+			path = RecipesList;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -347,11 +372,14 @@
 			files = (
 				0BBCC9782B5BB8ED001C198D /* ImageFromURL.swift in Sources */,
 				0BBCC9742B5B176F001C198D /* RecommendedCollectionViewCell.swift in Sources */,
+				0BE1BC912B5EB1BB00873512 /* RecipesListComponentView.swift in Sources */,
 				0BBCC95C2B5A7DB7001C198D /* FontManager.swift in Sources */,
 				0BBCC9722B5B0F05001C198D /* CategoryModel.swift in Sources */,
 				0BBCC9872B5D34A9001C198D /* RecipeDetailsPageViewController.swift in Sources */,
+				0BE1BC932B5EB2C900873512 /* TextComponentView.swift in Sources */,
 				0BBCC9842B5BE381001C198D /* ProfilePageViewController.swift in Sources */,
 				0BBCC8FF2B5A73D2001C198D /* LandingPageViewController.swift in Sources */,
+				0BE1BC962B5EB82800873512 /* RecipesListTableViewCell.swift in Sources */,
 				0BBCC8FB2B5A73D2001C198D /* AppDelegate.swift in Sources */,
 				0BBCC9802B5BE33C001C198D /* YourRecipesPageViewController.swift in Sources */,
 				0BBCC9612B5A86D7001C198D /* ColorManager.swift in Sources */,
