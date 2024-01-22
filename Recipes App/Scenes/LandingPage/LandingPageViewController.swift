@@ -51,7 +51,7 @@ final class LandingPageViewController: UIViewController {
         collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
-        
+    
     private let recommendationsLabel = {
         let label = UILabel()
         label.text = "რეკომენდაციები" .uppercased()
@@ -79,7 +79,7 @@ final class LandingPageViewController: UIViewController {
     }()
     
     //MARK: - ViewLifeCycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = ColorManager.shared.backgroundColor
@@ -88,7 +88,7 @@ final class LandingPageViewController: UIViewController {
         setupCategories()
         setupRecommendations()
         addConstraints()
-
+        
     }
     
     //MARK: - Add Views
@@ -96,7 +96,7 @@ final class LandingPageViewController: UIViewController {
     private func addViews() {
         labelStack.addArrangedSubview(greetingLabel)
         labelStack.addArrangedSubview(whatAreYouCookingLabel)
-                
+        
         mainStack.addArrangedSubview(labelStack)
         mainStack.addArrangedSubview(categoriesLabel)
         mainStack.setCustomSpacing(30, after: categoriesLabel)
@@ -106,7 +106,7 @@ final class LandingPageViewController: UIViewController {
         mainStack.addArrangedSubview(recommendationsCollectionView)
         
         view.addSubview(mainStack)
-
+        
     }
     
     //MARK: - Categories Setup
@@ -134,7 +134,7 @@ final class LandingPageViewController: UIViewController {
     private func registerRecommendationsCell() {
         recommendationsCollectionView.register(RecommendedCollectionViewCell.self, forCellWithReuseIdentifier: "recommendCell")
     }
-
+    
     
     //MARK: - Add Constraints
     
@@ -145,13 +145,13 @@ final class LandingPageViewController: UIViewController {
             
             recommendationsCollectionView.heightAnchor.constraint(equalToConstant: 200),
             recommendationsCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-
+            
             mainStack.topAnchor.constraint(equalTo: view.topAnchor, constant: 80),
             mainStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 35),
-            mainStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 35),
+            mainStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -35),
         ])
     }
-
+    
 }
 
 //MARK: - Extensions
@@ -179,6 +179,15 @@ extension LandingPageViewController: UICollectionViewDelegate, UICollectionViewD
             return cell
         }
         return UICollectionViewCell()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == recommendationsCollectionView {
+            let currentRecipe = mockRecipes[indexPath.row]
+            let detailsViewController = RecipeDetailsPageViewController()
+            detailsViewController.selectedRecipe = currentRecipe
+            navigationController?.pushViewController(detailsViewController, animated: true)
+        }
     }
 }
 
