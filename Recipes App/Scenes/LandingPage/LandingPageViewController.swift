@@ -12,20 +12,12 @@ final class LandingPageViewController: UIViewController {
     //MARK: - Properties
     
     private let greetingLabel = {
-        let label = UILabel()
-        label.text = "დილა მშვიდობისა,\nსესილი"
-        label.font = FontManager.shared.bodyFont
+        let label = BodyTextComponentView(text: "დილა მშვიდობისა,\nსესილი")
         label.numberOfLines = 0
-        label.textColor = ColorManager.shared.textGrayColor
         return label
     }()
     
-    private let whatAreYouCookingLabel = {
-        let label = UILabel()
-        label.text = "დღეს რას მოამზადებ?" .uppercased()
-        label.font = FontManager.shared.headlineFont
-        return label
-    }()
+    private let whatAreYouCookingLabel = HeadlineTextComponentView(text: "დღეს რას მოამზადებ?")
     
     private let labelStack = {
         let stackView = UIStackView()
@@ -35,12 +27,7 @@ final class LandingPageViewController: UIViewController {
         return stackView
     }()
     
-    private let categoriesLabel = {
-        let label = UILabel()
-        label.text = "კატეგორიები" .uppercased()
-        label.font = FontManager.shared.headlineFont
-        return label
-    }()
+    private let categoriesLabel = HeadlineTextComponentView(text: "კატეგორიები")
     
     private let categoriesCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -52,12 +39,7 @@ final class LandingPageViewController: UIViewController {
         return collectionView
     }()
     
-    private let recommendationsLabel = {
-        let label = UILabel()
-        label.text = "რეკომენდაციები" .uppercased()
-        label.font = FontManager.shared.headlineFont
-        return label
-    }()
+    private let recommendationsLabel = HeadlineTextComponentView(text: "რეკომენდაციები")
     
     private let recommendationsCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()

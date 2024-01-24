@@ -10,7 +10,8 @@ import UIKit
 final class RecipeDetailsPageViewController: UIViewController {
     
     var selectedRecipe: RecipeData?
-    
+    var viewModel: RecipeDetailsViewModel?
+
     //MARK: - Properties
     
     private let scrollView = {
@@ -44,6 +45,17 @@ final class RecipeDetailsPageViewController: UIViewController {
         let label = UILabel()
         label.font = FontManager.shared.headlineFont
         return label
+    }()
+    
+    private let heartButton = {
+        let button = UIButton()
+        return button
+    }()
+    
+    private lazy var labelButtonStack = {
+        let stackView = UIStackView(arrangedSubviews: [nameLabel, heartButton])
+        stackView.spacing = 15
+        return stackView
     }()
     
     private let imageView = {
@@ -163,7 +175,7 @@ final class RecipeDetailsPageViewController: UIViewController {
     }()
     
     private lazy var mainStackView = {
-        let stackView = UIStackView(arrangedSubviews: [nameLabel, imageView,
+        let stackView = UIStackView(arrangedSubviews: [labelButtonStack, imageView,
                                                        detailsMainStack, ingredientsLabel,
                                                        tableView, rulesLabel, recipeLabel])
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -177,11 +189,17 @@ final class RecipeDetailsPageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        initViewModel()
         addViews()
         setupViews()
         addConstraints()
         
+    }
+    
+    //MARK: - init viewModel
+    
+    private func initViewModel() {
+        viewModel = RecipeDetailsViewModel(recipe: selectedRecipe ?? mockRecipes[0])
     }
     
 
@@ -204,12 +222,13 @@ final class RecipeDetailsPageViewController: UIViewController {
         setupUI()
         setupTableView()
         setupBackButton()
+        setupHeartButton()
         setUpScrollView()
         setCustomSpacing()
     }
     
     private func setCustomSpacing() {
-        mainStackView.setCustomSpacing(20, after: nameLabel)
+        mainStackView.setCustomSpacing(20, after: labelButtonStack)
         mainStackView.setCustomSpacing(16, after: imageView)
         mainStackView.setCustomSpacing(20, after: ingredientsLabel)
         mainStackView.setCustomSpacing(20, after: rulesLabel)
@@ -228,6 +247,16 @@ final class RecipeDetailsPageViewController: UIViewController {
     private func setupBackButton() {
         backButton.addAction((UIAction(handler: { [self] _ in
             navigationController?.popViewController(animated: true)
+        })), for: .touchUpInside)
+    }
+    
+    //MARK: - Setup Heart Button
+    
+    private func setupHeartButton() {
+        heartButton.setImage(viewModel?.heartButtonImage, for: .normal)
+        heartButton.addAction((UIAction(handler: { [self] _ in
+            viewModel?.handleHeartButtonClick()
+            heartButton.setImage(viewModel?.heartButtonImage, for: .normal)
         })), for: .touchUpInside)
     }
 
