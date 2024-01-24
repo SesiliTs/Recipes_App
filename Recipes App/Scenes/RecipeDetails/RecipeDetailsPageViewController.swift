@@ -81,7 +81,7 @@ final class RecipeDetailsPageViewController: UIViewController {
     private let timeLabel = {
         let label = UILabel()
         label.textColor = ColorManager.shared.textLightGray
-        label.font = FontManager.shared.bodyFontMedium
+        label.font = FontManager.shared.bodyFontMedium?.withSize(12)
         return label
     }()
     
@@ -104,7 +104,7 @@ final class RecipeDetailsPageViewController: UIViewController {
     private let difficultyLabel = {
         let label = UILabel()
         label.textColor = ColorManager.shared.textLightGray
-        label.font = FontManager.shared.bodyFontMedium
+        label.font = FontManager.shared.bodyFontMedium?.withSize(12)
         return label
     }()
     
@@ -127,7 +127,7 @@ final class RecipeDetailsPageViewController: UIViewController {
     private let portionLabel = {
         let label = UILabel()
         label.textColor = ColorManager.shared.textLightGray
-        label.font = FontManager.shared.bodyFontMedium
+        label.font = FontManager.shared.bodyFontMedium?.withSize(12)
         return label
     }()
     
