@@ -109,6 +109,7 @@ extension RecipesListComponentView: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "RecipesListCell", for: indexPath) as? RecipesListTableViewCell else { return UITableViewCell()}
         let currentRecipe = recipesData[indexPath.row]
+        cell.selectionStyle = .none
         cell.configure(recipe: currentRecipe)
         return cell
     }

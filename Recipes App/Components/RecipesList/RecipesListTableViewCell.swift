@@ -152,7 +152,7 @@ final class RecipesListTableViewCell: UITableViewCell {
         NSLayoutConstraint.activate([
             containerView.leadingAnchor.constraint(equalTo: leadingAnchor),
             containerView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            containerView.topAnchor.constraint(equalTo: topAnchor),
+            containerView.centerYAnchor.constraint(equalTo: centerYAnchor),
             containerView.heightAnchor.constraint(equalToConstant: 120),
             
             mainStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 10),

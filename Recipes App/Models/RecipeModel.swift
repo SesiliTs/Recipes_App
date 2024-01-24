@@ -16,7 +16,7 @@ struct RecipeData {
     let difficulty: DifficultyLevel
     let ingredients: [String]
     let recipe: String
-    let isLiked: Bool
+    var isLiked: Bool
     let category: Category
 }
 

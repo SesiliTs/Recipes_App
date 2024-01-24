@@ -42,6 +42,7 @@
 		0BE1BC912B5EB1BB00873512 /* RecipesListComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE1BC902B5EB1BB00873512 /* RecipesListComponentView.swift */; };
 		0BE1BC932B5EB2C900873512 /* TextComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE1BC922B5EB2C900873512 /* TextComponentView.swift */; };
 		0BE1BC962B5EB82800873512 /* RecipesListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE1BC952B5EB82800873512 /* RecipesListTableViewCell.swift */; };
+		0BE1BC982B5EEC0700873512 /* RecipeDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE1BC972B5EEC0700873512 /* RecipeDetailsViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -75,6 +76,7 @@
 		0BE1BC902B5EB1BB00873512 /* RecipesListComponentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesListComponentView.swift; sourceTree = "<group>"; };
 		0BE1BC922B5EB2C900873512 /* TextComponentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextComponentView.swift; sourceTree = "<group>"; };
 		0BE1BC952B5EB82800873512 /* RecipesListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesListTableViewCell.swift; sourceTree = "<group>"; };
+		0BE1BC972B5EEC0700873512 /* RecipeDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailsViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -252,6 +254,7 @@
 			isa = PBXGroup;
 			children = (
 				0BBCC9862B5D34A9001C198D /* RecipeDetailsPageViewController.swift */,
+				0BE1BC972B5EEC0700873512 /* RecipeDetailsViewModel.swift */,
 				0BBCC9882B5D573E001C198D /* TableViewCell */,
 			);
 			path = RecipeDetails;
@@ -386,6 +389,7 @@
 				0BBCC8FD2B5A73D2001C198D /* SceneDelegate.swift in Sources */,
 				0BBCC96A2B5B0ADE001C198D /* LandingPageViewModel.swift in Sources */,
 				0BBCC96D2B5B0B16001C198D /* RecipeModel.swift in Sources */,
+				0BE1BC982B5EEC0700873512 /* RecipeDetailsViewModel.swift in Sources */,
 				0BBCC98A2B5D576B001C198D /* IngredientTableViewCell.swift in Sources */,
 				0BBCC9702B5B0D1D001C198D /* CategoriesCollectionViewCell.swift in Sources */,
 				0BBCC97B2B5BE1A0001C198D /* TabBarController.swift in Sources */,
