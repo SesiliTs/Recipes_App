@@ -13,30 +13,21 @@ final class RecipesListComponentView: UIView {
     
     //MARK: - Properties
     
-    private let headlineLabel = {
-        let label = UILabel()
-        label.font = FontManager.shared.headlineFont
-        return label
+    private let tableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
     }()
     
-    private let tableView = UITableView()
-    
-    private lazy var mainStackView = {
-        let stackView = UIStackView(arrangedSubviews: [headlineLabel, tableView])
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .vertical
-        stackView.spacing = 35
-        return stackView
-    }()
     
     private var recipesData: [RecipeData] = []
     
     //MARK: - init
     
-    init(headline: String, recipes: [RecipeData]) {
+    init(recipes: [RecipeData]) {
         super.init(frame: .zero)
         setupUI()
-        configure(headline: headline, recipes: recipes)
+        configure(recipes: recipes)
     }
     
     required init?(coder: NSCoder) {
@@ -54,15 +45,15 @@ final class RecipesListComponentView: UIView {
     //MARK: - AddViews
     
     private func addViews() {
-        addSubview(mainStackView)
+        addSubview(tableView)
     }
     
     private func addConstraints() {
         NSLayoutConstraint.activate([
-            mainStackView.topAnchor.constraint(equalTo: topAnchor),
-            mainStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            mainStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            mainStackView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            tableView.topAnchor.constraint(equalTo: topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
     
@@ -91,8 +82,7 @@ final class RecipesListComponentView: UIView {
     
     //MARK: - Configuration
     
-    func configure(headline: String, recipes: [RecipeData]) {
-        headlineLabel.text = headline.uppercased()
+    func configure(recipes: [RecipeData]) {
         recipesData = recipes
         tableView.reloadData()
     }
