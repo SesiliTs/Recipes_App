@@ -7,10 +7,88 @@
 
 import UIKit
 
-class YourRecipesPageViewController: UIViewController {
+final class YourRecipesPageViewController: UIViewController {
 
+    //MARK: - Properties
+        
+    private let headlineLabel = {
+        let label = UILabel()
+        label.font = FontManager.shared.headlineFont
+        label.text = "შენი რეცეპტები".uppercased()
+        return label
+    }()
+    
+    private let recipeSearchBar: RecipeSearchBar = {
+        let searchBar = RecipeSearchBar()
+        return searchBar
+    }()
+    
+    private let listComponent = RecipesListComponentView(recipes: mockRecipes)
+    
+    private lazy var mainStackView = {
+        let stackView = UIStackView(arrangedSubviews: [headlineLabel, recipeSearchBar, listComponent])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.spacing = 35
+        return stackView
+    }()
+    
+    //MARK: - ViewLifeCycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .yellow
+        setupUI()
+        setupNavigation()
+        addDelegate()
+    }
+    
+    //MARK: - Setup UI
+    
+    private func setupUI() {
+        
+        view.backgroundColor = ColorManager.shared.backgroundColor
+        view.addSubview(mainStackView)
+        addConstraints()
+    }
+    
+    private func addConstraints() {
+        NSLayoutConstraint.activate([
+            mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 35),
+            mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -35),
+            mainStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 80),
+            mainStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10)
+        ])
+    }
+    
+    //MARK: - Navigation
+    
+    private func setupNavigation() {
+        listComponent.didSelectRecipe = { [weak self] selectedRecipe in
+            let detailsViewController = RecipeDetailsPageViewController()
+            detailsViewController.selectedRecipe = selectedRecipe
+            self?.navigationController?.pushViewController(detailsViewController, animated: true)
+        }
+    }
+    
+    //MARK: - Delegate
+    
+    private func addDelegate() {
+        recipeSearchBar.delegate = self
+    }
+    
+}
+
+//MARK: - Extensions
+
+extension YourRecipesPageViewController: RecipeSearchBarDelegate {
+    func didChangeSearchQuery(_ query: String?) {
+        if let query = query, !query.isEmpty {
+            let filteredRecipes = mockRecipes.filter { $0.name.lowercased().contains(query.lowercased()) }
+            listComponent.configure(recipes: filteredRecipes)
+            headlineLabel.text = "ძიების შედეგები: ".uppercased()
+        } else {
+            listComponent.configure(recipes: mockRecipes)
+            headlineLabel.text = "შენახული რეცეპტები".uppercased()
+        }
     }
 }

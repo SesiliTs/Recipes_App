@@ -77,8 +77,8 @@ final class RecipeSearchBar: UIView, UITextFieldDelegate {
 
 final class PaddedSearchIcon: UITextField {
 
-    let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 0))
-    let searchIconImageView: UIImageView = {
+    private let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 0))
+    private let searchIconImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(systemName: "magnifyingglass"))
         imageView.contentMode = .scaleAspectFit
         imageView.tintColor = .gray

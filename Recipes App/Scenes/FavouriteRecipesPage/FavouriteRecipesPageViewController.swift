@@ -23,18 +23,15 @@ final class FavouriteRecipesPageViewController: UIViewController {
         return searchBar
     }()
     
+    private let listComponent = RecipesListComponentView(recipes: mockRecipes)
+
+    
     private lazy var mainStackView = {
         let stackView = UIStackView(arrangedSubviews: [headlineLabel, recipeSearchBar, listComponent])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 35
         return stackView
-    }()
-    
-    private let listComponent = {
-        let list = RecipesListComponentView(recipes: mockRecipes)
-        list.translatesAutoresizingMaskIntoConstraints = false
-        return list
     }()
     
     //MARK: - ViewLifeCycle
