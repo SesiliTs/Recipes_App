@@ -46,6 +46,8 @@
 		0BE1BC9A2B615E0A00873512 /* RecipeSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE1BC992B615E0A00873512 /* RecipeSearchBar.swift */; };
 		0BE1BC9E2B62B3C600873512 /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE1BC9D2B62B3C600873512 /* RegistrationView.swift */; };
 		0BE1BCA02B63DEDC00873512 /* TextFieldComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE1BC9F2B63DEDC00873512 /* TextFieldComponentView.swift */; };
+		0BE1BCA22B63E1A700873512 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE1BCA12B63E1A700873512 /* LoginView.swift */; };
+		0BE1BCA62B63F09000873512 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE1BCA52B63F09000873512 /* ProfileView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -83,6 +85,8 @@
 		0BE1BC992B615E0A00873512 /* RecipeSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeSearchBar.swift; sourceTree = "<group>"; };
 		0BE1BC9D2B62B3C600873512 /* RegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
 		0BE1BC9F2B63DEDC00873512 /* TextFieldComponentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldComponentView.swift; sourceTree = "<group>"; };
+		0BE1BCA12B63E1A700873512 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		0BE1BCA52B63F09000873512 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -254,6 +258,7 @@
 			isa = PBXGroup;
 			children = (
 				0BBCC9832B5BE381001C198D /* ProfilePageViewController.swift */,
+				0BE1BCA52B63F09000873512 /* ProfileView.swift */,
 			);
 			path = ProfilePage;
 			sourceTree = "<group>";
@@ -307,6 +312,7 @@
 		0BE1BC9C2B62B38100873512 /* LoginPage */ = {
 			isa = PBXGroup;
 			children = (
+				0BE1BCA12B63E1A700873512 /* LoginView.swift */,
 			);
 			path = LoginPage;
 			sourceTree = "<group>";
@@ -410,6 +416,7 @@
 				0BBCC9842B5BE381001C198D /* ProfilePageViewController.swift in Sources */,
 				0BBCC8FF2B5A73D2001C198D /* LandingPageViewController.swift in Sources */,
 				0BE1BC962B5EB82800873512 /* RecipesListTableViewCell.swift in Sources */,
+				0BE1BCA62B63F09000873512 /* ProfileView.swift in Sources */,
 				0BBCC8FB2B5A73D2001C198D /* AppDelegate.swift in Sources */,
 				0BBCC9802B5BE33C001C198D /* YourRecipesPageViewController.swift in Sources */,
 				0BBCC9612B5A86D7001C198D /* ColorManager.swift in Sources */,
@@ -419,6 +426,7 @@
 				0BBCC96D2B5B0B16001C198D /* RecipeModel.swift in Sources */,
 				0BE1BC982B5EEC0700873512 /* RecipeDetailsViewModel.swift in Sources */,
 				0BBCC98A2B5D576B001C198D /* IngredientTableViewCell.swift in Sources */,
+				0BE1BCA22B63E1A700873512 /* LoginView.swift in Sources */,
 				0BBCC9702B5B0D1D001C198D /* CategoriesCollectionViewCell.swift in Sources */,
 				0BBCC97B2B5BE1A0001C198D /* TabBarController.swift in Sources */,
 				0BBCC95F2B5A8606001C198D /* ColorFromHex.swift in Sources */,

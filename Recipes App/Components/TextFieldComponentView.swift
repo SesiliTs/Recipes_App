@@ -9,25 +9,24 @@ import SwiftUI
 
 struct TextFieldComponentView: View {
     
-    @Binding var name: String
+    @Binding var text: String
     let imageSystemName: String
     let placeholder: String
-    let isSecure: Bool = false
+    var isSecure: Bool = false
     
     var body: some View {
         VStack {
             HStack {
                 Image(systemName: imageSystemName)
-                    .foregroundStyle(Color(ColorManager.shared.textLightGray))
+                    .foregroundStyle(Color(ColorManager.shared.textGrayColor))
                     .padding(.horizontal, 10)
                 
                 if isSecure {
-                    
-                    TextField(placeholder, text: $name)
+                    SecureField(placeholder, text: $text)
                         .frame(height: 45)
                         .font(Font(FontManager.shared.bodyFont ?? .systemFont(ofSize: 12)))
                 } else {
-                    TextField(placeholder, text: $name)
+                    TextField(placeholder, text: $text)
                         .frame(height: 45)
                         .font(Font(FontManager.shared.bodyFont ?? .systemFont(ofSize: 12)))
                 }
@@ -40,5 +39,5 @@ struct TextFieldComponentView: View {
 }
 
 #Preview {
-    TextFieldComponentView(name: .constant(""), imageSystemName: "person", placeholder: "სახელი და გვარი")
+    TextFieldComponentView(text: .constant(""), imageSystemName: "person", placeholder: "სახელი და გვარი")
 }
