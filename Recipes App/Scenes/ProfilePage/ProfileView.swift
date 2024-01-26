@@ -8,8 +8,19 @@
 import SwiftUI
 
 struct ProfileView: View {
+    @EnvironmentObject var viewModel: AuthViewModel
+
     var body: some View {
-        Text("Hello, World!")
+        
+        if let user = viewModel.currentUser {
+            Text(user.fullname)
+            
+            Button(action: {
+                viewModel.signOut()
+            }, label: {
+                Text("Log out")
+            })
+        }
     }
 }
 

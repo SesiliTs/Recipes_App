@@ -34,7 +34,6 @@ final class LandingPageViewController: UIViewController {
         layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         layout.minimumInteritemSpacing = 5
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
@@ -46,7 +45,6 @@ final class LandingPageViewController: UIViewController {
         layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         layout.minimumInteritemSpacing = 5
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
@@ -123,10 +121,10 @@ final class LandingPageViewController: UIViewController {
     private func addConstraints() {
         NSLayoutConstraint.activate([
             categoriesCollectionView.heightAnchor.constraint(equalToConstant: 120),
-            categoriesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            categoriesCollectionView.trailingAnchor.constraint(equalTo: mainStack.trailingAnchor),
             
             recommendationsCollectionView.heightAnchor.constraint(equalToConstant: 200),
-            recommendationsCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            recommendationsCollectionView.trailingAnchor.constraint(equalTo: mainStack.trailingAnchor),
             
             mainStack.topAnchor.constraint(equalTo: view.topAnchor, constant: 80),
             mainStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 35),

@@ -61,7 +61,11 @@ final class CategoriesCollectionViewCell: UICollectionViewCell {
             imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: 1.0),
             
             label.leadingAnchor.constraint(equalTo: shapeView.leadingAnchor, constant: 16),
-            label.topAnchor.constraint(equalTo: shapeView.topAnchor, constant: 16)
+            label.topAnchor.constraint(equalTo: shapeView.topAnchor, constant: 16),
+            
+            shapeView.topAnchor.constraint(equalTo: topAnchor),
+            shapeView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            shapeView.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
     }
     

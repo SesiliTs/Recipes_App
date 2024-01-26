@@ -113,7 +113,11 @@ final class RecommendedCollectionViewCell: UICollectionViewCell {
             arrowSymbol.trailingAnchor.constraint(equalTo: shapeView.trailingAnchor, constant: -10),
             
             horizontalStack.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 6),
-            horizontalStack.leadingAnchor.constraint(equalTo: shapeView.leadingAnchor, constant: 11)
+            horizontalStack.leadingAnchor.constraint(equalTo: shapeView.leadingAnchor, constant: 11),
+            
+            mainStack.leadingAnchor.constraint(equalTo: leadingAnchor),
+            mainStack.trailingAnchor.constraint(equalTo: trailingAnchor),
+            mainStack.topAnchor.constraint(equalTo: topAnchor)
             
         ])
     }
