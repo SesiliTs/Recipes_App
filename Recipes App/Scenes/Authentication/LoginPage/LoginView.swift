@@ -9,10 +9,14 @@ import SwiftUI
 
 struct LoginView: View {
     
+    //MARK: - Properties
+    
     @State private var email = ""
     @State private var password = ""
     @EnvironmentObject var viewModel: AuthViewModel
-
+    
+    //MARK: - Body
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -42,6 +46,8 @@ struct LoginView: View {
                             try await viewModel.signIn(email: email, password: password)
                         }
                     }
+                    .disabled(!isValid)
+                    .opacity(isValid ? 1.0 : 0.6)
                     
                     NavigationLink {
                         RegistrationView()
@@ -56,6 +62,15 @@ struct LoginView: View {
             }
         }
     }
+}
+
+//MARK: - Validation Protocol
+
+extension LoginView: AuthenticationValidationProtocol {
+    var isValid: Bool {
+        return !email.isEmpty && !password.isEmpty && email.contains("@")
+    }
+    
 }
 
 #Preview {

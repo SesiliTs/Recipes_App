@@ -8,8 +8,13 @@
 import SwiftUI
 
 struct ProfileView: View {
+    
+    //MARK: - Properties
+
     @EnvironmentObject var viewModel: AuthViewModel
 
+    //MARK: - Body
+    
     var body: some View {
         
         if let user = viewModel.currentUser {

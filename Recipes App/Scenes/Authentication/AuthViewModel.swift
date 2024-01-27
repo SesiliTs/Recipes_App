@@ -9,11 +9,20 @@ import Foundation
 import Firebase
 import FirebaseFirestore
 
+protocol AuthenticationValidationProtocol {
+    var isValid: Bool { get }
+}
+
 @MainActor
 class AuthViewModel: ObservableObject {
+    
+    //MARK: - Properties
+    
     @Published var userSession: FirebaseAuth.User?
     @Published var currentUser: User?
     
+    //MARK: - init
+
     init() {
         self.userSession = Auth.auth().currentUser
         
@@ -21,6 +30,8 @@ class AuthViewModel: ObservableObject {
             await fetchUser()
         }
     }
+    
+    //MARK: - Auth Methods
     
     func signIn(email: String, password: String) async throws {
         do {
