@@ -32,7 +32,7 @@ struct RegistrationView: View {
                 Text("რეგისტრაცია".uppercased())
                     .font(Font(FontManager.shared.headlineFont ?? .systemFont(ofSize: 12)))
                     .padding(.top, 30)
-                imagePickerView()
+                imagePickerView
                 TextFieldComponentView(text: $name,
                                        imageSystemName: "person",
                                        placeholder: "სახელი და გვარი")
@@ -44,7 +44,7 @@ struct RegistrationView: View {
                                        imageSystemName: "lock",
                                        placeholder: "შეიყვანე პაროლი",
                                        isSecure: true)
-                addValidation()
+                addValidation
                     .padding(.top, -15)
                 TextFieldComponentView(text: $repeatPassword,
                                        imageSystemName: "lock",
@@ -88,7 +88,7 @@ struct RegistrationView: View {
     
     //MARK: - Validation Labels
     
-    func addValidation() -> some View {
+    private var addValidation: some View {
         let containsNumeric = password.rangeOfCharacter(from: CharacterSet.decimalDigits) != nil
         let numericColor = containsNumeric ? Color.green : Color.red
         let lengthColor = password.count > 5 ? Color.green : Color.red
@@ -104,7 +104,7 @@ struct RegistrationView: View {
         }
     }
     
-    func imagePickerView() -> some View {
+    private var imagePickerView: some View {
         Button {
             shouldShowImagePicker.toggle()
         } label: {
