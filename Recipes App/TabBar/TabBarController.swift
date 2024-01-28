@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 final class TabBarController: UITabBarController {
     
@@ -24,8 +25,10 @@ final class TabBarController: UITabBarController {
         let landing = createNavigation(image: UIImage(named: "House"), selectedImage: UIImage(named: "HouseFilled"), viewController: LandingPageViewController())
         let save = createNavigation(image: UIImage(named: "Bookmark"), selectedImage: UIImage(named: "BookmarkFilled"), viewController: YourRecipesPageViewController())
         let favourites = createNavigation(image: UIImage(named: "Heart"), selectedImage: UIImage(named: "HeartFilled"), viewController: FavouriteRecipesPageViewController())
-        let profile = createNavigation(image: UIImage(named: "Person"), selectedImage: UIImage(named: "PersonFilled"), viewController: ProfilePageViewController())
         
+        let profileHostingController = UIHostingController(rootView: ProfilePage().environmentObject(AuthViewModel()))
+        let profile = createNavigation(image: UIImage(named: "Person"), selectedImage: UIImage(named: "PersonFilled"), viewController: profileHostingController)
+
         setViewControllers([landing, save, favourites, profile], animated: true)
     }
 
