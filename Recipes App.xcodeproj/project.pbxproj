@@ -10,6 +10,7 @@
 		0B018A192B666D8F007FD344 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 0B018A182B666D8F007FD344 /* FirebaseStorage */; };
 		0B85A57A2B66C5D500B06DAE /* AddRecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B85A5792B66C5D500B06DAE /* AddRecipeView.swift */; };
 		0B85A57C2B66E0C600B06DAE /* DifficultyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B85A57B2B66E0C600B06DAE /* DifficultyButton.swift */; };
+		0B85A57F2B66F18E00B06DAE /* AddRecipeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B85A57E2B66F18E00B06DAE /* AddRecipeViewModel.swift */; };
 		0BBCC8FB2B5A73D2001C198D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBCC8FA2B5A73D2001C198D /* AppDelegate.swift */; };
 		0BBCC8FD2B5A73D2001C198D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBCC8FC2B5A73D2001C198D /* SceneDelegate.swift */; };
 		0BBCC8FF2B5A73D2001C198D /* LandingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBCC8FE2B5A73D2001C198D /* LandingPageViewController.swift */; };
@@ -56,6 +57,7 @@
 /* Begin PBXFileReference section */
 		0B85A5792B66C5D500B06DAE /* AddRecipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeView.swift; sourceTree = "<group>"; };
 		0B85A57B2B66E0C600B06DAE /* DifficultyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyButton.swift; sourceTree = "<group>"; };
+		0B85A57E2B66F18E00B06DAE /* AddRecipeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeViewModel.swift; sourceTree = "<group>"; };
 		0BBCC8F72B5A73D2001C198D /* Recipes App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Recipes App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BBCC8FA2B5A73D2001C198D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0BBCC8FC2B5A73D2001C198D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				0B85A5792B66C5D500B06DAE /* AddRecipeView.swift */,
+				0B85A57E2B66F18E00B06DAE /* AddRecipeViewModel.swift */,
 				0B85A57D2B66E0DD00B06DAE /* Components */,
 			);
 			path = AddRecipe;
@@ -474,6 +477,7 @@
 				0BE1BCA22B63E1A700873512 /* LoginView.swift in Sources */,
 				0BE1BCAF2B6410E200873512 /* ProfilePage.swift in Sources */,
 				0B85A57C2B66E0C600B06DAE /* DifficultyButton.swift in Sources */,
+				0B85A57F2B66F18E00B06DAE /* AddRecipeViewModel.swift in Sources */,
 				0BBCC9702B5B0D1D001C198D /* CategoriesCollectionViewCell.swift in Sources */,
 				0BBCC97B2B5BE1A0001C198D /* TabBarController.swift in Sources */,
 				0BBCC95F2B5A8606001C198D /* ColorFromHex.swift in Sources */,

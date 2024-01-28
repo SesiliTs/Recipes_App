@@ -9,6 +9,8 @@ import SwiftUI
 
 struct AddRecipeView: View {
     
+    @StateObject private var viewModel = AddRecipeViewModel()
+    
     @State private var image: UIImage?
     @State private var shouldShowImagePicker = false
     @State private var recipeName = ""
@@ -22,26 +24,30 @@ struct AddRecipeView: View {
     @State private var selectedButton: Int?
     @State private var difficulty: DifficultyLevel?
     
+    @State private var ingredient = ""
+    
     var body: some View {
         
         ZStack {
             Color(ColorManager.shared.backgroundColor)
                 .ignoresSafeArea()
             
-            VStack(spacing: 35) {
-                imagePickerView
-                    .padding(.top, 50)
-                recipeNameView
-                detailsView
+            ScrollView {
+                VStack(spacing: 35) {
+                    imagePickerView
+                        .padding(.top, 50)
+                    recipeNameView
+                    detailsView
+                    difficultyButtons
+                    ingredientsView
+                }
+                .padding(.horizontal, 35)
+                .fullScreenCover(isPresented: $shouldShowImagePicker, onDismiss: nil) {
+                    ImagePicker(image: $image)
+                        .ignoresSafeArea()
+                }
                 
-                difficultyButtons
             }
-            .padding(.horizontal, 35)
-            .fullScreenCover(isPresented: $shouldShowImagePicker, onDismiss: nil) {
-                ImagePicker(image: $image)
-                    .ignoresSafeArea()
-            }
-
         }
     }
     
@@ -133,6 +139,71 @@ struct AddRecipeView: View {
         }
     }
     
+    private var ingredientsView: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            
+            Text("ინგრედიენტები".uppercased())
+                .font(Font(FontManager.shared.bodyFontMedium?.withSize(18) ?? .systemFont(ofSize: 18)))
+            
+            HStack {
+                TextField("დაამატე ინგრედიენტი", text: $ingredient)
+                    .frame(height: 45)
+                    .font(Font(FontManager.shared.bodyFont ?? .systemFont(ofSize: 12)))
+                    .padding(.horizontal, 10)
+                
+                Button(action: {
+                    addIngredient()
+                }) {
+                    Image(systemName: "plus")
+                        .font(.system(size: 14, weight: .bold))
+                        .padding()
+                        .foregroundStyle(.white)
+                        .frame(width: 40, height: 25)
+                        .background(Color(ColorManager.shared.primaryColor))
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .padding(.horizontal, 10)
+                }
+            }
+            .textFieldStyle(DefaultTextFieldStyle())
+            .background(.white)
+            .clipShape(RoundedRectangle(cornerRadius: 18))
+            
+            listView
+            
+        }
+        
+    }
+    
+    private var listView: some View {
+        
+        ForEach(viewModel.ingredientsList, id: \.self) { item in
+            VStack {
+                HStack {
+                    Text(item)
+                        .font(Font(FontManager.shared.bodyFont?.withSize(14) ?? .systemFont(ofSize: 12)))
+                        .foregroundStyle(Color(ColorManager.shared.textGrayColor))
+                    Spacer()
+                    Button(action: {
+                        viewModel.removeIngredient(item: item)
+                    }) {
+                        Image(systemName: "xmark.bin")
+                            .font(.system(size: 15))
+                            .foregroundColor(Color(ColorManager.shared.textGrayColor))
+                    }
+                }
+                Rectangle()
+                    .fill(Color(ColorManager.shared.primaryColor))
+                    .frame(height: 0.3)
+                
+            }
+        }
+    }
+    
+    private func addIngredient() {
+        guard !ingredient.isEmpty else { return }
+        viewModel.ingredientsList.append(ingredient)
+        ingredient = ""
+    }
 }
 
 #Preview {
