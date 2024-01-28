@@ -14,7 +14,7 @@ struct RegistrationView: View {
     @State private var name = ""
     @State private var email = ""
     @State private var password = ""
-    @State private var repeatPasword = ""
+    @State private var repeatPassword = ""
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var viewModel: AuthViewModel
     
@@ -44,7 +44,7 @@ struct RegistrationView: View {
                                        isSecure: true)
                 addValidation()
                     .padding(.top, -15)
-                TextFieldComponentView(text: $repeatPasword,
+                TextFieldComponentView(text: $repeatPassword,
                                        imageSystemName: "lock",
                                        placeholder: "გაიმეორე პაროლი",
                                        isSecure: true)
@@ -54,13 +54,16 @@ struct RegistrationView: View {
                 ButtonComponentView(text: "რეგისტრაცია") {
                     Task {
                         try await viewModel.signUp(email: email,
-                                                   password: password,
+                                                   password: password, repeatPassword: repeatPassword,
                                                    fullname: name,
                                                    photoURL: "")
                     }
                 }
                 .disabled(!isValid)
                 .opacity(isValid ? 1.0 : 0.6)
+                .alert(isPresented: $viewModel.showAlert) {
+                    Alert(title: Text("შეცდომა"), message: Text(viewModel.alertMessage), dismissButton: .default(Text("OK")))
+                }
                 
                 Spacer()
                 
@@ -78,6 +81,8 @@ struct RegistrationView: View {
         }
     }
     
+    //MARK: - Validation Labels
+    
     func addValidation() -> some View {
         let containsNumeric = password.rangeOfCharacter(from: CharacterSet.decimalDigits) != nil
         let numericColor = containsNumeric ? Color.green : Color.red
@@ -88,7 +93,7 @@ struct RegistrationView: View {
                 .font(Font(FontManager.shared.bodyFont?.withSize(9) ?? .systemFont(ofSize: 9)))
                 .foregroundStyle(numericColor)
 
-            Text("* პაროლი უნდა შეიცავდეს მინიმუმ 5 სიმბოლოს")
+            Text("* პაროლი უნდა შეიცავდეს მინიმუმ 6 სიმბოლოს")
                 .font(Font(FontManager.shared.bodyFont?.withSize(9) ?? .systemFont(ofSize: 9)))
                 .foregroundStyle(lengthColor)
         }
@@ -107,7 +112,6 @@ extension RegistrationView: AuthenticationValidationProtocol {
         && email.contains("@")
         && !name.isEmpty
         && password.count > 5
-        && password == repeatPasword
         && password.rangeOfCharacter(from: digitCharacterSet) != nil
     }
 }

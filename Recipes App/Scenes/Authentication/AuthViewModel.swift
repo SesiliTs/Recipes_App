@@ -21,8 +21,11 @@ class AuthViewModel: ObservableObject {
     @Published var userSession: FirebaseAuth.User?
     @Published var currentUser: User?
     
+    @Published var showAlert = false
+    @Published var alertMessage = ""
+    
     //MARK: - init
-
+    
     init() {
         self.userSession = Auth.auth().currentUser
         
@@ -39,11 +42,18 @@ class AuthViewModel: ObservableObject {
             self.userSession = result.user
             await fetchUser()
         } catch {
-            print("failed to log in. error: \(error.localizedDescription)")
+                showAlert = true
+                alertMessage = "მეილი ან პაროლი არასწორია"
         }
     }
     
-    func signUp(email: String, password: String, fullname: String, photoURL: String) async throws {
+    func signUp(email: String, password: String, repeatPassword: String, fullname: String, photoURL: String) async throws {
+        guard password == repeatPassword else {
+            showAlert = true
+            alertMessage = "პაროლები არ ემთხვევა"
+            return
+        }
+        
         do {
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
             self.userSession = result.user

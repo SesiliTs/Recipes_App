@@ -48,6 +48,9 @@ struct LoginView: View {
                     }
                     .disabled(!isValid)
                     .opacity(isValid ? 1.0 : 0.6)
+                    .alert(isPresented: $viewModel.showAlert) {
+                        Alert(title: Text("შეცდომა"), message: Text(viewModel.alertMessage), dismissButton: .default(Text("OK")))
+                    }
                     
                     NavigationLink {
                         RegistrationView()
