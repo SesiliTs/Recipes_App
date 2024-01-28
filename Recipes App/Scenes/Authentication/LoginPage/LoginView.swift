@@ -79,3 +79,4 @@ extension LoginView: AuthenticationValidationProtocol {
 #Preview {
     LoginView()
 }
+

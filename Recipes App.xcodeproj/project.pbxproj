@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B018A192B666D8F007FD344 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 0B018A182B666D8F007FD344 /* FirebaseStorage */; };
 		0BBCC8FB2B5A73D2001C198D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBCC8FA2B5A73D2001C198D /* AppDelegate.swift */; };
 		0BBCC8FD2B5A73D2001C198D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBCC8FC2B5A73D2001C198D /* SceneDelegate.swift */; };
 		0BBCC8FF2B5A73D2001C198D /* LandingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBCC8FE2B5A73D2001C198D /* LandingPageViewController.swift */; };
@@ -34,6 +35,7 @@
 		0BBCC9872B5D34A9001C198D /* RecipeDetailsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBCC9862B5D34A9001C198D /* RecipeDetailsPageViewController.swift */; };
 		0BBCC98A2B5D576B001C198D /* IngredientTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBCC9892B5D576B001C198D /* IngredientTableViewCell.swift */; };
 		0BD457682B6421150074FC00 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 0BD457672B6421150074FC00 /* FirebaseFirestore */; };
+		0BD4576A2B66578D0074FC00 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD457692B66578D0074FC00 /* ImagePicker.swift */; };
 		0BE1BC912B5EB1BB00873512 /* RecipesListComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE1BC902B5EB1BB00873512 /* RecipesListComponentView.swift */; };
 		0BE1BC932B5EB2C900873512 /* TextComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE1BC922B5EB2C900873512 /* TextComponentView.swift */; };
 		0BE1BC962B5EB82800873512 /* RecipesListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE1BC952B5EB82800873512 /* RecipesListTableViewCell.swift */; };
@@ -76,6 +78,7 @@
 		0BBCC9812B5BE365001C198D /* FavouriteRecipesPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteRecipesPageViewController.swift; sourceTree = "<group>"; };
 		0BBCC9862B5D34A9001C198D /* RecipeDetailsPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailsPageViewController.swift; sourceTree = "<group>"; };
 		0BBCC9892B5D576B001C198D /* IngredientTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientTableViewCell.swift; sourceTree = "<group>"; };
+		0BD457692B66578D0074FC00 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		0BE1BC902B5EB1BB00873512 /* RecipesListComponentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesListComponentView.swift; sourceTree = "<group>"; };
 		0BE1BC922B5EB2C900873512 /* TextComponentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextComponentView.swift; sourceTree = "<group>"; };
 		0BE1BC952B5EB82800873512 /* RecipesListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesListTableViewCell.swift; sourceTree = "<group>"; };
@@ -97,6 +100,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0BBCC9102B5A741C001C198D /* NetworkManager in Frameworks */,
+				0B018A192B666D8F007FD344 /* FirebaseStorage in Frameworks */,
 				0BD457682B6421150074FC00 /* FirebaseFirestore in Frameworks */,
 				0BBCC9262B5A763B001C198D /* FirebaseAuth in Frameworks */,
 			);
@@ -288,6 +292,7 @@
 				0BE1BC992B615E0A00873512 /* RecipeSearchBar.swift */,
 				0BE1BC9F2B63DEDC00873512 /* TextFieldComponentView.swift */,
 				0BE1BCAC2B6406C200873512 /* ButtonComponentView.swift */,
+				0BD457692B66578D0074FC00 /* ImagePicker.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -354,6 +359,7 @@
 				0BBCC90F2B5A741C001C198D /* NetworkManager */,
 				0BBCC9252B5A763B001C198D /* FirebaseAuth */,
 				0BD457672B6421150074FC00 /* FirebaseFirestore */,
+				0B018A182B666D8F007FD344 /* FirebaseStorage */,
 			);
 			productName = "Recipes App";
 			productReference = 0BBCC8F72B5A73D2001C198D /* Recipes App.app */;
@@ -430,6 +436,7 @@
 				0BBCC8FF2B5A73D2001C198D /* LandingPageViewController.swift in Sources */,
 				0BE1BC962B5EB82800873512 /* RecipesListTableViewCell.swift in Sources */,
 				0BE1BCA62B63F09000873512 /* ProfileView.swift in Sources */,
+				0BD4576A2B66578D0074FC00 /* ImagePicker.swift in Sources */,
 				0BBCC8FB2B5A73D2001C198D /* AppDelegate.swift in Sources */,
 				0BBCC9802B5BE33C001C198D /* YourRecipesPageViewController.swift in Sources */,
 				0BBCC9612B5A86D7001C198D /* ColorManager.swift in Sources */,
@@ -681,6 +688,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		0B018A182B666D8F007FD344 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0BBCC9182B5A763B001C198D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
 		0BBCC90F2B5A741C001C198D /* NetworkManager */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 0BBCC90E2B5A741C001C198D /* XCRemoteSwiftPackageReference "NetworkManager" */;

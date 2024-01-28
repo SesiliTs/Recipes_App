@@ -11,7 +11,7 @@ struct User: Identifiable, Codable {
     let id: String
     let fullname: String
     let email: String
-    let photoURL: String
+    var photoURL: String
 }
 
 let mockUser = User(id: UUID().uuidString, fullname: "სესილი წიქარიძე", email: "sesili@gmail.com", photoURL: "")

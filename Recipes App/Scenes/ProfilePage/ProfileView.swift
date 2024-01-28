@@ -25,6 +25,10 @@ struct ProfileView: View {
             }, label: {
                 Text("Log out")
             })
+            Text(user.photoURL)
+            
+            Spacer()
+
         }
     }
 }
