@@ -9,7 +9,11 @@ import SwiftUI
 
 struct AddRecipeView: View {
     
+    //MARK: - Properties
+    
     @StateObject private var viewModel = AddRecipeViewModel()
+    
+    var dismissAction: (() -> Void)?
     
     @State private var image: UIImage?
     @State private var shouldShowImagePicker = false
@@ -27,6 +31,8 @@ struct AddRecipeView: View {
     @State private var ingredient = ""
     @State private var recipeDetails = ""
     
+    //MARK: - Body
+    
     var body: some View {
         
         ZStack {
@@ -42,7 +48,10 @@ struct AddRecipeView: View {
                     ingredientsView
                     recipeView
                     ButtonComponentView(text: "დამატება") {
-                        
+                        Task {
+                            await addRecipe()
+                            dismissAction?()
+                        }
                     }
                 }
                 .padding(.all, 35)
@@ -203,24 +212,38 @@ struct AddRecipeView: View {
         }
     }
     
-    private func addIngredient() {
-        guard !ingredient.isEmpty else { return }
-        viewModel.ingredientsList.append(ingredient)
-        ingredient = ""
-    }
-    
     private var recipeView: some View {
         VStack(alignment: .leading, spacing: 20) {
             Text("მომზადების წესი".uppercased())
                 .font(Font(FontManager.shared.bodyFontMedium?.withSize(18) ?? .systemFont(ofSize: 18)))
             
             TextEditor(text: $recipeDetails)
-                      .multilineTextAlignment(.leading)
-                      .frame(minHeight: 100)
-                      .font(Font(FontManager.shared.bodyFont ?? .systemFont(ofSize: 12)))
-                      .padding(.horizontal, 10)
-                      .background(.white)
-                      .clipShape(RoundedRectangle(cornerRadius: 18))
+                .multilineTextAlignment(.leading)
+                .frame(minHeight: 100)
+                .font(Font(FontManager.shared.bodyFont ?? .systemFont(ofSize: 12)))
+                .padding(.horizontal, 10)
+                .background(.white)
+                .clipShape(RoundedRectangle(cornerRadius: 18))
+        }
+    }
+
+    
+    //MARK: - Private Functions
+    
+    private func addIngredient() {
+        guard !ingredient.isEmpty else { return }
+        viewModel.ingredientsList.append(ingredient)
+        ingredient = ""
+    }
+    
+    private func addRecipe() async {
+        
+        let recipeData = RecipeData(name: recipeName, image: "", time: 0, portion: 1, difficulty: difficulty ?? .easy, ingredients: viewModel.ingredientsList, recipe: recipeDetails, isLiked: false, category: .breakfast)
+        
+        do {
+            try await viewModel.updateRecipeData(recipeData: recipeData)
+        } catch {
+            print("Failed to add recipe: \(error)")
         }
     }
 }

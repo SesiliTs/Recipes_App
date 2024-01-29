@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 final class YourRecipesPageViewController: UIViewController {
 
@@ -33,6 +34,16 @@ final class YourRecipesPageViewController: UIViewController {
         return stackView
     }()
     
+    private let plusButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "plus"), for: .normal)
+        button.tintColor = .white
+        button.backgroundColor = ColorManager.shared.primaryColor
+        button.layer.cornerRadius = 25
+        return button
+    }()
+    
     //MARK: - ViewLifeCycle
     
     override func viewDidLoad() {
@@ -48,7 +59,9 @@ final class YourRecipesPageViewController: UIViewController {
         
         view.backgroundColor = ColorManager.shared.backgroundColor
         view.addSubview(mainStackView)
+        view.addSubview(plusButton)
         addConstraints()
+        setupPlusButton()
     }
     
     private func addConstraints() {
@@ -56,9 +69,22 @@ final class YourRecipesPageViewController: UIViewController {
             mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 35),
             mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -35),
             mainStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 80),
-            mainStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10)
+            mainStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10),
+            
+            plusButton.widthAnchor.constraint(equalToConstant: 50),
+            plusButton.heightAnchor.constraint(equalToConstant: 50),
+            plusButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            plusButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100)
+
         ])
     }
+    
+    private func setupPlusButton() {
+        plusButton.addAction((UIAction(handler: { [self] _ in
+            addButtonTapped()
+        })), for: .touchUpInside)
+    }
+
     
     //MARK: - Navigation
     
@@ -74,6 +100,15 @@ final class YourRecipesPageViewController: UIViewController {
     
     private func addDelegate() {
         recipeSearchBar.delegate = self
+    }
+    
+    private func addButtonTapped() {
+        let viewController = UIHostingController(
+            rootView: AddRecipeView(dismissAction: {
+                self.dismiss(animated: true)
+            })
+        )
+        present(viewController, animated: true)
     }
     
 }

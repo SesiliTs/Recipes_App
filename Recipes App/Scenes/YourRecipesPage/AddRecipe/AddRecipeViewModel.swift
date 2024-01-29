@@ -6,14 +6,34 @@
 //
 
 import Foundation
+import Firebase
+import FirebaseFirestore
 
-class AddRecipeViewModel: ObservableObject {
+
+final class AddRecipeViewModel: ObservableObject {
     
-    @Published var ingredientsList = [String]()
+    //MARK: - Properties
+    
+    @Published var ingredientsList = [String]()    
+    
+    //MARK: - Functions
 
     func removeIngredient(item: String) {
         if let index = ingredientsList.firstIndex(of: item) {
             ingredientsList.remove(at: index)
+        }
+    }
+            
+    func updateRecipeData(recipeData: RecipeData) async throws {
+        do {
+            guard let user = Auth.auth().currentUser else { return }
+            let encodedRecipe = try Firestore.Encoder().encode(recipeData)
+            try await Firestore.firestore().collection("users").document(user.uid).updateData([
+                "recipes": FieldValue.arrayUnion([encodedRecipe])
+            ])
+
+        } catch {
+            throw error
         }
     }
 }
