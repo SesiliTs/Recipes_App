@@ -93,7 +93,7 @@ class AuthViewModel: ObservableObject {
     
     private func persistImageToStorage(image: UIImage?) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        let ref = Storage.storage().reference(withPath: "\(uid)/profile_images")
+        let ref = Storage.storage().reference(withPath: "\(uid)/profile/profile_image")
         
         guard let imageData = image?.jpegData(compressionQuality: 0.5) else { return }
         let metadata = StorageMetadata()
@@ -112,13 +112,8 @@ class AuthViewModel: ObservableObject {
                 }
                 
                 if let downloadURL = url {
-                    print("Successfully stored image with URL: \(downloadURL)")
-                    
-                    // Update photoURL in Firestore
                     Firestore.firestore().collection("users").document(uid).updateData(["photoURL" : downloadURL.absoluteString])
                     
-                    // Update currentUser
-                    self.currentUser?.photoURL = downloadURL.absoluteString
                     self.objectWillChange.send()
                 }
             }

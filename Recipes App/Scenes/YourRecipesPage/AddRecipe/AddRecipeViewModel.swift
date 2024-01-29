@@ -8,13 +8,18 @@
 import Foundation
 import Firebase
 import FirebaseFirestore
+import FirebaseStorage
 
 
+protocol ValidationProtocol {
+    var isValid: Bool { get }
+}
 final class AddRecipeViewModel: ObservableObject {
     
     //MARK: - Properties
     
-    @Published var ingredientsList = [String]()    
+    @Published var ingredientsList = [String]()
+    private let storage: Storage? = nil
     
     //MARK: - Functions
 

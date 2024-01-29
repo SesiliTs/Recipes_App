@@ -53,6 +53,9 @@ struct AddRecipeView: View {
                             dismissAction?()
                         }
                     }
+                    .disabled(!isValid)
+                    .opacity(isValid ? 1.0 : 0.6)
+                    
                 }
                 .padding(.all, 35)
                 .fullScreenCover(isPresented: $shouldShowImagePicker, onDismiss: nil) {
@@ -238,13 +241,30 @@ struct AddRecipeView: View {
     
     private func addRecipe() async {
         
-        let recipeData = RecipeData(name: recipeName, image: "", time: 0, portion: 1, difficulty: difficulty ?? .easy, ingredients: viewModel.ingredientsList, recipe: recipeDetails, isLiked: false, category: .breakfast)
+        let selectedCategory = categoryCases[selection] ?? .other
+        
+        let timeInt = Int(time) ?? 0
+        let portionInt = Int(portion) ?? 0
+        
+        let recipeData = RecipeData(name: recipeName, image: "https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png", time: timeInt, portion: portionInt, difficulty: difficulty ?? .easy, ingredients: viewModel.ingredientsList, recipe: recipeDetails, isLiked: false, category: selectedCategory)
         
         do {
             try await viewModel.updateRecipeData(recipeData: recipeData)
         } catch {
             print("Failed to add recipe: \(error)")
         }
+    }
+}
+
+//MARK: - Fields Validation
+
+extension AddRecipeView: ValidationProtocol {
+    var isValid: Bool {
+        return !recipeName.isEmpty
+        && !time.isEmpty
+        && !portion.isEmpty
+        && !viewModel.ingredientsList.isEmpty
+        && !recipeDetails.isEmpty
     }
 }
 

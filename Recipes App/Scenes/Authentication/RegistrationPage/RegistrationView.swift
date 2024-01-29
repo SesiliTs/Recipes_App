@@ -151,6 +151,7 @@ extension RegistrationView: AuthenticationValidationProtocol {
         return !email.isEmpty
         && !password.isEmpty
         && email.contains("@")
+        && email.contains(".")
         && !name.isEmpty
         && password.count > 5
         && password.rangeOfCharacter(from: digitCharacterSet) != nil
