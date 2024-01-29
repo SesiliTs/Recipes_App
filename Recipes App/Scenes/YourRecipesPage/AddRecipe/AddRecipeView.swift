@@ -25,6 +25,7 @@ struct AddRecipeView: View {
     @State private var difficulty: DifficultyLevel?
     
     @State private var ingredient = ""
+    @State private var recipeDetails = ""
     
     var body: some View {
         
@@ -35,13 +36,16 @@ struct AddRecipeView: View {
             ScrollView {
                 VStack(spacing: 35) {
                     imagePickerView
-                        .padding(.top, 50)
                     recipeNameView
                     detailsView
                     difficultyButtons
                     ingredientsView
+                    recipeView
+                    ButtonComponentView(text: "დამატება") {
+                        
+                    }
                 }
-                .padding(.horizontal, 35)
+                .padding(.all, 35)
                 .fullScreenCover(isPresented: $shouldShowImagePicker, onDismiss: nil) {
                     ImagePicker(image: $image)
                         .ignoresSafeArea()
@@ -203,6 +207,21 @@ struct AddRecipeView: View {
         guard !ingredient.isEmpty else { return }
         viewModel.ingredientsList.append(ingredient)
         ingredient = ""
+    }
+    
+    private var recipeView: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            Text("მომზადების წესი".uppercased())
+                .font(Font(FontManager.shared.bodyFontMedium?.withSize(18) ?? .systemFont(ofSize: 18)))
+            
+            TextEditor(text: $recipeDetails)
+                      .multilineTextAlignment(.leading)
+                      .frame(minHeight: 100)
+                      .font(Font(FontManager.shared.bodyFont ?? .systemFont(ofSize: 12)))
+                      .padding(.horizontal, 10)
+                      .background(.white)
+                      .clipShape(RoundedRectangle(cornerRadius: 18))
+        }
     }
 }
 

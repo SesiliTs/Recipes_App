@@ -66,7 +66,7 @@ class AuthViewModel: ObservableObject {
                 persistImageToStorage(image: image)
             }
             
-            let user = User(id: result.user.uid, fullname: fullname, email: email, photoURL: "")
+            let user = User(id: result.user.uid, fullname: fullname, email: email, photoURL: "", recipes: [])
             let encodedUser = try Firestore.Encoder().encode(user)
             try await Firestore.firestore().collection("users").document(user.id).setData(encodedUser)
             await fetchUser()
