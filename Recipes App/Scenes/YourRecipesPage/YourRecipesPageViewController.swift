@@ -9,9 +9,11 @@ import UIKit
 import SwiftUI
 
 final class YourRecipesPageViewController: UIViewController {
-
+    
     //MARK: - Properties
-        
+    
+    private let viewModel = AddRecipeViewModel()
+    
     private let headlineLabel = {
         let label = UILabel()
         label.font = FontManager.shared.headlineFont
@@ -24,7 +26,7 @@ final class YourRecipesPageViewController: UIViewController {
         return searchBar
     }()
     
-    private let listComponent = RecipesListComponentView(recipes: mockRecipes)
+    private lazy var listComponent = RecipesListComponentView(recipes: viewModel.userRecipes)
     
     private lazy var mainStackView = {
         let stackView = UIStackView(arrangedSubviews: [headlineLabel, recipeSearchBar, listComponent])
@@ -51,6 +53,10 @@ final class YourRecipesPageViewController: UIViewController {
         setupUI()
         setupNavigation()
         addDelegate()
+        
+        Task {
+            await fetchRecipes()
+        }
     }
     
     //MARK: - Setup UI
@@ -75,7 +81,7 @@ final class YourRecipesPageViewController: UIViewController {
             plusButton.heightAnchor.constraint(equalToConstant: 50),
             plusButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
             plusButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100)
-
+            
         ])
     }
     
@@ -84,7 +90,12 @@ final class YourRecipesPageViewController: UIViewController {
             addButtonTapped()
         })), for: .touchUpInside)
     }
-
+    
+    private func fetchRecipes() async {
+        await viewModel.fetchUserRecipes()
+        listComponent.configure(recipes: viewModel.userRecipes)
+    }
+    
     
     //MARK: - Navigation
     
@@ -105,7 +116,12 @@ final class YourRecipesPageViewController: UIViewController {
     private func addButtonTapped() {
         let viewController = UIHostingController(
             rootView: AddRecipeView(dismissAction: {
-                self.dismiss(animated: true)
+                Task {
+                    await self.fetchRecipes()
+                    DispatchQueue.main.async {
+                        self.dismiss(animated: true)
+                    }
+                }
             })
         )
         present(viewController, animated: true)
@@ -118,12 +134,12 @@ final class YourRecipesPageViewController: UIViewController {
 extension YourRecipesPageViewController: RecipeSearchBarDelegate {
     func didChangeSearchQuery(_ query: String?) {
         if let query = query, !query.isEmpty {
-            let filteredRecipes = mockRecipes.filter { $0.name.lowercased().contains(query.lowercased()) }
+            let filteredRecipes = viewModel.userRecipes.filter { $0.name.lowercased().contains(query.lowercased()) }
             listComponent.configure(recipes: filteredRecipes)
             headlineLabel.text = "ძიების შედეგები: ".uppercased()
         } else {
-            listComponent.configure(recipes: mockRecipes)
-            headlineLabel.text = "შენახული რეცეპტები".uppercased()
+            listComponent.configure(recipes: viewModel.userRecipes)
+            headlineLabel.text = "შენი რეცეპტები".uppercased()
         }
     }
 }
