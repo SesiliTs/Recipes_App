@@ -245,11 +245,11 @@ struct AddRecipeView: View {
         
         let timeInt = Int(time) ?? 0
         let portionInt = Int(portion) ?? 0
-        
+    
         let recipeData = RecipeData(name: recipeName, image: "https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png", time: timeInt, portion: portionInt, difficulty: difficulty ?? .easy, ingredients: viewModel.ingredientsList, recipe: recipeDetails, isLiked: false, category: selectedCategory)
         
         do {
-            try await viewModel.updateRecipeData(recipeData: recipeData)
+            try await viewModel.updateRecipeData(recipeData: recipeData, image: image)
         } catch {
             print("Failed to add recipe: \(error)")
         }

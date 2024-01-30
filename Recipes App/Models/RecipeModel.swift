@@ -9,8 +9,9 @@ import Foundation
 
 
 struct RecipeData: Codable {
+    var id = UUID().uuidString
     let name: String
-    let image: String
+    var image: String
     let time: Int
     let portion: Int
     let difficulty: DifficultyLevel
