@@ -38,7 +38,6 @@ final class SeeListViewController: UIViewController {
     
     private lazy var listComponent = RecipesListComponentView(recipes: recipes)
     
-    
     private lazy var mainStackView = {
         let stackView = UIStackView(arrangedSubviews: [headlineLabel, recipeSearchBar, listComponent])
         stackView.translatesAutoresizingMaskIntoConstraints = false

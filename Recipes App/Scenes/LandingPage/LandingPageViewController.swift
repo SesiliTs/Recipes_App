@@ -29,6 +29,8 @@ final class LandingPageViewController: UIViewController {
     
     private let recipeSearchBar = RecipeSearchBar()
     
+    private lazy var listComponent = RecipesListComponentView(recipes: mockRecipes)
+    
     private let categoriesLabel = HeadlineTextComponentView(text: "კატეგორიები")
     
     private let categoriesCollectionView: UICollectionView = {
@@ -69,7 +71,7 @@ final class LandingPageViewController: UIViewController {
     private lazy var mainStack = {
         let stackView = UIStackView(arrangedSubviews: [labelStack, recipeSearchBar, categoriesLabel,
                                                        categoriesCollectionView, recommendationsHorizontalStack,
-                                                       recommendationsCollectionView])
+                                                       recommendationsCollectionView, listComponent])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 30
@@ -83,20 +85,26 @@ final class LandingPageViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = ColorManager.shared.backgroundColor
         
+        setupUI()
+        seeAllAction()
+        addDelegate()
+    }
+    
+    private func setupUI() {
+        
+        navigationController?.isNavigationBarHidden = true
+        
         addViews()
         setupCategories()
         setupRecommendations()
         addConstraints()
-        seeAllAction()
-        
+        listComponent.isHidden = true
     }
     
     //MARK: - Add Views
     
     private func addViews() {
         view.addSubview(mainStack)
-
-        mainStack.setCustomSpacing(50, after: recipeSearchBar)
         mainStack.setCustomSpacing(50, after: categoriesCollectionView)
     }
     
@@ -134,15 +142,18 @@ final class LandingPageViewController: UIViewController {
             recipeSearchBar.trailingAnchor.constraint(equalTo: mainStack.trailingAnchor),
             
             categoriesCollectionView.heightAnchor.constraint(equalToConstant: 120),
-            categoriesCollectionView.trailingAnchor.constraint(equalTo: mainStack.trailingAnchor),
+            categoriesCollectionView.trailingAnchor.constraint(equalTo: mainStack.trailingAnchor, constant: 35),
             
             recommendationsCollectionView.heightAnchor.constraint(equalToConstant: 200),
-            recommendationsCollectionView.trailingAnchor.constraint(equalTo: mainStack.trailingAnchor),
+            recommendationsCollectionView.trailingAnchor.constraint(equalTo: mainStack.trailingAnchor, constant: 35),
             
+            listComponent.bottomAnchor.constraint(equalTo: mainStack.bottomAnchor),
+            listComponent.leadingAnchor.constraint(equalTo: mainStack.leadingAnchor),
+            listComponent.trailingAnchor.constraint(equalTo: mainStack.trailingAnchor),
             mainStack.topAnchor.constraint(equalTo: view.topAnchor, constant: 80),
             mainStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 35),
             mainStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -35),
-            
+            mainStack.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor),
             seeAllButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -35)
         ])
     }
@@ -155,6 +166,12 @@ final class LandingPageViewController: UIViewController {
             navigationController?.isNavigationBarHidden = true
             navigationController?.pushViewController(viewController, animated: true)
         })), for: .touchUpInside)
+    }
+    
+    //MARK: - Add Delegate
+    
+    private func addDelegate() {
+        recipeSearchBar.delegate = self
     }
     
 }
@@ -213,3 +230,25 @@ extension LandingPageViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+//MARK: - Search Bar Delegate
+
+extension LandingPageViewController: RecipeSearchBarDelegate {
+    func didChangeSearchQuery(_ query: String?) {
+        if let query = query, !query.isEmpty {
+            let filteredRecipes = mockRecipes.filter { $0.name.lowercased().contains(query.lowercased()) }
+            listComponent.configure(recipes: filteredRecipes)
+            toggleUIElements(isHidden: true)
+            listComponent.isHidden = false
+        } else {
+            toggleUIElements(isHidden: false)
+            listComponent.isHidden = true
+        }
+    }
+
+    private func toggleUIElements(isHidden: Bool) {
+        categoriesLabel.isHidden = isHidden
+        categoriesCollectionView.isHidden = isHidden
+        recommendationsHorizontalStack.isHidden = isHidden
+        recommendationsCollectionView.isHidden = isHidden
+    }
+}
