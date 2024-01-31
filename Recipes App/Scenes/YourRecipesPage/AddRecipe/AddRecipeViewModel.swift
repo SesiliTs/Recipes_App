@@ -56,7 +56,7 @@ final class AddRecipeViewModel: ObservableObject {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         let ref = Storage.storage().reference(withPath: "\(uid)/recipes/recipe_\(recipeId)")
         
-        guard let imageData = image?.jpegData(compressionQuality: 0.5) else { return }
+        guard let imageData = image?.jpegData(compressionQuality: 0.2) else { return }
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpeg"
         

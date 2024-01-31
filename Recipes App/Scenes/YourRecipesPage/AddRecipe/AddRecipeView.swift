@@ -31,6 +31,8 @@ struct AddRecipeView: View {
     @State private var ingredient = ""
     @State private var recipeDetails = ""
     
+    @State private var isLoading = false
+    
     //MARK: - Body
     
     var body: some View {
@@ -50,6 +52,8 @@ struct AddRecipeView: View {
                     ButtonComponentView(text: "დამატება") {
                         Task {
                             await addRecipe()
+                        }
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                             dismissAction?()
                         }
                     }
@@ -63,6 +67,11 @@ struct AddRecipeView: View {
                         .ignoresSafeArea()
                 }
                 
+            }
+            
+            if isLoading {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle(tint: Color(ColorManager.shared.primaryColor)))
             }
         }
     }
@@ -240,6 +249,8 @@ struct AddRecipeView: View {
     }
     
     private func addRecipe() async {
+        
+        isLoading = true
         
         let selectedCategory = categoryCases[selection] ?? .other
         
