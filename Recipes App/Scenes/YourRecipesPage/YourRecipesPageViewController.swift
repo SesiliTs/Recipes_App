@@ -32,7 +32,7 @@ final class YourRecipesPageViewController: UIViewController {
         let stackView = UIStackView(arrangedSubviews: [headlineLabel, recipeSearchBar, listComponent])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.spacing = 35
+        stackView.spacing = 20
         return stackView
     }()
     
@@ -118,9 +118,7 @@ final class YourRecipesPageViewController: UIViewController {
             rootView: AddRecipeView(dismissAction: {
                 Task {
                     await self.fetchRecipes()
-                    DispatchQueue.main.async {
-                        self.dismiss(animated: true)
-                    }
+                    self.dismiss(animated: true)
                 }
             })
         )

@@ -19,8 +19,8 @@ final class LandingPageViewController: UIViewController {
     
     private let whatAreYouCookingLabel = HeadlineTextComponentView(text: "დღეს რას მოამზადებ?")
     
-    private let labelStack = {
-        let stackView = UIStackView()
+    private lazy var labelStack = {
+        let stackView = UIStackView(arrangedSubviews: [greetingLabel, whatAreYouCookingLabel])
         stackView.axis = .vertical
         stackView.spacing = 18
         stackView.alignment = .leading
@@ -40,6 +40,21 @@ final class LandingPageViewController: UIViewController {
     
     private let recommendationsLabel = HeadlineTextComponentView(text: "რეკომენდაციები")
     
+    private let seeAllButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("სრულად >", for: .normal)
+        button.setTitleColor(ColorManager.shared.primaryColor, for: .normal)
+        button.titleLabel?.font = FontManager.shared.bodyFont
+        return button
+    }()
+    
+    private lazy var recommendationsHorizontalStack = {
+        let stackView = UIStackView(arrangedSubviews:[recommendationsLabel, seeAllButton])
+        stackView.distribution = .equalCentering
+        return stackView
+    }()
+    
     private let recommendationsCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -49,8 +64,8 @@ final class LandingPageViewController: UIViewController {
         return collectionView
     }()
     
-    private let mainStack = {
-        let stackView = UIStackView()
+    private lazy var mainStack = {
+        let stackView = UIStackView(arrangedSubviews: [labelStack, categoriesLabel, categoriesCollectionView, recommendationsHorizontalStack, recommendationsCollectionView])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 58
@@ -68,25 +83,17 @@ final class LandingPageViewController: UIViewController {
         setupCategories()
         setupRecommendations()
         addConstraints()
+        seeAllAction()
         
     }
     
     //MARK: - Add Views
     
     private func addViews() {
-        labelStack.addArrangedSubview(greetingLabel)
-        labelStack.addArrangedSubview(whatAreYouCookingLabel)
-        
-        mainStack.addArrangedSubview(labelStack)
-        mainStack.addArrangedSubview(categoriesLabel)
-        mainStack.setCustomSpacing(30, after: categoriesLabel)
-        mainStack.addArrangedSubview(categoriesCollectionView)
-        mainStack.addArrangedSubview(recommendationsLabel)
-        mainStack.setCustomSpacing(30, after: recommendationsLabel)
-        mainStack.addArrangedSubview(recommendationsCollectionView)
-        
         view.addSubview(mainStack)
-        
+
+        mainStack.setCustomSpacing(30, after: categoriesLabel)
+        mainStack.setCustomSpacing(30, after: recommendationsHorizontalStack)
     }
     
     //MARK: - Categories Setup
@@ -129,7 +136,19 @@ final class LandingPageViewController: UIViewController {
             mainStack.topAnchor.constraint(equalTo: view.topAnchor, constant: 80),
             mainStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 35),
             mainStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -35),
+            
+            seeAllButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -35)
         ])
+    }
+    
+    //MARK: - Add Action
+    
+    private func seeAllAction() {
+        seeAllButton.addAction((UIAction(handler: { [self] _ in
+            let viewController = SeeAllViewController()
+            navigationController?.isNavigationBarHidden = true
+            navigationController?.pushViewController(viewController, animated: true)
+        })), for: .touchUpInside)
     }
     
 }
