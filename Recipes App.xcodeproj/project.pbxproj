@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		0B018A192B666D8F007FD344 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 0B018A182B666D8F007FD344 /* FirebaseStorage */; };
+		0B5539A52B69172400B235E7 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5539A42B69172400B235E7 /* TabBarController.swift */; };
+		0B85A57A2B66C5D500B06DAE /* AddRecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B85A5792B66C5D500B06DAE /* AddRecipeView.swift */; };
+		0B85A57C2B66E0C600B06DAE /* DifficultyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B85A57B2B66E0C600B06DAE /* DifficultyButton.swift */; };
+		0B85A57F2B66F18E00B06DAE /* AddRecipeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B85A57E2B66F18E00B06DAE /* AddRecipeViewModel.swift */; };
 		0BBCC8FB2B5A73D2001C198D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBCC8FA2B5A73D2001C198D /* AppDelegate.swift */; };
 		0BBCC8FD2B5A73D2001C198D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBCC8FC2B5A73D2001C198D /* SceneDelegate.swift */; };
 		0BBCC8FF2B5A73D2001C198D /* LandingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBCC8FE2B5A73D2001C198D /* LandingPageViewController.swift */; };
@@ -29,7 +33,6 @@
 		0BBCC9722B5B0F05001C198D /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBCC9712B5B0F05001C198D /* CategoryModel.swift */; };
 		0BBCC9742B5B176F001C198D /* RecommendedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBCC9732B5B176F001C198D /* RecommendedCollectionViewCell.swift */; };
 		0BBCC9782B5BB8ED001C198D /* ImageFromURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBCC9772B5BB8ED001C198D /* ImageFromURL.swift */; };
-		0BBCC97B2B5BE1A0001C198D /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBCC97A2B5BE1A0001C198D /* TabBarController.swift */; };
 		0BBCC9802B5BE33C001C198D /* YourRecipesPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBCC97F2B5BE33C001C198D /* YourRecipesPageViewController.swift */; };
 		0BBCC9822B5BE365001C198D /* FavouriteRecipesPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBCC9812B5BE365001C198D /* FavouriteRecipesPageViewController.swift */; };
 		0BBCC9872B5D34A9001C198D /* RecipeDetailsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBCC9862B5D34A9001C198D /* RecipeDetailsPageViewController.swift */; };
@@ -52,6 +55,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0B5539A42B69172400B235E7 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TabBarController.swift; path = "Recipes App/TabBar/TabBarController.swift"; sourceTree = SOURCE_ROOT; };
+		0B85A5792B66C5D500B06DAE /* AddRecipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeView.swift; sourceTree = "<group>"; };
+		0B85A57B2B66E0C600B06DAE /* DifficultyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyButton.swift; sourceTree = "<group>"; };
+		0B85A57E2B66F18E00B06DAE /* AddRecipeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeViewModel.swift; sourceTree = "<group>"; };
 		0BBCC8F72B5A73D2001C198D /* Recipes App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Recipes App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BBCC8FA2B5A73D2001C198D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0BBCC8FC2B5A73D2001C198D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -73,7 +80,6 @@
 		0BBCC9712B5B0F05001C198D /* CategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
 		0BBCC9732B5B176F001C198D /* RecommendedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendedCollectionViewCell.swift; sourceTree = "<group>"; };
 		0BBCC9772B5BB8ED001C198D /* ImageFromURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFromURL.swift; sourceTree = "<group>"; };
-		0BBCC97A2B5BE1A0001C198D /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		0BBCC97F2B5BE33C001C198D /* YourRecipesPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourRecipesPageViewController.swift; sourceTree = "<group>"; };
 		0BBCC9812B5BE365001C198D /* FavouriteRecipesPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteRecipesPageViewController.swift; sourceTree = "<group>"; };
 		0BBCC9862B5D34A9001C198D /* RecipeDetailsPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailsPageViewController.swift; sourceTree = "<group>"; };
@@ -109,6 +115,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0B85A5782B66C5BC00B06DAE /* AddRecipe */ = {
+			isa = PBXGroup;
+			children = (
+				0B85A5792B66C5D500B06DAE /* AddRecipeView.swift */,
+				0B85A57E2B66F18E00B06DAE /* AddRecipeViewModel.swift */,
+				0B85A57D2B66E0DD00B06DAE /* Components */,
+			);
+			path = AddRecipe;
+			sourceTree = "<group>";
+		};
+		0B85A57D2B66E0DD00B06DAE /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				0B85A57B2B66E0C600B06DAE /* DifficultyButton.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		0BBCC8EE2B5A73D2001C198D = {
 			isa = PBXGroup;
 			children = (
@@ -131,7 +155,6 @@
 			children = (
 				0BBCC9112B5A7438001C198D /* App */,
 				0BBCC96B2B5B0AFC001C198D /* Models */,
-				0BBCC9792B5BE185001C198D /* TabBar */,
 				0BBCC9132B5A7454001C198D /* Scenes */,
 				0BBCC98E2B5EA8DD001C198D /* Components */,
 				0BBCC95D2B5A85F1001C198D /* Extensions */,
@@ -220,6 +243,7 @@
 				0BBCC96C2B5B0B16001C198D /* RecipeModel.swift */,
 				0BBCC9712B5B0F05001C198D /* CategoryModel.swift */,
 				0BE1BCA72B63F3A300873512 /* UserModel.swift */,
+				0BBCC9792B5BE185001C198D /* TabBar */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -236,7 +260,7 @@
 		0BBCC9792B5BE185001C198D /* TabBar */ = {
 			isa = PBXGroup;
 			children = (
-				0BBCC97A2B5BE1A0001C198D /* TabBarController.swift */,
+				0B5539A42B69172400B235E7 /* TabBarController.swift */,
 			);
 			path = TabBar;
 			sourceTree = "<group>";
@@ -245,6 +269,7 @@
 			isa = PBXGroup;
 			children = (
 				0BBCC97F2B5BE33C001C198D /* YourRecipesPageViewController.swift */,
+				0B85A5782B66C5BC00B06DAE /* AddRecipe */,
 			);
 			path = YourRecipesPage;
 			sourceTree = "<group>";
@@ -425,6 +450,7 @@
 			files = (
 				0BBCC9782B5BB8ED001C198D /* ImageFromURL.swift in Sources */,
 				0BBCC9742B5B176F001C198D /* RecommendedCollectionViewCell.swift in Sources */,
+				0B85A57A2B66C5D500B06DAE /* AddRecipeView.swift in Sources */,
 				0BE1BC912B5EB1BB00873512 /* RecipesListComponentView.swift in Sources */,
 				0BE1BCA82B63F3A300873512 /* UserModel.swift in Sources */,
 				0BE1BC9A2B615E0A00873512 /* RecipeSearchBar.swift in Sources */,
@@ -440,6 +466,7 @@
 				0BBCC8FB2B5A73D2001C198D /* AppDelegate.swift in Sources */,
 				0BBCC9802B5BE33C001C198D /* YourRecipesPageViewController.swift in Sources */,
 				0BBCC9612B5A86D7001C198D /* ColorManager.swift in Sources */,
+				0B5539A52B69172400B235E7 /* TabBarController.swift in Sources */,
 				0BE1BC9E2B62B3C600873512 /* RegistrationView.swift in Sources */,
 				0BBCC8FD2B5A73D2001C198D /* SceneDelegate.swift in Sources */,
 				0BBCC96A2B5B0ADE001C198D /* LandingPageViewModel.swift in Sources */,
@@ -450,8 +477,9 @@
 				0BBCC98A2B5D576B001C198D /* IngredientTableViewCell.swift in Sources */,
 				0BE1BCA22B63E1A700873512 /* LoginView.swift in Sources */,
 				0BE1BCAF2B6410E200873512 /* ProfilePage.swift in Sources */,
+				0B85A57C2B66E0C600B06DAE /* DifficultyButton.swift in Sources */,
+				0B85A57F2B66F18E00B06DAE /* AddRecipeViewModel.swift in Sources */,
 				0BBCC9702B5B0D1D001C198D /* CategoriesCollectionViewCell.swift in Sources */,
-				0BBCC97B2B5BE1A0001C198D /* TabBarController.swift in Sources */,
 				0BBCC95F2B5A8606001C198D /* ColorFromHex.swift in Sources */,
 				0BBCC9682B5AB0D7001C198D /* TextToImage.swift in Sources */,
 				0BBCC9822B5BE365001C198D /* FavouriteRecipesPageViewController.swift in Sources */,
@@ -601,10 +629,11 @@
 				DEVELOPMENT_TEAM = 29X5XJV3CC;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Recipes App/Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -612,9 +641,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "Sesili.Tsikaridze.Recipes-App";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -628,10 +660,11 @@
 				DEVELOPMENT_TEAM = 29X5XJV3CC;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Recipes App/Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -639,9 +672,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "Sesili.Tsikaridze.Recipes-App";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

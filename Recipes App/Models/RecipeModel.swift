@@ -8,9 +8,10 @@
 import Foundation
 
 
-struct RecipeData {
+struct RecipeData: Codable {
+    var id = UUID().uuidString
     let name: String
-    let image: String
+    var image: String
     let time: Int
     let portion: Int
     let difficulty: DifficultyLevel
@@ -20,13 +21,13 @@ struct RecipeData {
     let category: Category
 }
 
-enum DifficultyLevel {
+enum DifficultyLevel: Codable {
     case easy
     case normal
     case hard
 }
 
-enum Category {
+enum Category: Codable {
     case breakfast
     case dinner
     case dessert

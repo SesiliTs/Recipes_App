@@ -20,3 +20,13 @@ let categoriesViews = [
     CategoryData(image: "🍹".image(), categoryName: "სასმელი"),
     CategoryData(image: "🍱".image(), categoryName: "სხვა")
 ]
+
+let categoryCases: [String: Category] = [
+    "საუზმე": .breakfast,
+    "სადილი": .dinner,
+    "დესერტი": .dessert,
+    "წასახემსებელი": .snack,
+    "სასმელი": .drink,
+    "სხვა": .other
+]
+

@@ -6,11 +6,14 @@
 //
 
 import UIKit
+import SwiftUI
 
 final class YourRecipesPageViewController: UIViewController {
-
+    
     //MARK: - Properties
-        
+    
+    private let viewModel = AddRecipeViewModel()
+    
     private let headlineLabel = {
         let label = UILabel()
         label.font = FontManager.shared.headlineFont
@@ -23,7 +26,7 @@ final class YourRecipesPageViewController: UIViewController {
         return searchBar
     }()
     
-    private let listComponent = RecipesListComponentView(recipes: mockRecipes)
+    private lazy var listComponent = RecipesListComponentView(recipes: viewModel.userRecipes)
     
     private lazy var mainStackView = {
         let stackView = UIStackView(arrangedSubviews: [headlineLabel, recipeSearchBar, listComponent])
@@ -33,6 +36,16 @@ final class YourRecipesPageViewController: UIViewController {
         return stackView
     }()
     
+    private let plusButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "plus"), for: .normal)
+        button.tintColor = .white
+        button.backgroundColor = ColorManager.shared.primaryColor
+        button.layer.cornerRadius = 25
+        return button
+    }()
+    
     //MARK: - ViewLifeCycle
     
     override func viewDidLoad() {
@@ -40,6 +53,10 @@ final class YourRecipesPageViewController: UIViewController {
         setupUI()
         setupNavigation()
         addDelegate()
+        
+        Task {
+            await fetchRecipes()
+        }
     }
     
     //MARK: - Setup UI
@@ -48,7 +65,9 @@ final class YourRecipesPageViewController: UIViewController {
         
         view.backgroundColor = ColorManager.shared.backgroundColor
         view.addSubview(mainStackView)
+        view.addSubview(plusButton)
         addConstraints()
+        setupPlusButton()
     }
     
     private func addConstraints() {
@@ -56,9 +75,27 @@ final class YourRecipesPageViewController: UIViewController {
             mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 35),
             mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -35),
             mainStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 80),
-            mainStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10)
+            mainStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10),
+            
+            plusButton.widthAnchor.constraint(equalToConstant: 50),
+            plusButton.heightAnchor.constraint(equalToConstant: 50),
+            plusButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            plusButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100)
+            
         ])
     }
+    
+    private func setupPlusButton() {
+        plusButton.addAction((UIAction(handler: { [self] _ in
+            addButtonTapped()
+        })), for: .touchUpInside)
+    }
+    
+    private func fetchRecipes() async {
+        await viewModel.fetchUserRecipes()
+        listComponent.configure(recipes: viewModel.userRecipes)
+    }
+    
     
     //MARK: - Navigation
     
@@ -76,6 +113,20 @@ final class YourRecipesPageViewController: UIViewController {
         recipeSearchBar.delegate = self
     }
     
+    private func addButtonTapped() {
+        let viewController = UIHostingController(
+            rootView: AddRecipeView(dismissAction: {
+                Task {
+                    await self.fetchRecipes()
+                    DispatchQueue.main.async {
+                        self.dismiss(animated: true)
+                    }
+                }
+            })
+        )
+        present(viewController, animated: true)
+    }
+    
 }
 
 //MARK: - Extensions
@@ -83,12 +134,12 @@ final class YourRecipesPageViewController: UIViewController {
 extension YourRecipesPageViewController: RecipeSearchBarDelegate {
     func didChangeSearchQuery(_ query: String?) {
         if let query = query, !query.isEmpty {
-            let filteredRecipes = mockRecipes.filter { $0.name.lowercased().contains(query.lowercased()) }
+            let filteredRecipes = viewModel.userRecipes.filter { $0.name.lowercased().contains(query.lowercased()) }
             listComponent.configure(recipes: filteredRecipes)
             headlineLabel.text = "ძიების შედეგები: ".uppercased()
         } else {
-            listComponent.configure(recipes: mockRecipes)
-            headlineLabel.text = "შენახული რეცეპტები".uppercased()
+            listComponent.configure(recipes: viewModel.userRecipes)
+            headlineLabel.text = "შენი რეცეპტები".uppercased()
         }
     }
 }
