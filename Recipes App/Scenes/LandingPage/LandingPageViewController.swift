@@ -145,7 +145,7 @@ final class LandingPageViewController: UIViewController {
     
     private func seeAllAction() {
         seeAllButton.addAction((UIAction(handler: { [self] _ in
-            let viewController = SeeAllViewController()
+            let viewController = SeeListViewController(recipes: mockRecipes, headlineText: "რეკომენდაციები")
             navigationController?.isNavigationBarHidden = true
             navigationController?.pushViewController(viewController, animated: true)
         })), for: .touchUpInside)
@@ -186,6 +186,12 @@ extension LandingPageViewController: UICollectionViewDelegate, UICollectionViewD
             let detailsViewController = RecipeDetailsPageViewController()
             detailsViewController.selectedRecipe = currentRecipe
             navigationController?.pushViewController(detailsViewController, animated: true)
+        } else if collectionView == categoriesCollectionView {
+            let selectedCategory = categoriesViews[indexPath.row].categoryName
+            let filteredRecipes = mockRecipes.filter { $0.category == categoryCases[selectedCategory] }
+            let viewController = SeeListViewController(recipes: filteredRecipes, headlineText: selectedCategory)
+            navigationController?.isNavigationBarHidden = true
+            navigationController?.pushViewController(viewController, animated: true)
         }
     }
 }

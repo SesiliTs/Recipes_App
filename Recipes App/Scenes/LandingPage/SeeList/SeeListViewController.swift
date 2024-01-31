@@ -7,7 +7,10 @@
 
 import UIKit
 
-final class SeeAllViewController: UIViewController {
+final class SeeListViewController: UIViewController {
+    
+    let recipes: [RecipeData]
+    let headlineText: String
     
     private let backButton: UIButton = {
         let button = UIButton()
@@ -24,10 +27,10 @@ final class SeeAllViewController: UIViewController {
         return buttonBackgroundView
     }()
     
-    private let headlineLabel = {
+    private lazy var headlineLabel = {
         let label = UILabel()
         label.font = FontManager.shared.headlineFont
-        label.text = "რეკომენდაციები".uppercased()
+        label.text = headlineText.uppercased()
         return label
     }()
     
@@ -36,7 +39,7 @@ final class SeeAllViewController: UIViewController {
         return searchBar
     }()
     
-    private let listComponent = RecipesListComponentView(recipes: mockRecipes)
+    private lazy var listComponent = RecipesListComponentView(recipes: recipes)
     
     
     private lazy var mainStackView = {
@@ -55,6 +58,18 @@ final class SeeAllViewController: UIViewController {
         setupNavigation()
         addDelegate()
         setupBackButton()
+    }
+    
+    //MARK: - init
+
+    init(recipes: [RecipeData], headlineText: String) {
+        self.recipes = recipes
+        self.headlineText = headlineText
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     private func setupUI() {
@@ -113,15 +128,15 @@ final class SeeAllViewController: UIViewController {
     }
 }
 
-extension SeeAllViewController: RecipeSearchBarDelegate {
+extension SeeListViewController: RecipeSearchBarDelegate {
     func didChangeSearchQuery(_ query: String?) {
         if let query = query, !query.isEmpty {
-            let filteredRecipes = mockRecipes.filter { $0.name.lowercased().contains(query.lowercased()) }
+            let filteredRecipes = recipes.filter { $0.name.lowercased().contains(query.lowercased()) }
             listComponent.configure(recipes: filteredRecipes)
             headlineLabel.text = "ძიების შედეგები: ".uppercased()
         } else {
-            listComponent.configure(recipes: mockRecipes)
-            headlineLabel.text = "შენახული რეცეპტები".uppercased()
+            listComponent.configure(recipes: recipes)
+            headlineLabel.text = headlineText.uppercased()
         }
     }
 }
