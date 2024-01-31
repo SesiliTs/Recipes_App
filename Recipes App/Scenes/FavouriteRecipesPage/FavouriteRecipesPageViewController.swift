@@ -18,10 +18,7 @@ final class FavouriteRecipesPageViewController: UIViewController {
         return label
     }()
     
-    private let recipeSearchBar: RecipeSearchBar = {
-        let searchBar = RecipeSearchBar()
-        return searchBar
-    }()
+    private let recipeSearchBar = RecipeSearchBar()
     
     private let listComponent = RecipesListComponentView(recipes: mockRecipes)
 

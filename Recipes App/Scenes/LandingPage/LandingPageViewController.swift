@@ -27,6 +27,8 @@ final class LandingPageViewController: UIViewController {
         return stackView
     }()
     
+    private let recipeSearchBar = RecipeSearchBar()
+    
     private let categoriesLabel = HeadlineTextComponentView(text: "კატეგორიები")
     
     private let categoriesCollectionView: UICollectionView = {
@@ -65,10 +67,12 @@ final class LandingPageViewController: UIViewController {
     }()
     
     private lazy var mainStack = {
-        let stackView = UIStackView(arrangedSubviews: [labelStack, categoriesLabel, categoriesCollectionView, recommendationsHorizontalStack, recommendationsCollectionView])
+        let stackView = UIStackView(arrangedSubviews: [labelStack, recipeSearchBar, categoriesLabel,
+                                                       categoriesCollectionView, recommendationsHorizontalStack,
+                                                       recommendationsCollectionView])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.spacing = 58
+        stackView.spacing = 30
         stackView.alignment = .leading
         return stackView
     }()
@@ -92,8 +96,8 @@ final class LandingPageViewController: UIViewController {
     private func addViews() {
         view.addSubview(mainStack)
 
-        mainStack.setCustomSpacing(30, after: categoriesLabel)
-        mainStack.setCustomSpacing(30, after: recommendationsHorizontalStack)
+        mainStack.setCustomSpacing(50, after: recipeSearchBar)
+        mainStack.setCustomSpacing(50, after: categoriesCollectionView)
     }
     
     //MARK: - Categories Setup
@@ -127,6 +131,8 @@ final class LandingPageViewController: UIViewController {
     
     private func addConstraints() {
         NSLayoutConstraint.activate([
+            recipeSearchBar.trailingAnchor.constraint(equalTo: mainStack.trailingAnchor),
+            
             categoriesCollectionView.heightAnchor.constraint(equalToConstant: 120),
             categoriesCollectionView.trailingAnchor.constraint(equalTo: mainStack.trailingAnchor),
             

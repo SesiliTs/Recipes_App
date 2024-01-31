@@ -34,10 +34,7 @@ final class SeeListViewController: UIViewController {
         return label
     }()
     
-    private let recipeSearchBar: RecipeSearchBar = {
-        let searchBar = RecipeSearchBar()
-        return searchBar
-    }()
+    private let recipeSearchBar = RecipeSearchBar()
     
     private lazy var listComponent = RecipesListComponentView(recipes: recipes)
     
