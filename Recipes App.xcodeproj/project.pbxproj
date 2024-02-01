@@ -13,6 +13,7 @@
 		0B85A57C2B66E0C600B06DAE /* DifficultyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B85A57B2B66E0C600B06DAE /* DifficultyButton.swift */; };
 		0B85A57F2B66F18E00B06DAE /* AddRecipeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B85A57E2B66F18E00B06DAE /* AddRecipeViewModel.swift */; };
 		0BA5508A2B6A9E64001B86DF /* SeeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA550892B6A9E64001B86DF /* SeeListViewController.swift */; };
+		0BA5508F2B6BF2BE001B86DF /* LoginRequiredView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA5508E2B6BF2BE001B86DF /* LoginRequiredView.swift */; };
 		0BBCC8FB2B5A73D2001C198D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBCC8FA2B5A73D2001C198D /* AppDelegate.swift */; };
 		0BBCC8FD2B5A73D2001C198D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBCC8FC2B5A73D2001C198D /* SceneDelegate.swift */; };
 		0BBCC8FF2B5A73D2001C198D /* LandingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBCC8FE2B5A73D2001C198D /* LandingPageViewController.swift */; };
@@ -61,6 +62,7 @@
 		0B85A57B2B66E0C600B06DAE /* DifficultyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyButton.swift; sourceTree = "<group>"; };
 		0B85A57E2B66F18E00B06DAE /* AddRecipeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeViewModel.swift; sourceTree = "<group>"; };
 		0BA550892B6A9E64001B86DF /* SeeListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeListViewController.swift; sourceTree = "<group>"; };
+		0BA5508E2B6BF2BE001B86DF /* LoginRequiredView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequiredView.swift; sourceTree = "<group>"; };
 		0BBCC8F72B5A73D2001C198D /* Recipes App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Recipes App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BBCC8FA2B5A73D2001C198D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0BBCC8FC2B5A73D2001C198D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -141,6 +143,14 @@
 				0BA550892B6A9E64001B86DF /* SeeListViewController.swift */,
 			);
 			path = SeeList;
+			sourceTree = "<group>";
+		};
+		0BA5508D2B6BF290001B86DF /* LogInRequiredView */ = {
+			isa = PBXGroup;
+			children = (
+				0BA5508E2B6BF2BE001B86DF /* LoginRequiredView.swift */,
+			);
+			path = LogInRequiredView;
 			sourceTree = "<group>";
 		};
 		0BBCC8EE2B5A73D2001C198D = {
@@ -324,6 +334,7 @@
 			isa = PBXGroup;
 			children = (
 				0BE1BC942B5EB80C00873512 /* RecipesList */,
+				0BA5508D2B6BF290001B86DF /* LogInRequiredView */,
 				0BE1BC922B5EB2C900873512 /* TextComponentView.swift */,
 				0BE1BC992B615E0A00873512 /* RecipeSearchBar.swift */,
 				0BE1BC9F2B63DEDC00873512 /* TextFieldComponentView.swift */,
@@ -477,6 +488,7 @@
 				0BD4576A2B66578D0074FC00 /* ImagePicker.swift in Sources */,
 				0BBCC8FB2B5A73D2001C198D /* AppDelegate.swift in Sources */,
 				0BBCC9802B5BE33C001C198D /* YourRecipesPageViewController.swift in Sources */,
+				0BA5508F2B6BF2BE001B86DF /* LoginRequiredView.swift in Sources */,
 				0BBCC9612B5A86D7001C198D /* ColorManager.swift in Sources */,
 				0B5539A52B69172400B235E7 /* TabBarController.swift in Sources */,
 				0BE1BC9E2B62B3C600873512 /* RegistrationView.swift in Sources */,

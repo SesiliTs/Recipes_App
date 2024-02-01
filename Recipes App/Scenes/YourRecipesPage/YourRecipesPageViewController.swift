@@ -7,6 +7,7 @@
 
 import UIKit
 import SwiftUI
+import FirebaseAuth
 
 final class YourRecipesPageViewController: UIViewController {
     
@@ -43,17 +44,54 @@ final class YourRecipesPageViewController: UIViewController {
         return button
     }()
     
+    private lazy var loginRequiredView = LoginRequiredView(navigationController: self.navigationController)
+    
     //MARK: - ViewLifeCycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        checkLoggedUser()
+    }
+    
+    //MARK: - Change view according to user's login state
+    
+    private func checkLoggedUser() {
+        Auth.auth().addStateDidChangeListener { [weak self] (_, user) in
+            if let _ = user {
+                self?.userIsLoggedIn()
+            } else {
+                self?.userIsLoggedOut()
+            }
+        }
+    }
+    
+    private func userIsLoggedIn() {
+        loginRequiredView.isHidden = true
+        mainStackView.isHidden = false
+        plusButton.isHidden = false
         setupUI()
         setupNavigation()
         addDelegate()
-        
         Task {
             await fetchRecipes()
         }
+    }
+    
+    private func userIsLoggedOut() {
+        view.backgroundColor = ColorManager.shared.backgroundColor
+        view.addSubview(loginRequiredView)
+
+        mainStackView.isHidden = true
+        plusButton.isHidden = true
+        loginRequiredView.isHidden = false
+        
+        loginRequiredView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            loginRequiredView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 35),
+            loginRequiredView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -35),
+            loginRequiredView.topAnchor.constraint(equalTo: view.topAnchor),
+            loginRequiredView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
     
     //MARK: - Setup UI
