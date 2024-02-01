@@ -14,6 +14,7 @@ struct LoginView: View {
     @State private var email = ""
     @State private var password = ""
     @EnvironmentObject var viewModel: AuthViewModel
+    @Environment(\.dismiss) var dismiss
     
     //MARK: - Body
     
@@ -43,6 +44,8 @@ struct LoginView: View {
                     
                     ButtonComponentView(text: "შესვლა") {
                         Task {
+                            dismiss()
+
                             try await viewModel.signIn(email: email, password: password)
                         }
                     }
