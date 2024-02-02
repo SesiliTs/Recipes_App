@@ -87,8 +87,8 @@ final class YourRecipesPageViewController: UIViewController {
         
         loginRequiredView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            loginRequiredView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 35),
-            loginRequiredView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -35),
+            loginRequiredView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            loginRequiredView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             loginRequiredView.topAnchor.constraint(equalTo: view.topAnchor),
             loginRequiredView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
@@ -107,14 +107,14 @@ final class YourRecipesPageViewController: UIViewController {
     
     private func addConstraints() {
         NSLayoutConstraint.activate([
-            mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 35),
-            mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -35),
+            mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             mainStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 80),
             mainStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10),
             
             plusButton.widthAnchor.constraint(equalToConstant: 50),
             plusButton.heightAnchor.constraint(equalToConstant: 50),
-            plusButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            plusButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             plusButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100)
             
         ])

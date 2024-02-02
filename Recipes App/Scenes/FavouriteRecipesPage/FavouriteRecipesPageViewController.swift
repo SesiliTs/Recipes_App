@@ -72,8 +72,8 @@ final class FavouriteRecipesPageViewController: UIViewController {
         
         loginRequiredView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            loginRequiredView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 35),
-            loginRequiredView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -35),
+            loginRequiredView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            loginRequiredView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             loginRequiredView.topAnchor.constraint(equalTo: view.topAnchor),
             loginRequiredView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
@@ -90,8 +90,8 @@ final class FavouriteRecipesPageViewController: UIViewController {
     
     private func addConstraints() {
         NSLayoutConstraint.activate([
-            mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 35),
-            mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -35),
+            mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             mainStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 80),
             mainStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10),
         ])

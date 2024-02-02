@@ -85,15 +85,15 @@ final class SeeListViewController: UIViewController {
         NSLayoutConstraint.activate([
             
             backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 60),
-            backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 35),
+            backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             
             buttonBackgroundView.topAnchor.constraint(equalTo: view.topAnchor),
             buttonBackgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             buttonBackgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             buttonBackgroundView.bottomAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 10),
             
-            mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 35),
-            mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -35),
+            mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             mainStackView.topAnchor.constraint(equalTo: buttonBackgroundView.bottomAnchor, constant: 15),
             mainStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10)
         ])

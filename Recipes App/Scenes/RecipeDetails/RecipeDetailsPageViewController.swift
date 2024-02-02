@@ -267,8 +267,8 @@ final class RecipeDetailsPageViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             mainStackView.topAnchor.constraint(equalTo: scrollContainer.topAnchor, constant: 100),
-            mainStackView.leadingAnchor.constraint(equalTo: scrollContainer.leadingAnchor, constant: 35),
-            mainStackView.trailingAnchor.constraint(equalTo: scrollContainer.trailingAnchor, constant: -35),
+            mainStackView.leadingAnchor.constraint(equalTo: scrollContainer.leadingAnchor, constant: 16),
+            mainStackView.trailingAnchor.constraint(equalTo: scrollContainer.trailingAnchor, constant: -16),
             mainStackView.bottomAnchor.constraint(equalTo: scrollContainer.bottomAnchor, constant: -80),
             
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -281,7 +281,7 @@ final class RecipeDetailsPageViewController: UIViewController {
             scrollContainer.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
             
             backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 60),
-            backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 35),
+            backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             
             buttonBackgroundView.topAnchor.constraint(equalTo: view.topAnchor),
             buttonBackgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),

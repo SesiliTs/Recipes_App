@@ -142,20 +142,20 @@ final class LandingPageViewController: UIViewController {
             recipeSearchBar.trailingAnchor.constraint(equalTo: mainStack.trailingAnchor),
             
             categoriesCollectionView.heightAnchor.constraint(equalToConstant: 120),
-            categoriesCollectionView.trailingAnchor.constraint(equalTo: mainStack.trailingAnchor, constant: 35),
+            categoriesCollectionView.trailingAnchor.constraint(equalTo: mainStack.trailingAnchor, constant: 16),
             
             recommendationsCollectionView.heightAnchor.constraint(equalToConstant: 200),
-            recommendationsCollectionView.trailingAnchor.constraint(equalTo: mainStack.trailingAnchor, constant: 35),
+            recommendationsCollectionView.trailingAnchor.constraint(equalTo: mainStack.trailingAnchor, constant: 16),
             
             listComponent.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             listComponent.leadingAnchor.constraint(equalTo: mainStack.leadingAnchor),
             listComponent.trailingAnchor.constraint(equalTo: mainStack.trailingAnchor),
             
             mainStack.topAnchor.constraint(equalTo: view.topAnchor, constant: 80),
-            mainStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 35),
-            mainStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -35),
+            mainStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            mainStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             mainStack.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor),
-            seeAllButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -35)
+            seeAllButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
         ])
     }
     

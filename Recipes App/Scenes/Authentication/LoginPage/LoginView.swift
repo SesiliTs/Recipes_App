@@ -64,7 +64,7 @@ struct LoginView: View {
                             .foregroundStyle(Color(ColorManager.shared.primaryColor))
                     }
                 }
-                .padding(35)
+                .padding(16)
             }
         }
     }
