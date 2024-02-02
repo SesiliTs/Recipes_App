@@ -6,13 +6,18 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 final class LandingPageViewController: UIViewController {
     
     //MARK: - Properties
     
+    private var viewModel = AuthViewModel()
+    
     private let greetingLabel = {
-        let label = BodyTextComponentView(text: "დილა მშვიდობისა,\nსესილი")
+        let label = UILabel()
+        label.font = FontManager.shared.bodyFont
+        label.textColor = ColorManager.shared.textGrayColor
         label.numberOfLines = 0
         return label
     }()
@@ -86,9 +91,15 @@ final class LandingPageViewController: UIViewController {
         view.backgroundColor = ColorManager.shared.backgroundColor
         
         setupUI()
+        
+        updateGreetingText()
+        observeAuthenticationState()
+        
         seeAllAction()
         addDelegate()
     }
+    
+    //MARK: - Setup UI
     
     private func setupUI() {
         
@@ -106,6 +117,44 @@ final class LandingPageViewController: UIViewController {
     private func addViews() {
         view.addSubview(mainStack)
         mainStack.setCustomSpacing(50, after: categoriesCollectionView)
+    }
+    
+    //MARK: - Update Greeting Label
+    
+    private func observeAuthenticationState() {
+        Auth.auth().addStateDidChangeListener { [weak self] _, _ in
+            self?.updateGreetingText()
+        }
+    }
+
+    private func updateGreetingText() {
+        
+        let greeting: String
+        let calendar = Calendar.current
+        let hour = calendar.component(.hour, from: Date())
+
+        switch hour {
+        case 6..<12:
+            greeting = "დილა მშვიდობისა"
+        case 12..<16:
+            greeting = "შუადღე მშვიდობისა"
+        case 16..<20:
+            greeting = "საღამო მშვიდობისა"
+        default:
+            greeting = "ღამე მშვიდობისა"
+        }
+        
+        Task {
+             await viewModel.fetchUser()
+             DispatchQueue.main.async { [weak self] in
+                 if self?.viewModel.userSession != nil {
+                     let firstName = self?.viewModel.currentUser?.fullname.components(separatedBy: " ").first ?? ""
+                     self?.greetingLabel.text = "\(greeting),\n\(firstName)"
+                 } else {
+                     self?.greetingLabel.text = "\(greeting)"
+                 }
+             }
+         }
     }
     
     //MARK: - Categories Setup

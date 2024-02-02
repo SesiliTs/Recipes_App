@@ -12,7 +12,7 @@ struct ProfilePage: View {
 
     var body: some View {
         Group {
-            if let user = viewModel.userSession {
+            if viewModel.userSession != nil {
                 ProfileView()
                     .environmentObject(AuthViewModel())
             } else {
