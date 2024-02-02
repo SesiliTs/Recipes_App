@@ -44,9 +44,10 @@ struct LoginView: View {
                     
                     ButtonComponentView(text: "შესვლა") {
                         Task {
-                            dismiss()
-
-                            try await viewModel.signIn(email: email, password: password)
+                            do {
+                                try await viewModel.signIn(email: email, password: password)
+                                dismiss()
+                            }
                         }
                     }
                     .disabled(!isValid)
