@@ -147,9 +147,10 @@ final class LandingPageViewController: UIViewController {
             recommendationsCollectionView.heightAnchor.constraint(equalToConstant: 200),
             recommendationsCollectionView.trailingAnchor.constraint(equalTo: mainStack.trailingAnchor, constant: 35),
             
-            listComponent.bottomAnchor.constraint(equalTo: mainStack.bottomAnchor),
+            listComponent.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             listComponent.leadingAnchor.constraint(equalTo: mainStack.leadingAnchor),
             listComponent.trailingAnchor.constraint(equalTo: mainStack.trailingAnchor),
+            
             mainStack.topAnchor.constraint(equalTo: view.topAnchor, constant: 80),
             mainStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 35),
             mainStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -35),
