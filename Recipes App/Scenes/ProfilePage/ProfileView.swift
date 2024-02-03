@@ -20,7 +20,9 @@ struct ProfileView: View {
     @State private var isEditingEmail = false
     @State private var isEditingPassword = false
     
-    @State private var newName = "".uppercased()
+    @State private var newName = ""
+    @State var shouldShowImagePicker = false
+    @State private var image: UIImage?
     
     @State private var newEmail = ""
     
@@ -54,7 +56,20 @@ struct ProfileView: View {
                     .frame(width: 150, height: 150)
                     .clipShape(Circle())
                     .padding(.top, 80)
-                                        
+                    .overlay(alignment: .bottomTrailing) {
+                        Button(action: {
+                            shouldShowImagePicker.toggle()
+                        }, label: {
+                            Image(systemName: "camera")
+                                .font(.system(size: 16))
+                                .scaledToFill()
+                                .foregroundStyle(.white)
+                                .frame(width: 40, height: 40)
+                                .background(Color(ColorManager.shared.primaryColor))
+                                .clipShape(Circle())
+                        })
+                    }
+                    
                     if isEditingName {
                         nameEditingView
                     } else {
@@ -136,6 +151,17 @@ struct ProfileView: View {
             }
             
         }
+        .navigationViewStyle(StackNavigationViewStyle())
+        .fullScreenCover(isPresented: $shouldShowImagePicker, onDismiss: nil) {
+            ImagePicker(image: $image)
+                .ignoresSafeArea()
+                .onDisappear {
+                    if let image {
+                        viewModel.changeImage(image: image)
+                    }
+                }
+        }
+        
     }
     
     //MARK: - Separate Views

@@ -3,4 +3,85 @@
    uuid = "0C741989-A89D-41E4-8BA9-4C4BDD569F01"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "FB01E17C-9475-48B9-8155-A6014CDE9E0E"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Recipes App/Scenes/Authentication/AuthViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "131"
+            endingLineNumber = "131"
+            landmarkName = "changeImage(image:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2F4C1430-B127-425D-9138-87DFFABB1959"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Recipes App/Scenes/Authentication/AuthViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "134"
+            endingLineNumber = "134"
+            landmarkName = "changeImage(image:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "2F4C1430-B127-425D-9138-87DFFABB1959 - 9fd76b3bb1b9fc91"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Sendable () async -&gt; () in Recipes_App.AuthViewModel.changeImage(image: Swift.Optional&lt;__C.UIImage&gt;) -&gt; ()"
+                  moduleName = "Recipes App"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/sesilitsikaridze/Desktop/TBC%20iOS/Recipes%20App/Recipes%20App/Scenes/Authentication/AuthViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "134"
+                  endingLineNumber = "134"
+                  offsetFromSymbolStart = "73">
+               </Location>
+               <Location
+                  uuid = "2F4C1430-B127-425D-9138-87DFFABB1959 - ec74eafc3babcf98"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) await resume partial function for closure #1 @Sendable () async -&gt; () in Recipes_App.AuthViewModel.changeImage(image: Swift.Optional&lt;__C.UIImage&gt;) -&gt; ()"
+                  moduleName = "Recipes App"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/sesilitsikaridze/Desktop/TBC%20iOS/Recipes%20App/Recipes%20App/Scenes/Authentication/AuthViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "134"
+                  endingLineNumber = "134"
+                  offsetFromSymbolStart = "34">
+               </Location>
+               <Location
+                  uuid = "2F4C1430-B127-425D-9138-87DFFABB1959 - 5b53502f5009c7f9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(2) suspend resume partial function for closure #1 @Sendable () async -&gt; () in Recipes_App.AuthViewModel.changeImage(image: Swift.Optional&lt;__C.UIImage&gt;) -&gt; ()"
+                  moduleName = "Recipes App"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/sesilitsikaridze/Desktop/TBC%20iOS/Recipes%20App/Recipes%20App/Scenes/Authentication/AuthViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "134"
+                  endingLineNumber = "134"
+                  offsetFromSymbolStart = "28">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

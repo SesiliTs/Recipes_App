@@ -98,7 +98,7 @@ class AuthViewModel: ObservableObject {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         let ref = Storage.storage().reference(withPath: "\(uid)/profile_images")
         
-        guard let imageData = image?.jpegData(compressionQuality: 0.5) else { return }
+        guard let imageData = image?.jpegData(compressionQuality: 0.1) else { return }
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpeg"
         
@@ -125,6 +125,13 @@ class AuthViewModel: ObservableObject {
                     self.objectWillChange.send()
                 }
             }
+        }
+    }
+    
+    func changeImage(image: UIImage?) {
+        persistImageToStorage(image: image)
+        Task {
+            await fetchUser()
         }
     }
     
