@@ -16,14 +16,17 @@ struct ProfileView: View {
     @State private var confirmPassword = false
     @State private var wrongPasswordAlert = false
     
+    @State private var isEditingName = false
     @State private var isEditingEmail = false
     @State private var isEditingPassword = false
+    
+    @State private var newName = "".uppercased()
     
     @State private var newEmail = ""
     
     @State private var currentPassword = ""
     @State private var newPassword = ""
-        
+    
     //MARK: - Body
     
     var body: some View {
@@ -51,9 +54,12 @@ struct ProfileView: View {
                     .frame(width: 150, height: 150)
                     .clipShape(Circle())
                     .padding(.top, 80)
-                    
-                    Text(user.fullname.uppercased())
-                        .font(Font(FontManager.shared.headlineFont ?? .systemFont(ofSize: 16)))
+                                        
+                    if isEditingName {
+                        nameEditingView
+                    } else {
+                        nameView(user: user)
+                    }
                     
                     if isEditingEmail {
                         emailEditingView
@@ -133,6 +139,56 @@ struct ProfileView: View {
     }
     
     //MARK: - Separate Views
+    
+    private func nameView(user: User) -> some View {
+        HStack {
+            Text(user.fullname.uppercased())
+                .font(Font(FontManager.shared.headlineFont ?? .systemFont(ofSize: 16)))
+            
+            Button(action: {
+                isEditingName.toggle()
+            }, label: {
+                Image(systemName: "square.and.pencil")
+                    .font(.system(size: 14))
+                    .foregroundStyle(Color(ColorManager.shared.textGrayColor))
+            })
+        }
+    }
+    
+    private var nameEditingView: some View {
+        HStack {
+            TextField("შეიყვანე სახელი და გვარი", text: $newName)
+                .padding(.horizontal)
+                .font(Font(FontManager.shared.bodyFont ?? .systemFont(ofSize: 16)))
+                .autocorrectionDisabled()
+                .textInputAutocapitalization(.never)
+            
+            Button(action: {
+                Task {
+                    do {
+                        try await viewModel.changeFullname(newFullname: newName)
+                        isEditingName.toggle()
+                        newName = ""
+                    } catch {
+                        print(error)
+                    }
+                }
+            }, label: {
+                Image(systemName: "checkmark")
+                    .foregroundColor(Color(ColorManager.shared.primaryColor))
+                    .font(.system(size: 16))
+            })
+            
+            Button(action: {
+                isEditingName.toggle()
+                newName = ""
+            }, label: {
+                Image(systemName: "xmark")
+                    .foregroundColor(Color(ColorManager.shared.primaryColor))
+                    .font(.system(size: 16))
+            })
+        }
+    }
     
     private var emailEditingView: some View {
         HStack {
@@ -275,7 +331,7 @@ struct ProfileView: View {
         } message: {
             Text("პაროლი არასწორია, სცადეთ თავიდან")
         }
-
+        
     }
 }
 
