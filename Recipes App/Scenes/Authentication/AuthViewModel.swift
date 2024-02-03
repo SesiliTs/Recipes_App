@@ -23,7 +23,10 @@ class AuthViewModel: ObservableObject {
     @Published var currentUser: User?
     
     @Published var showAlert = false
+    @Published var showSuccessAlert = false
     @Published var alertMessage = ""
+    
+    var credential: AuthCredential?
     
     let storage: Storage
     
@@ -162,14 +165,20 @@ class AuthViewModel: ObservableObject {
     
     // MARK: - Change Password
      
-     func changePassword(newPassword: String) async throws {
-         do {
-             try await Auth.auth().currentUser?.updatePassword(to: newPassword)
-         } catch {
-             print("Failed to change password. Error: \(error.localizedDescription)")
-             throw error
-         }
-     }
+    func changePassword(currentPassword: String, newPassword: String) async throws {
+        guard let user = Auth.auth().currentUser else { return }
+        
+        let credentials = EmailAuthProvider.credential(withEmail: user.email ?? "", password: currentPassword)
+
+        do {
+            try await user.reauthenticate(with: credentials)
+            try await user.updatePassword(to: newPassword)
+            self.showSuccessAlert = true
+        } catch {
+            print("Failed to reauthenticate or change password. Error: \(error.localizedDescription)")
+            throw error
+        }
+    }
     
     //MARK: - Delete User Account
     
