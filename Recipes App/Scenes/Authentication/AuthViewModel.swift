@@ -190,12 +190,24 @@ class AuthViewModel: ObservableObject {
     
     //MARK: - Delete User Account
     
-    func deleteUser() async throws {
+    func deleteUser(password: String) async throws {
         guard let user = Auth.auth().currentUser else {
             throw URLError(.badURL)
         }
-        try await deleteUserFromFirestore()
-        try await user.delete()
+        
+        do {
+            let credential = EmailAuthProvider.credential(withEmail: user.email!, password: password)
+            try await user.reauthenticate(with: credential)
+            
+            try await deleteUserFromFirestore()
+            try await user.delete()
+            userSession = nil
+            currentUser = nil
+
+        } catch {
+            print("Failed to reauthenticate or delete user account. Error: \(error.localizedDescription)")
+            throw error
+        }
     }
     
     private func deleteUserFromFirestore() async throws {

@@ -13,6 +13,8 @@ struct ProfileView: View {
     
     @EnvironmentObject var viewModel: AuthViewModel
     @State private var showDeleteConfirmation = false
+    @State private var confirmPassword = false
+    @State private var wrongPasswordAlert = false
     
     @State private var isEditingEmail = false
     @State private var isEditingPassword = false
@@ -246,16 +248,34 @@ struct ProfileView: View {
                 message: Text("დადასტურების შემდეგ ვეღარ მოხდება ანგარიშის აღდგენა და დაიკარგება შენახული ინფორმაცია"),
                 primaryButton: .default(Text("უკან დაბრუნება")),
                 secondaryButton: .destructive(Text("დადასტურება"), action: {
-                    Task {
-                        do {
-                            try await viewModel.deleteUser()
-                        } catch {
-                            print(error)
-                        }
-                    }
+                    confirmPassword.toggle()
                 })
             )
         }
+        .alert("შეიყვანე პაროლი", isPresented: $confirmPassword) {
+            SecureField("შეიყვანე პაროლი", text: $currentPassword)
+            Button("უკან") {}
+            Button("დადასტურება") {
+                Task {
+                    do {
+                        try await viewModel.deleteUser(password: currentPassword)
+                    } catch {
+                        wrongPasswordAlert.toggle()
+                        currentPassword = ""
+                    }
+                }
+            }
+            .foregroundStyle(.red)
+        } message: {
+            Text("ანგარიშის გასაუქმებლად შეიყვანე პაროლი")
+        }
+        
+        .alert("შეცდომა", isPresented: $wrongPasswordAlert) {
+            Button("კარგი") {}
+        } message: {
+            Text("პაროლი არასწორია, სცადეთ თავიდან")
+        }
+
     }
 }
 
