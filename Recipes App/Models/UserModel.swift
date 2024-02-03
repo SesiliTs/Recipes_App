@@ -9,8 +9,8 @@ import Foundation
 
 struct User: Identifiable, Codable {
     let id: String
-    let fullname: String
-    let email: String
+    var fullname: String
+    var email: String
     var photoURL: String
 }
 

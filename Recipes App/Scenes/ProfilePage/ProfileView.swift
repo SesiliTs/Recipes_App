@@ -12,6 +12,7 @@ struct ProfileView: View {
     //MARK: - Properties
     
     @EnvironmentObject var viewModel: AuthViewModel
+    @State private var showDeleteConfirmation = false
     
     //MARK: - Body
     
@@ -31,7 +32,12 @@ struct ProfileView: View {
                             .frame(width: 200, height: 200)
                             .clipShape(Circle())
                     } placeholder: {
-                        ProgressView()
+                        Image(systemName: "photo.circle")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 200, height: 200)
+                            .foregroundStyle(.gray)
+                            .clipShape(Circle())
                     }
                     .frame(width: 200, height: 200)
                     .clipShape(Circle())
@@ -49,6 +55,30 @@ struct ProfileView: View {
                     ButtonComponentView(text: "გამოსვლა") {
                         viewModel.signOut()
                     }
+                    Button(action: {
+                        showDeleteConfirmation = true
+                    }, label: {
+                        Text("ანგარიშის გაუქმება")
+                            .font(Font(FontManager.shared.bodyFont ?? .systemFont(ofSize: 12)))
+                            .foregroundStyle(Color(ColorManager.shared.primaryColor))
+                    })
+                    .alert(isPresented: $showDeleteConfirmation) {
+                        Alert(
+                            title: Text("ნამდვილად გსურთ გაუქმება?"),
+                            message: Text("დადასტურების შემდეგ ვეღარ მოხდება ანგარიშის აღდგენა და დაიკარგება შენახული ინფორმაცია"),
+                            primaryButton: .default(Text("უკან დაბრუნება")),
+                            secondaryButton: .destructive(Text("დადასტურება"), action: {
+                                Task {
+                                    do {
+                                        try await viewModel.deleteUser()
+                                    } catch {
+                                        print(error)
+                                    }
+                                }
+                            })
+                        )
+                    }
+
                     .padding(.bottom, 30)
                 }
                 .padding(.horizontal, 35)
