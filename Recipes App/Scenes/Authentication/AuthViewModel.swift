@@ -129,33 +129,35 @@ class AuthViewModel: ObservableObject {
     }
     
     // MARK: - Change Fullname
-     
-     func changeFullname(newFullname: String) async throws {
-         guard let currentUser = currentUser else {
-             print("Current user is nil.")
-             return
-         }
-         
-         do {
-             let updatedUser = User(id: currentUser.id, fullname: newFullname, email: currentUser.email, photoURL: currentUser.photoURL)
-             
-             let encodedUser = try Firestore.Encoder().encode(updatedUser)
-             try await Firestore.firestore().collection("users").document(currentUser.id).setData(encodedUser, merge: true)
-             
-             // Update the local currentUser object after changing fullname
-             self.currentUser?.fullname = newFullname
-             self.objectWillChange.send()
-         } catch {
-             print("Failed to change fullname. Error: \(error.localizedDescription)")
-             throw error
-         }
-     }
+    
+    func changeFullname(newFullname: String) async throws {
+        guard let currentUser = currentUser else {
+            print("Current user is nil.")
+            return
+        }
+        
+        do {
+            let updatedUser = User(id: currentUser.id, fullname: newFullname, email: currentUser.email, photoURL: currentUser.photoURL)
+            
+            let encodedUser = try Firestore.Encoder().encode(updatedUser)
+            try await Firestore.firestore().collection("users").document(currentUser.id).setData(encodedUser, merge: true)
+            self.currentUser?.fullname = newFullname
+            self.objectWillChange.send()
+        } catch {
+            print("Failed to change fullname. Error: \(error.localizedDescription)")
+            throw error
+        }
+    }
     
     // MARK: - Change Email
     
-    func changeEmail(newEmail: String) async throws {
+    func changeEmail(newEmail: String, currentPassword: String) async throws {
         do {
-            try await Auth.auth().currentUser?.updateEmail(to: newEmail)
+            guard let user = Auth.auth().currentUser else { return }
+            let credentials = EmailAuthProvider.credential(withEmail: user.email ?? "", password: currentPassword)
+            try await user.reauthenticate(with: credentials)
+            try await user.sendEmailVerification(beforeUpdatingEmail: newEmail)
+            try await updateFirestoreEmail(newEmail)
             await fetchUser()
         } catch {
             print("Failed to change email. Error: \(error.localizedDescription)")
@@ -163,13 +165,19 @@ class AuthViewModel: ObservableObject {
         }
     }
     
+    func updateFirestoreEmail(_ newEmail: String) async throws {
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+        let userReference = Firestore.firestore().collection("users").document(userId)
+        try await userReference.updateData(["email": newEmail])
+    }
+    
     // MARK: - Change Password
-     
+    
     func changePassword(currentPassword: String, newPassword: String) async throws {
         guard let user = Auth.auth().currentUser else { return }
         
         let credentials = EmailAuthProvider.credential(withEmail: user.email ?? "", password: currentPassword)
-
+        
         do {
             try await user.reauthenticate(with: credentials)
             try await user.updatePassword(to: newPassword)
@@ -189,7 +197,7 @@ class AuthViewModel: ObservableObject {
         try await deleteUserFromFirestore()
         try await user.delete()
     }
-
+    
     private func deleteUserFromFirestore() async throws {
         guard let uid = Auth.auth().currentUser?.uid else {
             throw URLError(.badURL)
@@ -201,5 +209,5 @@ class AuthViewModel: ObservableObject {
             throw error
         }
     }
-
+    
 }

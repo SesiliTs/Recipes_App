@@ -19,7 +19,7 @@ struct ProfileView: View {
     
     @State private var newEmail = ""
     
-    @State private var oldPassword = ""
+    @State private var currentPassword = ""
     @State private var newPassword = ""
         
     //MARK: - Body
@@ -32,22 +32,21 @@ struct ProfileView: View {
                 .ignoresSafeArea()
             
             if let user = viewModel.currentUser {
-                VStack(alignment: .leading, spacing: 30) {
+                VStack(spacing: 40) {
                     AsyncImage(url: URL(string: user.photoURL)) { image in
                         image
                             .resizable()
                             .scaledToFill()
-                            .frame(width: 200, height: 200)
+                            .frame(width: 150, height: 150)
                             .clipShape(Circle())
                     } placeholder: {
                         Image(systemName: "photo.circle")
                             .resizable()
                             .scaledToFill()
-                            .frame(width: 200, height: 200)
                             .foregroundStyle(.gray)
-                            .clipShape(Circle())
+                            .opacity(0.5)
                     }
-                    .frame(width: 200, height: 200)
+                    .frame(width: 150, height: 150)
                     .clipShape(Circle())
                     .padding(.top, 80)
                     
@@ -59,7 +58,7 @@ struct ProfileView: View {
                     } else {
                         HStack(alignment: .center, spacing: 20) {
                             
-                            Image(systemName: "person")
+                            Image(systemName: "envelope")
                                 .font(.system(size: 14))
                                 .foregroundStyle(Color(ColorManager.shared.textGrayColor))
                             
@@ -83,7 +82,7 @@ struct ProfileView: View {
                         passwordEditingView
                     } else {
                         HStack(alignment: .center, spacing: 20) {
-                            Image(systemName: "lock.square")
+                            Image(systemName: "lock.rectangle")
                                 .font(.system(size: 14))
                                 .foregroundStyle(Color(ColorManager.shared.textGrayColor))
                             
@@ -135,17 +134,26 @@ struct ProfileView: View {
     
     private var emailEditingView: some View {
         HStack {
-            TextField("შეიყვანე ახალი მეილი", text: $newEmail)
-                .padding(.horizontal)
-                .font(Font(FontManager.shared.bodyFont ?? .systemFont(ofSize: 14)))
-                .autocorrectionDisabled()
-                .textInputAutocapitalization(.never)
+            VStack(alignment: .leading, spacing: 20) {
+                TextField("შეიყვანე ახალი მეილი", text: $newEmail)
+                    .padding(.horizontal)
+                    .font(Font(FontManager.shared.bodyFont ?? .systemFont(ofSize: 14)))
+                    .autocorrectionDisabled()
+                    .textInputAutocapitalization(.never)
+                SecureField("შეიყვანე პაროლი", text: $currentPassword)
+                    .padding(.horizontal)
+                    .font(Font(FontManager.shared.bodyFont ?? .systemFont(ofSize: 14)))
+                    .autocorrectionDisabled()
+                    .textInputAutocapitalization(.never)
+            }
             
             Button(action: {
                 Task {
                     do {
-                        try await viewModel.changeEmail(newEmail: newEmail)
+                        try await viewModel.changeEmail(newEmail: newEmail, currentPassword: currentPassword)
                         isEditingEmail.toggle()
+                        currentPassword = ""
+                        newEmail = ""
                     } catch {
                         print(error)
                     }
@@ -153,15 +161,17 @@ struct ProfileView: View {
             }, label: {
                 Image(systemName: "checkmark")
                     .foregroundColor(Color(ColorManager.shared.primaryColor))
-                    .padding(.trailing, 10)
+                    .font(.system(size: 14))
             })
             
             Button(action: {
                 isEditingEmail.toggle()
+                currentPassword = ""
+                newEmail = ""
             }, label: {
                 Image(systemName: "xmark")
                     .foregroundColor(Color(ColorManager.shared.primaryColor))
-                    .padding(.trailing, 10)
+                    .font(.system(size: 14))
             })
         }
     }
@@ -169,7 +179,7 @@ struct ProfileView: View {
     private var passwordEditingView: some View {
         HStack {
             VStack(alignment: .leading, spacing: 20) {
-                SecureField("შეიყვანე ძველი პაროლი", text: $oldPassword)
+                SecureField("შეიყვანე ძველი პაროლი", text: $currentPassword)
                     .padding(.horizontal)
                     .font(Font(FontManager.shared.bodyFont ?? .systemFont(ofSize: 14)))
                     .autocorrectionDisabled()
@@ -185,22 +195,22 @@ struct ProfileView: View {
             Button(action: {
                 Task {
                     do {
-                        try await viewModel.changePassword(currentPassword: oldPassword, newPassword: newPassword)
+                        try await viewModel.changePassword(currentPassword: currentPassword, newPassword: newPassword)
                         print("Password changed successfully after reauthentication.")
                         isEditingPassword.toggle()
-                        oldPassword = ""
+                        currentPassword = ""
                         newPassword = ""
                     } catch {
                         viewModel.showAlert = true
                         viewModel.alertMessage = "პაროლის შეცვლა ვერ მოხერხდა, გთხოვთ სცადოთ თავიდან"
-                        oldPassword = ""
+                        currentPassword = ""
                         newPassword = ""
                     }
                 }
             }, label: {
                 Image(systemName: "checkmark")
                     .foregroundColor(Color(ColorManager.shared.primaryColor))
-                    .padding(.trailing, 10)
+                    .font(.system(size: 14))
             })
             .alert(isPresented: $viewModel.showAlert) {
                 Alert(
@@ -212,10 +222,12 @@ struct ProfileView: View {
             
             Button(action: {
                 isEditingPassword.toggle()
+                currentPassword = ""
+                newPassword = ""
             }, label: {
                 Image(systemName: "xmark")
                     .foregroundColor(Color(ColorManager.shared.primaryColor))
-                    .padding(.trailing, 10)
+                    .font(.system(size: 14))
             })
         }
     }
