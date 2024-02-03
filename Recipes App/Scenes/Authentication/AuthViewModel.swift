@@ -23,7 +23,10 @@ class AuthViewModel: ObservableObject {
     @Published var currentUser: User?
     
     @Published var showAlert = false
+    @Published var showSuccessAlert = false
     @Published var alertMessage = ""
+    
+    var credential: AuthCredential?
     
     let storage: Storage
     
@@ -95,7 +98,7 @@ class AuthViewModel: ObservableObject {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         let ref = Storage.storage().reference(withPath: "\(uid)/profile/profile_image")
         
-        guard let imageData = image?.jpegData(compressionQuality: 0.5) else { return }
+        guard let imageData = image?.jpegData(compressionQuality: 0.1) else { return }
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpeg"
         
@@ -119,4 +122,106 @@ class AuthViewModel: ObservableObject {
             }
         }
     }
+    
+    func changeImage(image: UIImage?) {
+        persistImageToStorage(image: image)
+        Task {
+            await fetchUser()
+        }
+    }
+    
+    // MARK: - Change Fullname
+    
+    func changeFullname(newFullname: String) async throws {
+        guard let currentUser = currentUser else {
+            print("Current user is nil.")
+            return
+        }
+        
+        do {
+            let updatedUser = User(id: currentUser.id, fullname: newFullname, email: currentUser.email, photoURL: currentUser.photoURL)
+            
+            let encodedUser = try Firestore.Encoder().encode(updatedUser)
+            try await Firestore.firestore().collection("users").document(currentUser.id).setData(encodedUser, merge: true)
+            self.currentUser?.fullname = newFullname
+            self.objectWillChange.send()
+        } catch {
+            print("Failed to change fullname. Error: \(error.localizedDescription)")
+            throw error
+        }
+    }
+    
+    // MARK: - Change Email
+    
+    func changeEmail(newEmail: String, currentPassword: String) async throws {
+        do {
+            guard let user = Auth.auth().currentUser else { return }
+            let credentials = EmailAuthProvider.credential(withEmail: user.email ?? "", password: currentPassword)
+            try await user.reauthenticate(with: credentials)
+            try await user.sendEmailVerification(beforeUpdatingEmail: newEmail)
+            try await updateFirestoreEmail(newEmail)
+            await fetchUser()
+        } catch {
+            print("Failed to change email. Error: \(error.localizedDescription)")
+            throw error
+        }
+    }
+    
+    func updateFirestoreEmail(_ newEmail: String) async throws {
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+        let userReference = Firestore.firestore().collection("users").document(userId)
+        try await userReference.updateData(["email": newEmail])
+    }
+    
+    // MARK: - Change Password
+    
+    func changePassword(currentPassword: String, newPassword: String) async throws {
+        guard let user = Auth.auth().currentUser else { return }
+        
+        let credentials = EmailAuthProvider.credential(withEmail: user.email ?? "", password: currentPassword)
+        
+        do {
+            try await user.reauthenticate(with: credentials)
+            try await user.updatePassword(to: newPassword)
+            self.showSuccessAlert = true
+        } catch {
+            print("Failed to reauthenticate or change password. Error: \(error.localizedDescription)")
+            throw error
+        }
+    }
+    
+    //MARK: - Delete User Account
+    
+    func deleteUser(password: String) async throws {
+        guard let user = Auth.auth().currentUser else {
+            throw URLError(.badURL)
+        }
+        
+        do {
+            let credential = EmailAuthProvider.credential(withEmail: user.email!, password: password)
+            try await user.reauthenticate(with: credential)
+            
+            try await deleteUserFromFirestore()
+            try await user.delete()
+            userSession = nil
+            currentUser = nil
+
+        } catch {
+            print("Failed to reauthenticate or delete user account. Error: \(error.localizedDescription)")
+            throw error
+        }
+    }
+    
+    private func deleteUserFromFirestore() async throws {
+        guard let uid = Auth.auth().currentUser?.uid else {
+            throw URLError(.badURL)
+        }
+        do {
+            try await Firestore.firestore().collection("users").document(uid).delete()
+        } catch {
+            print("Failed to delete user data from Firestore. Error: \(error.localizedDescription)")
+            throw error
+        }
+    }
+    
 }
