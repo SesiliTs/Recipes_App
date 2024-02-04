@@ -10,6 +10,8 @@ import Firebase
 
 final class FavouriteRecipesPageViewController: UIViewController {
     
+    private let viewModel = FavouriteRecipesViewModel()
+    
     var currentUser = Auth.auth().currentUser
     
     //MARK: - Properties
@@ -23,8 +25,7 @@ final class FavouriteRecipesPageViewController: UIViewController {
     
     private let recipeSearchBar = RecipeSearchBar()
     
-    private let listComponent = RecipesListComponentView(recipes: mockRecipes)
-    
+    private let listComponent = RecipesListComponentView(recipes: [])
     
     private lazy var mainStackView = {
         let stackView = UIStackView(arrangedSubviews: [headlineLabel, recipeSearchBar, listComponent])
@@ -41,6 +42,7 @@ final class FavouriteRecipesPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         checkLoggedUser()
+        loadLikedRecipes()
     }
     
     //MARK: - Change view according to user's login state
@@ -51,6 +53,14 @@ final class FavouriteRecipesPageViewController: UIViewController {
                 self?.userIsLoggedIn()
             } else {
                 self?.userIsLoggedOut()
+            }
+        }
+    }
+    
+    private func loadLikedRecipes() {
+        viewModel.fetchLikedRecipes { [weak self] recipes in
+            if let recipes = recipes {
+                self?.listComponent.configure(recipes: recipes)
             }
         }
     }
@@ -104,6 +114,14 @@ final class FavouriteRecipesPageViewController: UIViewController {
             let detailsViewController = RecipeDetailsPageViewController()
             detailsViewController.selectedRecipe = selectedRecipe
             self?.navigationController?.pushViewController(detailsViewController, animated: true)
+        }
+    }
+    
+    private func reloadLikedRecipes() {
+        viewModel.fetchLikedRecipes { [weak self] recipes in
+            if let recipes = recipes {
+                self?.listComponent.configure(recipes: recipes)
+            }
         }
     }
     
