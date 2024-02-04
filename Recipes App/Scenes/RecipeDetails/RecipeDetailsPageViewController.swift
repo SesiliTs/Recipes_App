@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import FirebaseAuth
 
 final class RecipeDetailsPageViewController: UIViewController {
     
@@ -254,17 +253,7 @@ final class RecipeDetailsPageViewController: UIViewController {
     //MARK: - Setup Heart Button
     
     private func setupHeartButton() {
-        Auth.auth().addStateDidChangeListener { [weak self] (_, user) in
-            if let _ = user {
-                self?.heartButton.setImage(self?.viewModel?.heartButtonImage, for: .normal)
-                self?.heartButton.addAction((UIAction(handler: { [self] _ in
-                    self?.viewModel?.handleHeartButtonClick()
-                    self?.heartButton.setImage(self?.viewModel?.heartButtonImage, for: .normal)
-                })), for: .touchUpInside)
-            } else {
-                self?.heartButton.isHidden = true
-            }
-        }
+        viewModel?.setupButton(button: heartButton)
     }
 
     

@@ -256,8 +256,10 @@ struct AddRecipeView: View {
         
         let timeInt = Int(time) ?? 0
         let portionInt = Int(portion) ?? 0
+        
+        let idString = UUID().uuidString
     
-        let recipeData = RecipeData(name: recipeName, image: "https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png", time: timeInt, portion: portionInt, difficulty: difficulty ?? .easy, ingredients: viewModel.ingredientsList, recipe: recipeDetails, isLiked: false, category: selectedCategory)
+        let recipeData = RecipeData(id: idString, name: recipeName, image: "https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png", time: timeInt, portion: portionInt, difficulty: difficulty ?? .easy, ingredients: viewModel.ingredientsList, recipe: recipeDetails, isLiked: false, category: selectedCategory)
         
         do {
             try await viewModel.updateRecipeData(recipeData: recipeData, image: image)

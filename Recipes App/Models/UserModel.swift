@@ -13,5 +13,5 @@ struct User: Identifiable, Codable {
     var email: String
     var photoURL: String
     let recipes: [RecipeData]?
-    let likedRecipes: [RecipeData]?
+    let likedRecipes: [String]?
 }
