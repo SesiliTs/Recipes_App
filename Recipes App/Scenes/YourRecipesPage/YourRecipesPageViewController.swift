@@ -7,6 +7,7 @@
 
 import UIKit
 import SwiftUI
+import FirebaseAuth
 
 final class YourRecipesPageViewController: UIViewController {
     
@@ -21,10 +22,7 @@ final class YourRecipesPageViewController: UIViewController {
         return label
     }()
     
-    private let recipeSearchBar: RecipeSearchBar = {
-        let searchBar = RecipeSearchBar()
-        return searchBar
-    }()
+    private let recipeSearchBar = RecipeSearchBar()
     
     private lazy var listComponent = RecipesListComponentView(recipes: viewModel.userRecipes)
     
@@ -32,7 +30,7 @@ final class YourRecipesPageViewController: UIViewController {
         let stackView = UIStackView(arrangedSubviews: [headlineLabel, recipeSearchBar, listComponent])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.spacing = 35
+        stackView.spacing = 20
         return stackView
     }()
     
@@ -46,17 +44,54 @@ final class YourRecipesPageViewController: UIViewController {
         return button
     }()
     
+    private lazy var loginRequiredView = LoginRequiredView(navigationController: self.navigationController)
+    
     //MARK: - ViewLifeCycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        checkLoggedUser()
+    }
+    
+    //MARK: - Change view according to user's login state
+    
+    private func checkLoggedUser() {
+        Auth.auth().addStateDidChangeListener { [weak self] (_, user) in
+            if let _ = user {
+                self?.userIsLoggedIn()
+            } else {
+                self?.userIsLoggedOut()
+            }
+        }
+    }
+    
+    private func userIsLoggedIn() {
+        loginRequiredView.isHidden = true
+        mainStackView.isHidden = false
+        plusButton.isHidden = false
         setupUI()
         setupNavigation()
         addDelegate()
-        
         Task {
             await fetchRecipes()
         }
+    }
+    
+    private func userIsLoggedOut() {
+        view.backgroundColor = ColorManager.shared.backgroundColor
+        view.addSubview(loginRequiredView)
+
+        mainStackView.isHidden = true
+        plusButton.isHidden = true
+        loginRequiredView.isHidden = false
+        
+        loginRequiredView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            loginRequiredView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            loginRequiredView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            loginRequiredView.topAnchor.constraint(equalTo: view.topAnchor),
+            loginRequiredView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
     
     //MARK: - Setup UI
@@ -72,14 +107,14 @@ final class YourRecipesPageViewController: UIViewController {
     
     private func addConstraints() {
         NSLayoutConstraint.activate([
-            mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 35),
-            mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -35),
+            mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             mainStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 80),
             mainStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10),
             
             plusButton.widthAnchor.constraint(equalToConstant: 50),
             plusButton.heightAnchor.constraint(equalToConstant: 50),
-            plusButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            plusButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             plusButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100)
             
         ])
@@ -118,9 +153,7 @@ final class YourRecipesPageViewController: UIViewController {
             rootView: AddRecipeView(dismissAction: {
                 Task {
                     await self.fetchRecipes()
-                    DispatchQueue.main.async {
-                        self.dismiss(animated: true)
-                    }
+                    self.dismiss(animated: true)
                 }
             })
         )

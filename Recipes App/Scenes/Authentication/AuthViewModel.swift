@@ -35,9 +35,16 @@ class AuthViewModel: ObservableObject {
     init() {
         self.userSession = Auth.auth().currentUser
         self.storage = Storage.storage()
+        checkLoggedUser()
         
         Task {
             await fetchUser()
+        }
+    }
+    
+    private func checkLoggedUser() {
+        Auth.auth().addStateDidChangeListener { _, user in
+            self.userSession = user
         }
     }
     

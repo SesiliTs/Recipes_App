@@ -31,7 +31,7 @@ struct RegistrationView: View {
                 
                 Text("რეგისტრაცია".uppercased())
                     .font(Font(FontManager.shared.headlineFont ?? .systemFont(ofSize: 12)))
-                    .padding(.top, 30)
+                    .padding(.top, 20)
                 imagePickerView
                 TextFieldComponentView(text: $name,
                                        imageSystemName: "person",
@@ -76,7 +76,7 @@ struct RegistrationView: View {
                 })
                 Spacer()
             }
-            .padding(.horizontal, 35)
+            .padding(.horizontal, 16)
             .navigationViewStyle(StackNavigationViewStyle())
             .fullScreenCover(isPresented: $shouldShowImagePicker, onDismiss: nil) {
                 ImagePicker(image: $image)

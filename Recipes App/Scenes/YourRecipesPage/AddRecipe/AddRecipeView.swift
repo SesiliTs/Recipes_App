@@ -61,7 +61,7 @@ struct AddRecipeView: View {
                     .opacity(isValid ? 1.0 : 0.6)
                     
                 }
-                .padding(.all, 35)
+                .padding(.all, 16)
                 .fullScreenCover(isPresented: $shouldShowImagePicker, onDismiss: nil) {
                     ImagePicker(image: $image)
                         .ignoresSafeArea()

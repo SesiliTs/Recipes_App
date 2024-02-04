@@ -14,6 +14,7 @@ struct LoginView: View {
     @State private var email = ""
     @State private var password = ""
     @EnvironmentObject var viewModel: AuthViewModel
+    @Environment(\.dismiss) var dismiss
     
     //MARK: - Body
     
@@ -43,7 +44,10 @@ struct LoginView: View {
                     
                     ButtonComponentView(text: "შესვლა") {
                         Task {
-                            try await viewModel.signIn(email: email, password: password)
+                            do {
+                                try await viewModel.signIn(email: email, password: password)
+                                dismiss()
+                            }
                         }
                     }
                     .disabled(!isValid)
@@ -61,7 +65,7 @@ struct LoginView: View {
                             .foregroundStyle(Color(ColorManager.shared.primaryColor))
                     }
                 }
-                .padding(35)
+                .padding(16)
             }
         }
     }

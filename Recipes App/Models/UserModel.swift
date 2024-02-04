@@ -14,5 +14,3 @@ struct User: Identifiable, Codable {
     var photoURL: String
     let recipes: [RecipeData]?
 }
-
-let mockUser = User(id: UUID().uuidString, fullname: "სესილი წიქარიძე", email: "sesili@gmail.com", photoURL: "", recipes: [])

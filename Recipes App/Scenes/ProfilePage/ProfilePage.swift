@@ -14,6 +14,7 @@ struct ProfilePage: View {
         Group {
             if viewModel.userSession != nil {
                 ProfileView()
+                    .environmentObject(AuthViewModel())
             } else {
                 LoginView()
             }
