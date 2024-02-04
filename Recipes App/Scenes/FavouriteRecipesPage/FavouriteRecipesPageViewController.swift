@@ -45,6 +45,30 @@ final class FavouriteRecipesPageViewController: UIViewController {
         loadLikedRecipes()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        startListeningLikedRecipesChanges()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        stopListeningLikedRecipesChanges()
+    }
+
+    //MARK: - Listen to changes in liked recipes
+    
+    private func startListeningLikedRecipesChanges() {
+        viewModel.startListeningLikedRecipesChanges { [weak self] recipes in
+            if let recipes = recipes {
+                self?.listComponent.configure(recipes: recipes)
+            }
+        }
+    }
+
+    private func stopListeningLikedRecipesChanges() {
+        viewModel.stopListeningLikedRecipesChanges()
+    }
+    
     //MARK: - Change view according to user's login state
     
     private func checkLoggedUser() {
