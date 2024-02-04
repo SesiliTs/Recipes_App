@@ -6,12 +6,13 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 final class RecipeDetailsPageViewController: UIViewController {
     
     var selectedRecipe: RecipeData?
     var viewModel: RecipeDetailsViewModel?
-
+    
     //MARK: - Properties
     
     private let scrollView = {
@@ -202,7 +203,7 @@ final class RecipeDetailsPageViewController: UIViewController {
         viewModel = RecipeDetailsViewModel(recipe: selectedRecipe ?? mockRecipes[0])
     }
     
-
+    
     //MARK: - Add Views
     
     private func addViews() {
@@ -233,7 +234,7 @@ final class RecipeDetailsPageViewController: UIViewController {
         mainStackView.setCustomSpacing(20, after: ingredientsLabel)
         mainStackView.setCustomSpacing(20, after: rulesLabel)
     }
-
+    
     
     //MARK: - Setup ScrollView
     
@@ -253,11 +254,17 @@ final class RecipeDetailsPageViewController: UIViewController {
     //MARK: - Setup Heart Button
     
     private func setupHeartButton() {
-        heartButton.setImage(viewModel?.heartButtonImage, for: .normal)
-        heartButton.addAction((UIAction(handler: { [self] _ in
-            viewModel?.handleHeartButtonClick()
-            heartButton.setImage(viewModel?.heartButtonImage, for: .normal)
-        })), for: .touchUpInside)
+        Auth.auth().addStateDidChangeListener { [weak self] (_, user) in
+            if let _ = user {
+                self?.heartButton.setImage(self?.viewModel?.heartButtonImage, for: .normal)
+                self?.heartButton.addAction((UIAction(handler: { [self] _ in
+                    self?.viewModel?.handleHeartButtonClick()
+                    self?.heartButton.setImage(self?.viewModel?.heartButtonImage, for: .normal)
+                })), for: .touchUpInside)
+            } else {
+                self?.heartButton.isHidden = true
+            }
+        }
     }
 
     
@@ -323,7 +330,7 @@ final class RecipeDetailsPageViewController: UIViewController {
     private func setupUI() {
         navigationController?.isNavigationBarHidden = true
         view.backgroundColor = ColorManager.shared.backgroundColor
-
+        
         nameLabel.text = selectedRecipe?.name.uppercased()
         imageView.load(urlString: selectedRecipe?.image ?? "")
         timeLabel.text = "მომზადების დრო: \(selectedRecipe?.time ?? 0) წთ"
