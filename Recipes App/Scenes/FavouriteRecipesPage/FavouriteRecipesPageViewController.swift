@@ -162,12 +162,13 @@ final class FavouriteRecipesPageViewController: UIViewController {
 extension FavouriteRecipesPageViewController: RecipeSearchBarDelegate {
     func didChangeSearchQuery(_ query: String?) {
         if let query = query, !query.isEmpty {
-            let filteredRecipes = mockRecipes.filter { $0.name.lowercased().contains(query.lowercased()) }
-            listComponent.configure(recipes: filteredRecipes)
-            headlineLabel.text = "ძიების შედეგები: ".uppercased()
+            viewModel.fetchLikedRecipes { [weak self] recipes in
+                let filteredRecipes = recipes?.filter { $0.name.lowercased().contains(query.lowercased()) } ?? []
+                self?.listComponent.configure(recipes: filteredRecipes)
+                self?.headlineLabel.text = "ძიების შედეგები: ".uppercased()
+            }
         } else {
-            listComponent.configure(recipes: mockRecipes)
-            headlineLabel.text = "შენახული რეცეპტები".uppercased()
+            reloadLikedRecipes()
         }
     }
 }
