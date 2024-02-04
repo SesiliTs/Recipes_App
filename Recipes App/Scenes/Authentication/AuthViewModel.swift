@@ -146,7 +146,7 @@ class AuthViewModel: ObservableObject {
         }
         
         do {
-            let updatedUser = User(id: currentUser.id, fullname: newFullname, email: currentUser.email, photoURL: currentUser.photoURL)
+            let updatedUser = User(id: currentUser.id, fullname: newFullname, email: currentUser.email, photoURL: currentUser.photoURL, recipes: currentUser.recipes)
             
             let encodedUser = try Firestore.Encoder().encode(updatedUser)
             try await Firestore.firestore().collection("users").document(currentUser.id).setData(encodedUser, merge: true)
