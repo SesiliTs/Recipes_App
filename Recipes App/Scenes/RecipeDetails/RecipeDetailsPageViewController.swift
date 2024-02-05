@@ -11,6 +11,7 @@ final class RecipeDetailsPageViewController: UIViewController {
     
     var selectedRecipe: RecipeData?
     var viewModel: RecipeDetailsViewModel?
+    private let recipes = FireStoreManager.shared.allRecipes
     
     //MARK: - Properties
     
@@ -199,7 +200,7 @@ final class RecipeDetailsPageViewController: UIViewController {
     //MARK: - init viewModel
     
     private func initViewModel() {
-        viewModel = RecipeDetailsViewModel(recipe: selectedRecipe ?? mockRecipes[0])
+        viewModel = RecipeDetailsViewModel(recipe: selectedRecipe ?? recipes[0])
     }
     
     
