@@ -20,6 +20,7 @@ final class RecipeSearchBar: UIView, UITextFieldDelegate {
     private let textField: UITextField = {
         let textField = PaddedSearchIcon()
         textField.placeholder = "მოძებნე რეცეპტი..."
+        textField.clearButtonMode = .whileEditing
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
@@ -66,6 +67,11 @@ final class RecipeSearchBar: UIView, UITextFieldDelegate {
     
     // MARK: - UITextFieldDelegate
     
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        delegate?.didChangeSearchQuery(nil)
+        return true
+    }
+
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentText = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) ?? ""
         delegate?.didChangeSearchQuery(currentText)

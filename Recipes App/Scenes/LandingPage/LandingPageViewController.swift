@@ -178,6 +178,7 @@ final class LandingPageViewController: UIViewController {
         recommendationsCollectionView.delegate = self
         recommendationsCollectionView.backgroundColor = .clear
         registerRecommendationsCell()
+        setupNavigation()
         
         FireStoreManager.shared.fetchAllRecipes { recipes in
             self.recipes = recipes
@@ -230,6 +231,16 @@ final class LandingPageViewController: UIViewController {
     
     private func addDelegate() {
         recipeSearchBar.delegate = self
+    }
+    
+    //MARK: - Navigation
+    
+    private func setupNavigation() {
+        listComponent.didSelectRecipe = { [weak self] selectedRecipe in
+            let detailsViewController = RecipeDetailsPageViewController()
+            detailsViewController.selectedRecipe = selectedRecipe
+            self?.navigationController?.pushViewController(detailsViewController, animated: true)
+        }
     }
     
 }

@@ -7,69 +7,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "CA2BDF02-31B1-45FB-8BF9-E4CF76A10EDE"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Recipes App/Scenes/LandingPage/LandingPageViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39"
-            landmarkName = "LandingPageViewController"
-            landmarkType = "3">
-            <Locations>
-               <Location
-                  uuid = "CA2BDF02-31B1-45FB-8BF9-E4CF76A10EDE - 1ab5e98141f5cd3c"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Recipes_App.LandingPageViewController.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; Recipes_App.LandingPageViewController"
-                  moduleName = "Recipes App"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sesilitsikaridze/Desktop/TBC%20iOS/Recipes%20App/Recipes%20App/Scenes/LandingPage/LandingPageViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "41"
-                  endingLineNumber = "41"
-                  offsetFromSymbolStart = "638">
-               </Location>
-               <Location
-                  uuid = "CA2BDF02-31B1-45FB-8BF9-E4CF76A10EDE - c451807971c69f3b"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Recipes_App.LandingPageViewController.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;Recipes_App.LandingPageViewController&gt;"
-                  moduleName = "Recipes App"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sesilitsikaridze/Desktop/TBC%20iOS/Recipes%20App/Recipes%20App/Scenes/LandingPage/LandingPageViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "41"
-                  endingLineNumber = "41"
-                  offsetFromSymbolStart = "577">
-               </Location>
-               <Location
-                  uuid = "CA2BDF02-31B1-45FB-8BF9-E4CF76A10EDE - d3115d723e024c8a"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Recipes_App.LandingPageViewController.listComponent.getter : Recipes_App.RecipesListComponentView"
-                  moduleName = "Recipes App"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sesilitsikaridze/Desktop/TBC%20iOS/Recipes%20App/Recipes%20App/Scenes/LandingPage/LandingPageViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "41"
-                  endingLineNumber = "41"
-                  offsetFromSymbolStart = "164">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "8B5E9857-974E-4134-9970-574992824EAE"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -77,8 +14,8 @@
             filePath = "Recipes App/Scenes/LandingPage/LandingPageViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "244"
-            endingLineNumber = "244"
+            startingLineNumber = "255"
+            endingLineNumber = "255"
             landmarkName = "collectionView(_:numberOfItemsInSection:)"
             landmarkType = "7">
             <Locations>
@@ -125,8 +62,8 @@
             filePath = "Recipes App/Scenes/LandingPage/LandingPageViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "257"
-            endingLineNumber = "257"
+            startingLineNumber = "268"
+            endingLineNumber = "268"
             landmarkName = "collectionView(_:cellForItemAt:)"
             landmarkType = "7">
             <Locations>
@@ -173,8 +110,8 @@
             filePath = "Recipes App/Scenes/LandingPage/LandingPageViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "266"
-            endingLineNumber = "266"
+            startingLineNumber = "277"
+            endingLineNumber = "277"
             landmarkName = "collectionView(_:didSelectItemAt:)"
             landmarkType = "7">
             <Locations>
