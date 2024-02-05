@@ -163,7 +163,7 @@ extension FavouriteRecipesPageViewController: RecipeSearchBarDelegate {
     func didChangeSearchQuery(_ query: String?) {
         if let query = query, !query.isEmpty {
             viewModel.fetchLikedRecipes { [weak self] recipes in
-                let filteredRecipes = recipes?.filter { $0.name.lowercased().contains(query.lowercased()) } ?? []
+                let filteredRecipes = recipes?.filter { $0.name.contains(query) } ?? []
                 self?.listComponent.configure(recipes: filteredRecipes)
                 self?.headlineLabel.text = "ძიების შედეგები: ".uppercased()
             }

@@ -293,7 +293,7 @@ extension LandingPageViewController: UICollectionViewDelegateFlowLayout {
 extension LandingPageViewController: RecipeSearchBarDelegate {
     func didChangeSearchQuery(_ query: String?) {
         if let query = query, !query.isEmpty {
-            let filteredRecipes = recipes.filter { $0.name.lowercased().contains(query.lowercased()) }
+            let filteredRecipes = recipes.filter { $0.name.contains(query) }
             listComponent.configure(recipes: filteredRecipes)
             toggleUIElements(isHidden: true)
             listComponent.isHidden = false
