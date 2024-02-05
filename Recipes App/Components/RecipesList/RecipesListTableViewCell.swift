@@ -134,6 +134,17 @@ final class RecipesListTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Prepare For Reuse
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        recipeImage.image = nil
+        nameLabel.text = nil
+        timeLabel.text = nil
+        portionLabel.text = nil
+        difficultyLabel.text = nil
+    }
+    
     // MARK: - Private Methods
     
     private func setupUI() {

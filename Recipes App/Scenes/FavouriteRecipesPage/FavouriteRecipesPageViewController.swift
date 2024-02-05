@@ -25,7 +25,7 @@ final class FavouriteRecipesPageViewController: UIViewController {
     
     private let recipeSearchBar = RecipeSearchBar()
     
-    private let listComponent = RecipesListComponentView(recipes: [])
+    private lazy var listComponent = RecipesListComponentView(recipes: viewModel.recipes)
     
     private lazy var mainStackView = {
         let stackView = UIStackView(arrangedSubviews: [headlineLabel, recipeSearchBar, listComponent])

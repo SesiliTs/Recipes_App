@@ -14,8 +14,8 @@ final class FavouriteRecipesViewModel {
     //MARK: - Properties
     
     private var likedRecipesListener: ListenerRegistration?
-    private let recipes = FireStoreManager.shared.allRecipes
-    
+    @Published var recipes = [RecipeData]()
+
     //MARK: - Fetch Liked Recipes
     
     func fetchLikedRecipes(completion: @escaping ([RecipeData]?) -> Void) {
@@ -31,7 +31,7 @@ final class FavouriteRecipesViewModel {
                 completion(nil)
             } else {
                 if let likedRecipesIds = document?.data()?["likedRecipes"] as? [String] {
-                    let likedRecipes = self.recipes.filter { likedRecipesIds.contains($0.id) }
+                    let likedRecipes = FireStoreManager.shared.allRecipes.filter { likedRecipesIds.contains($0.id) }
                     completion(likedRecipes)
                 } else {
                     completion([])
@@ -55,7 +55,7 @@ final class FavouriteRecipesViewModel {
                 completion(nil)
             } else {
                 if let likedRecipesIds = document?.data()?["likedRecipes"] as? [String] {
-                    let likedRecipes = self.recipes.filter { likedRecipesIds.contains($0.id) }
+                    let likedRecipes = FireStoreManager.shared.allRecipes.filter { likedRecipesIds.contains($0.id) }
                     completion(likedRecipes)
                 } else {
                     completion([])
