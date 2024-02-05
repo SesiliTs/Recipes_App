@@ -323,8 +323,20 @@ final class RecipeDetailsPageViewController: UIViewController {
         
         nameLabel.text = selectedRecipe?.name.uppercased()
         imageView.load(urlString: selectedRecipe?.image ?? "")
-        timeLabel.text = "მომზადების დრო: \(selectedRecipe?.time ?? 0) წთ"
         portionLabel.text = "პორცია: \(selectedRecipe?.portion ?? 0)"
+        
+        let hours = (selectedRecipe?.time ?? 0) / 60
+        let minutes = (selectedRecipe?.time ?? 0) % 60
+
+        if hours > 0 {
+            if minutes > 0 {
+                timeLabel.text = "მომზადების დრო: \(hours)სთ \(minutes)წთ"
+            } else {
+                timeLabel.text = "მომზადების დრო: \(hours)სთ"
+            }
+        } else {
+            timeLabel.text = "მომზადების დრო: \(minutes)წთ"
+        }
         
         if let difficulty = selectedRecipe?.difficulty {
             switch difficulty {

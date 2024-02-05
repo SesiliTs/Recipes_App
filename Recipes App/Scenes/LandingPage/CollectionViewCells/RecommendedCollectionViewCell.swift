@@ -9,6 +9,8 @@ import UIKit
 
 final class RecommendedCollectionViewCell: UICollectionViewCell {
     
+    //MARK: - Properties
+    
     private let shapeView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -78,6 +80,7 @@ final class RecommendedCollectionViewCell: UICollectionViewCell {
         return stackView
     }()
     
+    //MARK: - init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -88,6 +91,17 @@ final class RecommendedCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
+    
+    //MARK: - Prepare For Reuse
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.image = nil
+        nameLabel.text = nil
+        timeLabel.text = nil
+    }
+    
+    //MARK: - Private Functions
     
     private func addSubviews() {
         addSubview(mainStack)
@@ -122,11 +136,24 @@ final class RecommendedCollectionViewCell: UICollectionViewCell {
         ])
     }
     
+    //MARK: - Configure
+    
     func configure(with image: String, label: String, time: Int) {
         imageView.load(urlString: image)
         nameLabel.text = label
-        timeLabel.text = "\(time) წთ."
+        
+        let hours = time / 60
+        let minutes = time % 60
+        
+        if hours > 0 {
+            if minutes > 0 {
+                timeLabel.text = "\(hours)სთ \(minutes)წთ"
+            } else {
+                timeLabel.text = "\(hours)სთ"
+            }
+        } else {
+            timeLabel.text = "\(minutes)წთ"
+        }
     }
-    
 }
 

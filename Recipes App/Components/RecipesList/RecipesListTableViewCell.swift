@@ -178,8 +178,20 @@ final class RecipesListTableViewCell: UITableViewCell {
     func configure(recipe: RecipeData?) {
         recipeImage.load(urlString: recipe?.image ?? "")
         nameLabel.text = recipe?.name.uppercased()
-        timeLabel.text = "\(recipe?.time ?? 0) წთ"
         portionLabel.text = "\(recipe?.portion ?? 0) პორცია"
+        
+        let hours = (recipe?.time ?? 0) / 60
+        let minutes = (recipe?.time ?? 0) % 60
+
+        if hours > 0 {
+            if minutes > 0 {
+                timeLabel.text = "\(hours)სთ \(minutes)წთ"
+            } else {
+                timeLabel.text = "\(hours)სთ"
+            }
+        } else {
+            timeLabel.text = "\(minutes)წთ"
+        }
         
         if let difficulty = recipe?.difficulty {
             switch difficulty {
