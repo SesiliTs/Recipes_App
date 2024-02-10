@@ -7,8 +7,17 @@
 
 import UIKit
 
+protocol RecipeCollectionViewCellDelegate: AnyObject {
+    func didDeleteRecipe(cell: RecipeCollectionViewCell)
+}
+
 final class RecipeCollectionViewCell: UICollectionViewCell {
+    
     //MARK: - Properties
+    
+    var viewModel = YourRecipesViewModel()
+    weak var delegate: RecipeCollectionViewCellDelegate?
+    var recipe: RecipeData?
     
     private let containerView: UIView = {
         let view = UIView()
@@ -131,6 +140,7 @@ final class RecipeCollectionViewCell: UICollectionViewCell {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(systemName: "minus.circle.fill"), for: .normal)
         button.tintColor = ColorManager.shared.primaryColor
+        button.isUserInteractionEnabled = true
         return button
     }()
     
@@ -154,6 +164,7 @@ final class RecipeCollectionViewCell: UICollectionViewCell {
         timeLabel.text = nil
         portionLabel.text = nil
         difficultyLabel.text = nil
+        trashButton.removeTarget(nil, action: nil, for: .allEvents)
     }
     
     // MARK: - Private Methods
@@ -162,14 +173,14 @@ final class RecipeCollectionViewCell: UICollectionViewCell {
         backgroundColor = .clear
         addViews()
         addConstraints()
+        trashButtonAction()
     }
     
     private func addViews() {
         contentView.addSubview(containerView)
         containerView.addSubview(mainStackView)
         labelsVerticalStack.setCustomSpacing(15, after: nameLabel)
-        recipeImage.addSubview(trashButton)
-    }
+        contentView.addSubview(trashButton)    }
     
     private func addConstraints() {
         NSLayoutConstraint.activate([
@@ -182,8 +193,8 @@ final class RecipeCollectionViewCell: UICollectionViewCell {
             recipeImage.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor),
             recipeImage.topAnchor.constraint(equalTo: mainStackView.topAnchor),
             
-            trashButton.topAnchor.constraint(equalTo: recipeImage.topAnchor, constant: 7),
-            trashButton.trailingAnchor.constraint(equalTo: recipeImage.trailingAnchor, constant: -7),
+            trashButton.topAnchor.constraint(equalTo: topAnchor, constant: 30),
+            trashButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
             
             labelsHorizontalStack.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor),
             
@@ -191,6 +202,15 @@ final class RecipeCollectionViewCell: UICollectionViewCell {
             mainStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -10),
             mainStackView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 10)
         ])
+    }
+    
+    func trashButtonAction() {
+        trashButton.addAction(UIAction { [self] _ in
+            if let recipe = self.recipe {
+                self.viewModel.deleteRecipe(recipeId: recipe.id)
+                self.delegate?.didDeleteRecipe(cell: self)
+            }
+        }, for: .touchUpInside)
     }
     
     //MARK: - Configure

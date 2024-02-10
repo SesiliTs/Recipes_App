@@ -178,6 +178,8 @@ extension YourRecipesPageViewController: UICollectionViewDataSource, UICollectio
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RecipeCell", for: indexPath) as! RecipeCollectionViewCell
         let recipe = viewModel.userRecipes[indexPath.item]
+        cell.recipe = recipe
+        cell.delegate = self
         cell.configure(recipe: recipe)
         return cell
     }
@@ -194,6 +196,14 @@ extension YourRecipesPageViewController: UICollectionViewDataSource, UICollectio
         let detailsViewController = RecipeDetailsPageViewController()
         detailsViewController.selectedRecipe = currentRecipe
         navigationController?.pushViewController(detailsViewController, animated: true)
+    }
+}
+
+extension YourRecipesPageViewController: RecipeCollectionViewCellDelegate {
+    func didDeleteRecipe(cell: RecipeCollectionViewCell) {
+        guard let indexPath = collectionView.indexPath(for: cell) else { return }
+        viewModel.userRecipes.remove(at: indexPath.item)
+        collectionView.deleteItems(at: [indexPath])
     }
 }
 
