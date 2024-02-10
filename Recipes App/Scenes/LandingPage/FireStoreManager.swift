@@ -15,7 +15,6 @@ final class FireStoreManager {
     private init() {
         fetchAllRecipes { recipes in
             self.allRecipes = recipes
-            print(self.allRecipes.count)
         }
     }
 

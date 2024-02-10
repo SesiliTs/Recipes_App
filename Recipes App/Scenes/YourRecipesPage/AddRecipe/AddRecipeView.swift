@@ -211,9 +211,9 @@ struct AddRecipeView: View {
                     Button(action: {
                         viewModel.removeIngredient(item: item)
                     }) {
-                        Image(systemName: "xmark.bin")
+                        Image(systemName: "minus.circle")
                             .font(.system(size: 15))
-                            .foregroundColor(Color(ColorManager.shared.textGrayColor))
+                            .foregroundStyle(Color(ColorManager.shared.primaryColor))
                     }
                 }
                 Rectangle()
