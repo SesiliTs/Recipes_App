@@ -10,6 +10,8 @@ import Firebase
 
 final class FavouriteRecipesPageViewController: UIViewController {
     
+    private let viewModel = FavouriteRecipesViewModel()
+    
     var currentUser = Auth.auth().currentUser
     
     //MARK: - Properties
@@ -23,8 +25,7 @@ final class FavouriteRecipesPageViewController: UIViewController {
     
     private let recipeSearchBar = RecipeSearchBar()
     
-    private let listComponent = RecipesListComponentView(recipes: mockRecipes)
-    
+    private lazy var listComponent = RecipesListComponentView(recipes: viewModel.recipes)
     
     private lazy var mainStackView = {
         let stackView = UIStackView(arrangedSubviews: [headlineLabel, recipeSearchBar, listComponent])
@@ -41,6 +42,31 @@ final class FavouriteRecipesPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         checkLoggedUser()
+        loadLikedRecipes()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        startListeningLikedRecipesChanges()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        stopListeningLikedRecipesChanges()
+    }
+
+    //MARK: - Listen to changes in liked recipes
+    
+    private func startListeningLikedRecipesChanges() {
+        viewModel.startListeningLikedRecipesChanges { [weak self] recipes in
+            if let recipes = recipes {
+                self?.listComponent.configure(recipes: recipes)
+            }
+        }
+    }
+
+    private func stopListeningLikedRecipesChanges() {
+        viewModel.stopListeningLikedRecipesChanges()
     }
     
     //MARK: - Change view according to user's login state
@@ -51,6 +77,14 @@ final class FavouriteRecipesPageViewController: UIViewController {
                 self?.userIsLoggedIn()
             } else {
                 self?.userIsLoggedOut()
+            }
+        }
+    }
+    
+    private func loadLikedRecipes() {
+        viewModel.fetchLikedRecipes { [weak self] recipes in
+            if let recipes = recipes {
+                self?.listComponent.configure(recipes: recipes)
             }
         }
     }
@@ -107,6 +141,14 @@ final class FavouriteRecipesPageViewController: UIViewController {
         }
     }
     
+    private func reloadLikedRecipes() {
+        viewModel.fetchLikedRecipes { [weak self] recipes in
+            if let recipes = recipes {
+                self?.listComponent.configure(recipes: recipes)
+            }
+        }
+    }
+    
     //MARK: - Delegate
     
     private func addDelegate() {
@@ -120,12 +162,13 @@ final class FavouriteRecipesPageViewController: UIViewController {
 extension FavouriteRecipesPageViewController: RecipeSearchBarDelegate {
     func didChangeSearchQuery(_ query: String?) {
         if let query = query, !query.isEmpty {
-            let filteredRecipes = mockRecipes.filter { $0.name.lowercased().contains(query.lowercased()) }
-            listComponent.configure(recipes: filteredRecipes)
-            headlineLabel.text = "ძიების შედეგები: ".uppercased()
+            viewModel.fetchLikedRecipes { [weak self] recipes in
+                let filteredRecipes = recipes?.filter { $0.name.contains(query) } ?? []
+                self?.listComponent.configure(recipes: filteredRecipes)
+                self?.headlineLabel.text = "ძიების შედეგები: ".uppercased()
+            }
         } else {
-            listComponent.configure(recipes: mockRecipes)
-            headlineLabel.text = "შენახული რეცეპტები".uppercased()
+            reloadLikedRecipes()
         }
     }
 }

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		0B018A192B666D8F007FD344 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 0B018A182B666D8F007FD344 /* FirebaseStorage */; };
 		0B5539A52B69172400B235E7 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5539A42B69172400B235E7 /* TabBarController.swift */; };
+		0B70FE622B7009A0009B1FDC /* FavouriteRecipesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B70FE612B7009A0009B1FDC /* FavouriteRecipesViewModel.swift */; };
+		0B70FE642B70F9CA009B1FDC /* FireStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B70FE632B70F9CA009B1FDC /* FireStoreManager.swift */; };
 		0B85A57A2B66C5D500B06DAE /* AddRecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B85A5792B66C5D500B06DAE /* AddRecipeView.swift */; };
 		0B85A57C2B66E0C600B06DAE /* DifficultyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B85A57B2B66E0C600B06DAE /* DifficultyButton.swift */; };
 		0B85A57F2B66F18E00B06DAE /* AddRecipeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B85A57E2B66F18E00B06DAE /* AddRecipeViewModel.swift */; };
@@ -39,6 +41,8 @@
 		0BBCC9822B5BE365001C198D /* FavouriteRecipesPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBCC9812B5BE365001C198D /* FavouriteRecipesPageViewController.swift */; };
 		0BBCC9872B5D34A9001C198D /* RecipeDetailsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBCC9862B5D34A9001C198D /* RecipeDetailsPageViewController.swift */; };
 		0BBCC98A2B5D576B001C198D /* IngredientTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBCC9892B5D576B001C198D /* IngredientTableViewCell.swift */; };
+		0BC33B422B77DDEE002A7114 /* RecipeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BC33B412B77DDEE002A7114 /* RecipeCollectionViewCell.swift */; };
+		0BC33B452B780121002A7114 /* YourRecipesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BC33B442B780121002A7114 /* YourRecipesViewModel.swift */; };
 		0BD457682B6421150074FC00 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 0BD457672B6421150074FC00 /* FirebaseFirestore */; };
 		0BD4576A2B66578D0074FC00 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD457692B66578D0074FC00 /* ImagePicker.swift */; };
 		0BE1BC912B5EB1BB00873512 /* RecipesListComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE1BC902B5EB1BB00873512 /* RecipesListComponentView.swift */; };
@@ -58,6 +62,8 @@
 
 /* Begin PBXFileReference section */
 		0B5539A42B69172400B235E7 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TabBarController.swift; path = "Recipes App/TabBar/TabBarController.swift"; sourceTree = SOURCE_ROOT; };
+		0B70FE612B7009A0009B1FDC /* FavouriteRecipesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteRecipesViewModel.swift; sourceTree = "<group>"; };
+		0B70FE632B70F9CA009B1FDC /* FireStoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireStoreManager.swift; sourceTree = "<group>"; };
 		0B85A5792B66C5D500B06DAE /* AddRecipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeView.swift; sourceTree = "<group>"; };
 		0B85A57B2B66E0C600B06DAE /* DifficultyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyButton.swift; sourceTree = "<group>"; };
 		0B85A57E2B66F18E00B06DAE /* AddRecipeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeViewModel.swift; sourceTree = "<group>"; };
@@ -88,6 +94,8 @@
 		0BBCC9812B5BE365001C198D /* FavouriteRecipesPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteRecipesPageViewController.swift; sourceTree = "<group>"; };
 		0BBCC9862B5D34A9001C198D /* RecipeDetailsPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailsPageViewController.swift; sourceTree = "<group>"; };
 		0BBCC9892B5D576B001C198D /* IngredientTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientTableViewCell.swift; sourceTree = "<group>"; };
+		0BC33B412B77DDEE002A7114 /* RecipeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCollectionViewCell.swift; sourceTree = "<group>"; };
+		0BC33B442B780121002A7114 /* YourRecipesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourRecipesViewModel.swift; sourceTree = "<group>"; };
 		0BD457692B66578D0074FC00 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		0BE1BC902B5EB1BB00873512 /* RecipesListComponentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesListComponentView.swift; sourceTree = "<group>"; };
 		0BE1BC922B5EB2C900873512 /* TextComponentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextComponentView.swift; sourceTree = "<group>"; };
@@ -223,6 +231,7 @@
 			children = (
 				0BBCC8FE2B5A73D2001C198D /* LandingPageViewController.swift */,
 				0BBCC9692B5B0ADE001C198D /* LandingPageViewModel.swift */,
+				0B70FE632B70F9CA009B1FDC /* FireStoreManager.swift */,
 				0BA550882B6A9E47001B86DF /* SeeList */,
 				0BBCC96E2B5B0CF4001C198D /* CollectionViewCells */,
 			);
@@ -290,6 +299,8 @@
 			isa = PBXGroup;
 			children = (
 				0BBCC97F2B5BE33C001C198D /* YourRecipesPageViewController.swift */,
+				0BC33B442B780121002A7114 /* YourRecipesViewModel.swift */,
+				0BC33B432B77F5A1002A7114 /* CollectionView Cell */,
 				0B85A5782B66C5BC00B06DAE /* AddRecipe */,
 			);
 			path = YourRecipesPage;
@@ -299,6 +310,7 @@
 			isa = PBXGroup;
 			children = (
 				0BBCC9812B5BE365001C198D /* FavouriteRecipesPageViewController.swift */,
+				0B70FE612B7009A0009B1FDC /* FavouriteRecipesViewModel.swift */,
 			);
 			path = FavouriteRecipesPage;
 			sourceTree = "<group>";
@@ -342,6 +354,14 @@
 				0BD457692B66578D0074FC00 /* ImagePicker.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		0BC33B432B77F5A1002A7114 /* CollectionView Cell */ = {
+			isa = PBXGroup;
+			children = (
+				0BC33B412B77DDEE002A7114 /* RecipeCollectionViewCell.swift */,
+			);
+			path = "CollectionView Cell";
 			sourceTree = "<group>";
 		};
 		0BD457642B6420D80074FC00 /* Frameworks */ = {
@@ -490,6 +510,8 @@
 				0BBCC9802B5BE33C001C198D /* YourRecipesPageViewController.swift in Sources */,
 				0BA5508F2B6BF2BE001B86DF /* LoginRequiredView.swift in Sources */,
 				0BBCC9612B5A86D7001C198D /* ColorManager.swift in Sources */,
+				0B70FE622B7009A0009B1FDC /* FavouriteRecipesViewModel.swift in Sources */,
+				0B70FE642B70F9CA009B1FDC /* FireStoreManager.swift in Sources */,
 				0B5539A52B69172400B235E7 /* TabBarController.swift in Sources */,
 				0BE1BC9E2B62B3C600873512 /* RegistrationView.swift in Sources */,
 				0BBCC8FD2B5A73D2001C198D /* SceneDelegate.swift in Sources */,
@@ -500,6 +522,8 @@
 				0BE1BC982B5EEC0700873512 /* RecipeDetailsViewModel.swift in Sources */,
 				0BBCC98A2B5D576B001C198D /* IngredientTableViewCell.swift in Sources */,
 				0BE1BCA22B63E1A700873512 /* LoginView.swift in Sources */,
+				0BC33B452B780121002A7114 /* YourRecipesViewModel.swift in Sources */,
+				0BC33B422B77DDEE002A7114 /* RecipeCollectionViewCell.swift in Sources */,
 				0BE1BCAF2B6410E200873512 /* ProfilePage.swift in Sources */,
 				0B85A57C2B66E0C600B06DAE /* DifficultyButton.swift in Sources */,
 				0B85A57F2B66F18E00B06DAE /* AddRecipeViewModel.swift in Sources */,

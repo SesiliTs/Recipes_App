@@ -14,6 +14,8 @@ final class LandingPageViewController: UIViewController {
     
     private var viewModel = AuthViewModel()
     
+    private var recipes = FireStoreManager.shared.allRecipes
+    
     private let greetingLabel = {
         let label = UILabel()
         label.font = FontManager.shared.bodyFont
@@ -34,7 +36,7 @@ final class LandingPageViewController: UIViewController {
     
     private let recipeSearchBar = RecipeSearchBar()
     
-    private lazy var listComponent = RecipesListComponentView(recipes: mockRecipes)
+    private lazy var listComponent = RecipesListComponentView(recipes: recipes)
     
     private let categoriesLabel = HeadlineTextComponentView(text: "კატეგორიები")
     
@@ -89,7 +91,6 @@ final class LandingPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = ColorManager.shared.backgroundColor
-        
         setupUI()
         
         updateGreetingText()
@@ -177,6 +178,14 @@ final class LandingPageViewController: UIViewController {
         recommendationsCollectionView.delegate = self
         recommendationsCollectionView.backgroundColor = .clear
         registerRecommendationsCell()
+        setupNavigation()
+        
+        FireStoreManager.shared.fetchAllRecipes { recipes in
+            self.recipes = recipes
+            DispatchQueue.main.async {
+                self.recommendationsCollectionView.reloadData()
+            }
+        }
     }
     
     private func registerRecommendationsCell() {
@@ -212,7 +221,7 @@ final class LandingPageViewController: UIViewController {
     
     private func seeAllAction() {
         seeAllButton.addAction((UIAction(handler: { [self] _ in
-            let viewController = SeeListViewController(recipes: mockRecipes, headlineText: "რეკომენდაციები")
+            let viewController = SeeListViewController(recipes: recipes, headlineText: "რეკომენდაციები")
             navigationController?.isNavigationBarHidden = true
             navigationController?.pushViewController(viewController, animated: true)
         })), for: .touchUpInside)
@@ -224,6 +233,16 @@ final class LandingPageViewController: UIViewController {
         recipeSearchBar.delegate = self
     }
     
+    //MARK: - Navigation
+    
+    private func setupNavigation() {
+        listComponent.didSelectRecipe = { [weak self] selectedRecipe in
+            let detailsViewController = RecipeDetailsPageViewController()
+            detailsViewController.selectedRecipe = selectedRecipe
+            self?.navigationController?.pushViewController(detailsViewController, animated: true)
+        }
+    }
+    
 }
 
 //MARK: - Extensions
@@ -233,7 +252,7 @@ extension LandingPageViewController: UICollectionViewDelegate, UICollectionViewD
         if collectionView == categoriesCollectionView {
             return categoriesViews.count
         } else if collectionView == recommendationsCollectionView {
-            return mockRecipes.count
+            return recipes.count
         }
         return 0
     }
@@ -246,7 +265,7 @@ extension LandingPageViewController: UICollectionViewDelegate, UICollectionViewD
             return cell
         } else if collectionView == recommendationsCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "recommendCell", for: indexPath) as! RecommendedCollectionViewCell
-            let currentRecipe = mockRecipes[indexPath.row]
+            let currentRecipe = recipes[indexPath.row]
             cell.configure(with: currentRecipe.image, label: currentRecipe.name, time: currentRecipe.time)
             return cell
         }
@@ -255,13 +274,13 @@ extension LandingPageViewController: UICollectionViewDelegate, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == recommendationsCollectionView {
-            let currentRecipe = mockRecipes[indexPath.row]
+            let currentRecipe = recipes[indexPath.row]
             let detailsViewController = RecipeDetailsPageViewController()
             detailsViewController.selectedRecipe = currentRecipe
             navigationController?.pushViewController(detailsViewController, animated: true)
         } else if collectionView == categoriesCollectionView {
             let selectedCategory = categoriesViews[indexPath.row].categoryName
-            let filteredRecipes = mockRecipes.filter { $0.category == categoryCases[selectedCategory] }
+            let filteredRecipes = recipes.filter { $0.category == categoryCases[selectedCategory] }
             let viewController = SeeListViewController(recipes: filteredRecipes, headlineText: selectedCategory)
             navigationController?.isNavigationBarHidden = true
             navigationController?.pushViewController(viewController, animated: true)
@@ -285,7 +304,7 @@ extension LandingPageViewController: UICollectionViewDelegateFlowLayout {
 extension LandingPageViewController: RecipeSearchBarDelegate {
     func didChangeSearchQuery(_ query: String?) {
         if let query = query, !query.isEmpty {
-            let filteredRecipes = mockRecipes.filter { $0.name.lowercased().contains(query.lowercased()) }
+            let filteredRecipes = recipes.filter { $0.name.contains(query) }
             listComponent.configure(recipes: filteredRecipes)
             toggleUIElements(isHidden: true)
             listComponent.isHidden = false

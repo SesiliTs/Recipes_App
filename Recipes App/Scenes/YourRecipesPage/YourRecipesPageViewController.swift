@@ -24,10 +24,15 @@ final class YourRecipesPageViewController: UIViewController {
     
     private let recipeSearchBar = RecipeSearchBar()
     
-    private lazy var listComponent = RecipesListComponentView(recipes: viewModel.userRecipes)
+    private lazy var collectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        return collectionView
+    }()
     
     private lazy var mainStackView = {
-        let stackView = UIStackView(arrangedSubviews: [headlineLabel, recipeSearchBar, listComponent])
+        let stackView = UIStackView(arrangedSubviews: [headlineLabel, recipeSearchBar, collectionView, listComponent])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 20
@@ -44,6 +49,8 @@ final class YourRecipesPageViewController: UIViewController {
         return button
     }()
     
+    private lazy var listComponent = RecipesListComponentView(recipes: viewModel.userRecipes)
+    
     private lazy var loginRequiredView = LoginRequiredView(navigationController: self.navigationController)
     
     //MARK: - ViewLifeCycle
@@ -51,6 +58,7 @@ final class YourRecipesPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         checkLoggedUser()
+        listComponent.isHidden = true
     }
     
     //MARK: - Change view according to user's login state
@@ -70,7 +78,6 @@ final class YourRecipesPageViewController: UIViewController {
         mainStackView.isHidden = false
         plusButton.isHidden = false
         setupUI()
-        setupNavigation()
         addDelegate()
         Task {
             await fetchRecipes()
@@ -101,8 +108,20 @@ final class YourRecipesPageViewController: UIViewController {
         view.backgroundColor = ColorManager.shared.backgroundColor
         view.addSubview(mainStackView)
         view.addSubview(plusButton)
+        setupCollectionView()
         addConstraints()
         setupPlusButton()
+    }
+    
+    private func setupCollectionView() {
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.backgroundColor = .clear
+        registerCollectionViewCell()
+    }
+    
+    private func registerCollectionViewCell() {
+        collectionView.register(RecipeCollectionViewCell.self, forCellWithReuseIdentifier: "RecipeCell")
     }
     
     private func addConstraints() {
@@ -115,7 +134,11 @@ final class YourRecipesPageViewController: UIViewController {
             plusButton.widthAnchor.constraint(equalToConstant: 50),
             plusButton.heightAnchor.constraint(equalToConstant: 50),
             plusButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            plusButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100)
+            plusButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
+            
+            listComponent.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            listComponent.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor),
+            listComponent.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor)
             
         ])
     }
@@ -128,19 +151,9 @@ final class YourRecipesPageViewController: UIViewController {
     
     private func fetchRecipes() async {
         await viewModel.fetchUserRecipes()
-        listComponent.configure(recipes: viewModel.userRecipes)
+        collectionView.reloadData()
     }
     
-    
-    //MARK: - Navigation
-    
-    private func setupNavigation() {
-        listComponent.didSelectRecipe = { [weak self] selectedRecipe in
-            let detailsViewController = RecipeDetailsPageViewController()
-            detailsViewController.selectedRecipe = selectedRecipe
-            self?.navigationController?.pushViewController(detailsViewController, animated: true)
-        }
-    }
     
     //MARK: - Delegate
     
@@ -160,19 +173,72 @@ final class YourRecipesPageViewController: UIViewController {
         present(viewController, animated: true)
     }
     
+    //MARK: - Navigation
+    
+    private func setupNavigation() {
+        listComponent.didSelectRecipe = { [weak self] selectedRecipe in
+            let detailsViewController = RecipeDetailsPageViewController()
+            detailsViewController.selectedRecipe = selectedRecipe
+            self?.navigationController?.pushViewController(detailsViewController, animated: true)
+        }
+    }
+    
 }
 
 //MARK: - Extensions
 
+extension YourRecipesPageViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return viewModel.userRecipes.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RecipeCell", for: indexPath) as! RecipeCollectionViewCell
+        let recipe = viewModel.userRecipes[indexPath.item]
+        cell.recipe = recipe
+        cell.delegate = self
+        cell.configure(recipe: recipe)
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let spacing: CGFloat = 15
+        let collectionViewWidth = collectionView.frame.width
+        let itemWidth = (collectionViewWidth - spacing) / 2
+        return CGSize(width: itemWidth, height: 240)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let currentRecipe = viewModel.userRecipes[indexPath.row]
+        let detailsViewController = RecipeDetailsPageViewController()
+        detailsViewController.selectedRecipe = currentRecipe
+        navigationController?.pushViewController(detailsViewController, animated: true)
+    }
+}
+
+extension YourRecipesPageViewController: RecipeCollectionViewCellDelegate {
+    func didDeleteRecipe(cell: RecipeCollectionViewCell) {
+        guard let indexPath = collectionView.indexPath(for: cell) else { return }
+        viewModel.userRecipes.remove(at: indexPath.item)
+        collectionView.deleteItems(at: [indexPath])
+    }
+}
+
 extension YourRecipesPageViewController: RecipeSearchBarDelegate {
+    
     func didChangeSearchQuery(_ query: String?) {
         if let query = query, !query.isEmpty {
-            let filteredRecipes = viewModel.userRecipes.filter { $0.name.lowercased().contains(query.lowercased()) }
+            let filteredRecipes = viewModel.userRecipes.filter { $0.name.contains(query) }
             listComponent.configure(recipes: filteredRecipes)
-            headlineLabel.text = "ძიების შედეგები: ".uppercased()
+            toggleUIElements(isHidden: true)
+            listComponent.isHidden = false
         } else {
-            listComponent.configure(recipes: viewModel.userRecipes)
-            headlineLabel.text = "შენი რეცეპტები".uppercased()
+            toggleUIElements(isHidden: false)
+            listComponent.isHidden = true
         }
+    }
+
+    private func toggleUIElements(isHidden: Bool) {
+        collectionView.isHidden = isHidden
     }
 }

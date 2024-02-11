@@ -127,7 +127,7 @@ final class SeeListViewController: UIViewController {
 extension SeeListViewController: RecipeSearchBarDelegate {
     func didChangeSearchQuery(_ query: String?) {
         if let query = query, !query.isEmpty {
-            let filteredRecipes = recipes.filter { $0.name.lowercased().contains(query.lowercased()) }
+            let filteredRecipes = recipes.filter { $0.name.contains(query) }
             listComponent.configure(recipes: filteredRecipes)
             headlineLabel.text = "ძიების შედეგები: ".uppercased()
         } else {

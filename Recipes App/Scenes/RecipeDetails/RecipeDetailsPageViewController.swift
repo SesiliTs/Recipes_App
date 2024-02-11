@@ -11,7 +11,8 @@ final class RecipeDetailsPageViewController: UIViewController {
     
     var selectedRecipe: RecipeData?
     var viewModel: RecipeDetailsViewModel?
-
+    private let recipes = FireStoreManager.shared.allRecipes
+    
     //MARK: - Properties
     
     private let scrollView = {
@@ -199,10 +200,10 @@ final class RecipeDetailsPageViewController: UIViewController {
     //MARK: - init viewModel
     
     private func initViewModel() {
-        viewModel = RecipeDetailsViewModel(recipe: selectedRecipe ?? mockRecipes[0])
+        viewModel = RecipeDetailsViewModel(recipe: selectedRecipe ?? recipes[0])
     }
     
-
+    
     //MARK: - Add Views
     
     private func addViews() {
@@ -233,7 +234,7 @@ final class RecipeDetailsPageViewController: UIViewController {
         mainStackView.setCustomSpacing(20, after: ingredientsLabel)
         mainStackView.setCustomSpacing(20, after: rulesLabel)
     }
-
+    
     
     //MARK: - Setup ScrollView
     
@@ -253,11 +254,7 @@ final class RecipeDetailsPageViewController: UIViewController {
     //MARK: - Setup Heart Button
     
     private func setupHeartButton() {
-        heartButton.setImage(viewModel?.heartButtonImage, for: .normal)
-        heartButton.addAction((UIAction(handler: { [self] _ in
-            viewModel?.handleHeartButtonClick()
-            heartButton.setImage(viewModel?.heartButtonImage, for: .normal)
-        })), for: .touchUpInside)
+        viewModel?.setupButton(button: heartButton)
     }
 
     
@@ -323,11 +320,23 @@ final class RecipeDetailsPageViewController: UIViewController {
     private func setupUI() {
         navigationController?.isNavigationBarHidden = true
         view.backgroundColor = ColorManager.shared.backgroundColor
-
+        
         nameLabel.text = selectedRecipe?.name.uppercased()
         imageView.load(urlString: selectedRecipe?.image ?? "")
-        timeLabel.text = "მომზადების დრო: \(selectedRecipe?.time ?? 0) წთ"
         portionLabel.text = "პორცია: \(selectedRecipe?.portion ?? 0)"
+        
+        let hours = (selectedRecipe?.time ?? 0) / 60
+        let minutes = (selectedRecipe?.time ?? 0) % 60
+
+        if hours > 0 {
+            if minutes > 0 {
+                timeLabel.text = "მომზადების დრო: \(hours)სთ \(minutes)წთ"
+            } else {
+                timeLabel.text = "მომზადების დრო: \(hours)სთ"
+            }
+        } else {
+            timeLabel.text = "მომზადების დრო: \(minutes)წთ"
+        }
         
         if let difficulty = selectedRecipe?.difficulty {
             switch difficulty {

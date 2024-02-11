@@ -1,15 +1,23 @@
 //
-//  RecipesListTableViewCell.swift
+//  RecipeCollectionViewCell.swift
 //  Recipes App
 //
-//  Created by Sesili Tsikaridze on 22.01.24.
+//  Created by Sesili Tsikaridze on 10.02.24.
 //
 
 import UIKit
 
-final class RecipesListTableViewCell: UITableViewCell {
+protocol RecipeCollectionViewCellDelegate: AnyObject {
+    func didDeleteRecipe(cell: RecipeCollectionViewCell)
+}
+
+final class RecipeCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Properties
+    
+    var viewModel = YourRecipesViewModel()
+    weak var delegate: RecipeCollectionViewCellDelegate?
+    var recipe: RecipeData?
     
     private let containerView: UIView = {
         let view = UIView()
@@ -23,8 +31,7 @@ final class RecipesListTableViewCell: UITableViewCell {
     private let recipeImage: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        imageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: 120).isActive = true
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 18
         imageView.clipsToBounds = true
@@ -56,7 +63,7 @@ final class RecipesListTableViewCell: UITableViewCell {
     
     private lazy var timeHorizontalStack = {
         let stackView = UIStackView(arrangedSubviews: [clockSymbol, timeLabel])
-        stackView.spacing = 15
+        stackView.spacing = 5
         return stackView
     }()
     
@@ -79,7 +86,7 @@ final class RecipesListTableViewCell: UITableViewCell {
     
     private lazy var difficultyHorizontalStack = {
         let stackView = UIStackView(arrangedSubviews: [gearSymbol, difficultyLabel])
-        stackView.spacing = 15
+        stackView.spacing = 5
         return stackView
     }()
     
@@ -87,8 +94,8 @@ final class RecipesListTableViewCell: UITableViewCell {
         let imageView = UIImageView()
         imageView.image = .init(systemName: "person.2")
         imageView.tintColor = ColorManager.shared.textLightGray
-        imageView.widthAnchor.constraint(equalToConstant: 16).isActive = true
-        imageView.heightAnchor.constraint(equalToConstant: 14).isActive = true
+        imageView.widthAnchor.constraint(equalToConstant: 14).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: 12).isActive = true
         imageView.clipsToBounds = true
         return imageView
     }()
@@ -102,13 +109,17 @@ final class RecipesListTableViewCell: UITableViewCell {
     
     private lazy var portionHorizontalStack = {
         let stackView = UIStackView(arrangedSubviews: [peopleSymbol, portionLabel])
-        stackView.spacing = 15
+        stackView.spacing = 5
+        return stackView
+    }()
+    
+    private lazy var labelsHorizontalStack = {
+        let stackView = UIStackView(arrangedSubviews: [difficultyHorizontalStack, portionHorizontalStack])
         return stackView
     }()
     
     private lazy var labelsVerticalStack = {
-        let stackView = UIStackView(arrangedSubviews: [nameLabel, timeHorizontalStack,
-                                                       difficultyHorizontalStack, portionHorizontalStack])
+        let stackView = UIStackView(arrangedSubviews: [nameLabel, labelsHorizontalStack, timeHorizontalStack])
         stackView.axis = .vertical
         stackView.spacing = 10
         stackView.alignment = .leading
@@ -118,15 +129,25 @@ final class RecipesListTableViewCell: UITableViewCell {
     private lazy var mainStackView = {
         let stackView = UIStackView(arrangedSubviews: [recipeImage, labelsVerticalStack])
         stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
         stackView.alignment = .top
-        stackView.spacing = 35
+        stackView.spacing = 15
         return stackView
+    }()
+    
+    private let trashButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "minus.circle.fill"), for: .normal)
+        button.tintColor = ColorManager.shared.primaryColor
+        button.isUserInteractionEnabled = true
+        return button
     }()
     
     // MARK: - init
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         setupUI()
     }
     
@@ -135,7 +156,7 @@ final class RecipesListTableViewCell: UITableViewCell {
     }
     
     // MARK: - Prepare For Reuse
-
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         recipeImage.image = nil
@@ -143,6 +164,7 @@ final class RecipesListTableViewCell: UITableViewCell {
         timeLabel.text = nil
         portionLabel.text = nil
         difficultyLabel.text = nil
+        trashButton.removeTarget(nil, action: nil, for: .allEvents)
     }
     
     // MARK: - Private Methods
@@ -151,25 +173,50 @@ final class RecipesListTableViewCell: UITableViewCell {
         backgroundColor = .clear
         addViews()
         addConstraints()
+        trashButtonAction()
     }
     
     private func addViews() {
         contentView.addSubview(containerView)
         containerView.addSubview(mainStackView)
         labelsVerticalStack.setCustomSpacing(15, after: nameLabel)
-    }
+        contentView.addSubview(trashButton)    }
     
     private func addConstraints() {
         NSLayoutConstraint.activate([
             containerView.leadingAnchor.constraint(equalTo: leadingAnchor),
             containerView.trailingAnchor.constraint(equalTo: trailingAnchor),
             containerView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            containerView.heightAnchor.constraint(equalToConstant: 120),
+            containerView.heightAnchor.constraint(equalToConstant: 220),
+            
+            recipeImage.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor),
+            recipeImage.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor),
+            recipeImage.topAnchor.constraint(equalTo: mainStackView.topAnchor),
+            
+            trashButton.topAnchor.constraint(equalTo: topAnchor, constant: 30),
+            trashButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            
+            labelsHorizontalStack.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor),
             
             mainStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 10),
-            mainStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: 10),
-            mainStackView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
+            mainStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -10),
+            mainStackView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 10)
         ])
+    }
+    
+    func trashButtonAction() {
+        trashButton.addAction(UIAction { [weak self] _ in
+            guard let self = self else { return }
+            if let recipe = self.recipe {
+                let alert = UIAlertController(title: "რეცეპტის წაშლა", message: "დარწმუნებული ხარ რომ გსურს რეცეპტის წაშლა?", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "გაუქმება", style: .cancel, handler: nil))
+                alert.addAction(UIAlertAction(title: "წაშლა", style: .destructive, handler: { _ in
+                    self.viewModel.deleteRecipe(recipeId: recipe.id)
+                    self.delegate?.didDeleteRecipe(cell: self)
+                }))
+                self.window?.rootViewController?.present(alert, animated: true, completion: nil)
+            }
+        }, for: .touchUpInside)
     }
     
     //MARK: - Configure
@@ -178,11 +225,11 @@ final class RecipesListTableViewCell: UITableViewCell {
     func configure(recipe: RecipeData?) {
         recipeImage.load(urlString: recipe?.image ?? "")
         nameLabel.text = recipe?.name.uppercased()
-        portionLabel.text = "\(recipe?.portion ?? 0) პორცია"
+        portionLabel.text = "\(recipe?.portion ?? 0)"
         
         let hours = (recipe?.time ?? 0) / 60
         let minutes = (recipe?.time ?? 0) % 60
-
+        
         if hours > 0 {
             if minutes > 0 {
                 timeLabel.text = "\(hours)სთ \(minutes)წთ"
@@ -196,16 +243,15 @@ final class RecipesListTableViewCell: UITableViewCell {
         if let difficulty = recipe?.difficulty {
             switch difficulty {
             case .easy:
-                difficultyLabel.text = "სირთულე: მარტივი"
+                difficultyLabel.text = "მარტივი"
             case .normal:
-                difficultyLabel.text = "სირთულე: საშუალო"
+                difficultyLabel.text = "საშუალო"
             case .hard:
-                difficultyLabel.text = "სირთულე: რთული"
+                difficultyLabel.text = "რთული"
             }
         } else {
-            difficultyLabel.text = "სირთულე: უცნობი"
+            difficultyLabel.text = "უცნობი"
         }
     }
     
 }
-
