@@ -8,24 +8,34 @@
 import UIKit
 import SwiftUI
 
+var imageCache = NSCache<NSString, UIImage>()
+
 extension UIImageView {
     func load(urlString: String) {
-        let compressionQuality: CGFloat = 0.1
+        if let cachedImage = imageCache.object(forKey: urlString as NSString) {
+            self.image = cachedImage
+            return
+        }
+        
+        URLSession.shared.invalidateAndCancel()
         
         if let url = URL(string: urlString) {
-            DispatchQueue.global().async { [weak self] in
-                if let data = try? Data(contentsOf: url) {
-                    if var image = UIImage(data: data) {
-                        if let compressedData = image.jpegData(compressionQuality: compressionQuality) {
-                            image = UIImage(data: compressedData) ?? image
-                        }
-                        
-                        DispatchQueue.main.async {
-                            self?.image = image
-                        }
-                    }
+            let task = URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
+                guard let self = self else { return }
+                if error != nil {
+                    print("Failed to load image:", error?.localizedDescription ?? "")
+                    return
+                }
+                
+                guard let data = data, let image = UIImage(data: data) else { return }
+                
+                imageCache.setObject(image, forKey: urlString as NSString)
+                
+                DispatchQueue.main.async {
+                    self.image = image
                 }
             }
+            task.resume()
         }
     }
 }
