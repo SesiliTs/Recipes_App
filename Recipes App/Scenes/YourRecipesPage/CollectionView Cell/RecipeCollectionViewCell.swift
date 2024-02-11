@@ -205,10 +205,16 @@ final class RecipeCollectionViewCell: UICollectionViewCell {
     }
     
     func trashButtonAction() {
-        trashButton.addAction(UIAction { [self] _ in
+        trashButton.addAction(UIAction { [weak self] _ in
+            guard let self = self else { return }
             if let recipe = self.recipe {
-                self.viewModel.deleteRecipe(recipeId: recipe.id)
-                self.delegate?.didDeleteRecipe(cell: self)
+                let alert = UIAlertController(title: "რეცეპტის წაშლა", message: "დარწმუნებული ხარ რომ გსურს რეცეპტის წაშლა?", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "გაუქმება", style: .cancel, handler: nil))
+                alert.addAction(UIAlertAction(title: "წაშლა", style: .destructive, handler: { _ in
+                    self.viewModel.deleteRecipe(recipeId: recipe.id)
+                    self.delegate?.didDeleteRecipe(cell: self)
+                }))
+                self.window?.rootViewController?.present(alert, animated: true, completion: nil)
             }
         }, for: .touchUpInside)
     }

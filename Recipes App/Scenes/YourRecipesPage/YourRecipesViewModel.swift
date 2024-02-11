@@ -11,6 +11,10 @@ import FirebaseFirestore
 
 final class YourRecipesViewModel {
     
+    //MARK: - Alert
+    
+    @Published var showAlert = false
+    
     //MARK: - Delete Recipe
     
     func deleteRecipe(recipeId: String) {
