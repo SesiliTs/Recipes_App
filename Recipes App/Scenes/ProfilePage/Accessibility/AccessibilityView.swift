@@ -9,6 +9,11 @@ import SwiftUI
 
 struct AccessibilityView: View {
     
+    //MARK: - Properties
+    
+    @StateObject private var viewModel = AccessibilityViewModel()
+    @Environment(\.dismiss) var dismiss
+    
     @State private var fontSize: CGFloat = 12
     @State private var isHighContrastEnabled = false
     @State private var isBoldTextEnabled = false
@@ -18,6 +23,8 @@ struct AccessibilityView: View {
     
     @State private var bodyFont: UIFont? = FontManager.shared.bodyFont
     @State private var headlineFont: UIFont? = FontManager.shared.headlineFont
+    
+    //MARK: - Body
     
     var body: some View {
         ZStack {
@@ -57,7 +64,10 @@ struct AccessibilityView: View {
                 Spacer()
                 
                 ButtonComponentView(text: "შენახვა") {
-                    print("save button clicked")
+                    Task {
+                        await saveAccessibilitySettings()
+                        dismiss()
+                    }
                 }
                 .padding(.bottom, 30)
                 
@@ -65,6 +75,18 @@ struct AccessibilityView: View {
             .padding(20)
         }
     }
+    
+    //MARK: - Button Action
+    
+    private func saveAccessibilitySettings() async {
+        do {
+            try await viewModel.updateAccessibilitySettings(highContrast: isHighContrastEnabled, boldText: isBoldTextEnabled, fontSize: fontSize)
+        } catch {
+            print("Failed to save accessibility settings: \(error.localizedDescription)")
+        }
+    }
+    
+    //MARK: - Separate Views
     
     private var sliderView: some View {
         VStack(alignment: .leading, spacing: 30) {
