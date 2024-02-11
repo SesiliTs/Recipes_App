@@ -77,6 +77,11 @@ final class RecipeSearchBar: UIView, UITextFieldDelegate {
         delegate?.didChangeSearchQuery(currentText)
         return true
     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
 }
 
 //MARK: - Search icon setup
