@@ -10,9 +10,8 @@ import UIKit
 class ColorManager {
     static let shared = ColorManager()
 
-    let backgroundColor = UIColor(hexString: "#F9F9F9")
-    let primaryColor = UIColor(hexString: "#F55A51")
-    let textGrayColor = UIColor(hexString: "#666666")
-    let textLightGray = UIColor(hexString: "#BDBDBD")
-    
+    var backgroundColor = UIColor(hexString: "#F9F9F9")
+    var primaryColor = UIColor(hexString: "#F55A51")
+    var textGrayColor = UIColor(hexString: "#666666")
+    var textLightGray = UIColor(hexString: "#BDBDBD")
 }

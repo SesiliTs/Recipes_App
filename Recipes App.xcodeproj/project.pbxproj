@@ -16,6 +16,7 @@
 		0B85A57F2B66F18E00B06DAE /* AddRecipeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B85A57E2B66F18E00B06DAE /* AddRecipeViewModel.swift */; };
 		0BA5508A2B6A9E64001B86DF /* SeeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA550892B6A9E64001B86DF /* SeeListViewController.swift */; };
 		0BA5508F2B6BF2BE001B86DF /* LoginRequiredView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA5508E2B6BF2BE001B86DF /* LoginRequiredView.swift */; };
+		0BAACED62B791E96006D003C /* AccessibilityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAACED52B791E96006D003C /* AccessibilityView.swift */; };
 		0BBCC8FB2B5A73D2001C198D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBCC8FA2B5A73D2001C198D /* AppDelegate.swift */; };
 		0BBCC8FD2B5A73D2001C198D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBCC8FC2B5A73D2001C198D /* SceneDelegate.swift */; };
 		0BBCC8FF2B5A73D2001C198D /* LandingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBCC8FE2B5A73D2001C198D /* LandingPageViewController.swift */; };
@@ -69,6 +70,7 @@
 		0B85A57E2B66F18E00B06DAE /* AddRecipeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeViewModel.swift; sourceTree = "<group>"; };
 		0BA550892B6A9E64001B86DF /* SeeListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeListViewController.swift; sourceTree = "<group>"; };
 		0BA5508E2B6BF2BE001B86DF /* LoginRequiredView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequiredView.swift; sourceTree = "<group>"; };
+		0BAACED52B791E96006D003C /* AccessibilityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityView.swift; sourceTree = "<group>"; };
 		0BBCC8F72B5A73D2001C198D /* Recipes App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Recipes App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BBCC8FA2B5A73D2001C198D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0BBCC8FC2B5A73D2001C198D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -159,6 +161,14 @@
 				0BA5508E2B6BF2BE001B86DF /* LoginRequiredView.swift */,
 			);
 			path = LogInRequiredView;
+			sourceTree = "<group>";
+		};
+		0BAACED72B791E9C006D003C /* Accessibility */ = {
+			isa = PBXGroup;
+			children = (
+				0BAACED52B791E96006D003C /* AccessibilityView.swift */,
+			);
+			path = Accessibility;
 			sourceTree = "<group>";
 		};
 		0BBCC8EE2B5A73D2001C198D = {
@@ -320,6 +330,7 @@
 			children = (
 				0BE1BCAE2B6410E200873512 /* ProfilePage.swift */,
 				0BE1BCA52B63F09000873512 /* ProfileView.swift */,
+				0BAACED72B791E9C006D003C /* Accessibility */,
 			);
 			path = ProfilePage;
 			sourceTree = "<group>";
@@ -491,6 +502,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0BBCC9782B5BB8ED001C198D /* ImageFromURL.swift in Sources */,
+				0BAACED62B791E96006D003C /* AccessibilityView.swift in Sources */,
 				0BBCC9742B5B176F001C198D /* RecommendedCollectionViewCell.swift in Sources */,
 				0B85A57A2B66C5D500B06DAE /* AddRecipeView.swift in Sources */,
 				0BE1BC912B5EB1BB00873512 /* RecipesListComponentView.swift in Sources */,

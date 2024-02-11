@@ -138,6 +138,31 @@ struct ProfileView: View {
                     
                     Spacer()
                     
+                    NavigationLink {
+                        AccessibilityView()
+                            .navigationBarBackButtonHidden(true)
+                    } label: {
+                        
+                        HStack(alignment: .center, spacing: 20) {
+                            Image(systemName: "accessibility")
+                                .font(.system(size: 14))
+                                .foregroundStyle(Color(ColorManager.shared.textGrayColor))
+                            
+                            Text("accessibility")
+                                .font(Font(FontManager.shared.bodyFont ?? .systemFont(ofSize: 14)))
+                                .foregroundStyle(Color(ColorManager.shared.textGrayColor))
+                            
+                            Spacer()
+                            
+                            Image(systemName: "chevron.forward")
+                                .font(.system(size: 14))
+                                .foregroundStyle(Color(ColorManager.shared.primaryColor))
+                            
+                        }
+                    }
+                    
+                    Spacer()
+                    
                     ButtonComponentView(text: "გამოსვლა") {
                         viewModel.signOut()
                     }
@@ -363,6 +388,6 @@ struct ProfileView: View {
 
 
 
-#Preview {
-    ProfileView()
-}
+//#Preview {
+//    ProfileView()
+//}
