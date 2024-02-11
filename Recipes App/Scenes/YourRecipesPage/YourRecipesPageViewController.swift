@@ -32,7 +32,7 @@ final class YourRecipesPageViewController: UIViewController {
     }()
     
     private lazy var mainStackView = {
-        let stackView = UIStackView(arrangedSubviews: [headlineLabel, recipeSearchBar, collectionView])
+        let stackView = UIStackView(arrangedSubviews: [headlineLabel, recipeSearchBar, collectionView, listComponent])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 20
@@ -49,6 +49,8 @@ final class YourRecipesPageViewController: UIViewController {
         return button
     }()
     
+    private lazy var listComponent = RecipesListComponentView(recipes: viewModel.userRecipes)
+    
     private lazy var loginRequiredView = LoginRequiredView(navigationController: self.navigationController)
     
     //MARK: - ViewLifeCycle
@@ -56,6 +58,7 @@ final class YourRecipesPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         checkLoggedUser()
+        listComponent.isHidden = true
     }
     
     //MARK: - Change view according to user's login state
@@ -131,7 +134,11 @@ final class YourRecipesPageViewController: UIViewController {
             plusButton.widthAnchor.constraint(equalToConstant: 50),
             plusButton.heightAnchor.constraint(equalToConstant: 50),
             plusButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            plusButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100)
+            plusButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
+            
+            listComponent.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            listComponent.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor),
+            listComponent.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor)
             
         ])
     }
@@ -164,6 +171,16 @@ final class YourRecipesPageViewController: UIViewController {
             })
         )
         present(viewController, animated: true)
+    }
+    
+    //MARK: - Navigation
+    
+    private func setupNavigation() {
+        listComponent.didSelectRecipe = { [weak self] selectedRecipe in
+            let detailsViewController = RecipeDetailsPageViewController()
+            detailsViewController.selectedRecipe = selectedRecipe
+            self?.navigationController?.pushViewController(detailsViewController, animated: true)
+        }
     }
     
 }
@@ -208,14 +225,20 @@ extension YourRecipesPageViewController: RecipeCollectionViewCellDelegate {
 }
 
 extension YourRecipesPageViewController: RecipeSearchBarDelegate {
+    
     func didChangeSearchQuery(_ query: String?) {
         if let query = query, !query.isEmpty {
             let filteredRecipes = viewModel.userRecipes.filter { $0.name.contains(query) }
-//            listComponent.configure(recipes: filteredRecipes)
-            headlineLabel.text = "ძიების შედეგები: ".uppercased()
+            listComponent.configure(recipes: filteredRecipes)
+            toggleUIElements(isHidden: true)
+            listComponent.isHidden = false
         } else {
-//            listComponent.configure(recipes: viewModel.userRecipes)
-            headlineLabel.text = "შენი რეცეპტები".uppercased()
+            toggleUIElements(isHidden: false)
+            listComponent.isHidden = true
         }
+    }
+
+    private func toggleUIElements(isHidden: Bool) {
+        collectionView.isHidden = isHidden
     }
 }
