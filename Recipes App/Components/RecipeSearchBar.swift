@@ -31,6 +31,8 @@ final class RecipeSearchBar: UIView, UITextFieldDelegate {
         super.init(frame: frame)
         setupUI()
         addDelegate()
+        addFontObserver()
+        addColorObserver()
     }
     
     required init?(coder: NSCoder) {
@@ -46,7 +48,9 @@ final class RecipeSearchBar: UIView, UITextFieldDelegate {
         textField.backgroundColor = .white
         textField.layer.cornerRadius = 18
         textField.font = FontManager.shared.bodyFont
-        textField.layer.borderWidth = 0
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.gray.cgColor
+
     }
     
     private func addConstraints() {
@@ -57,6 +61,27 @@ final class RecipeSearchBar: UIView, UITextFieldDelegate {
             textField.bottomAnchor.constraint(equalTo: bottomAnchor),
             textField.heightAnchor.constraint(equalToConstant: 45),
         ])
+    }
+    
+    //MARK: - Accessibility
+    
+    @objc func updateFonts() {
+        textField.font = FontManager.shared.bodyFont
+    }
+
+    @objc func updateColors() {
+        textField.layer.borderColor = ColorManager.shared.borderColor.cgColor
+        textField.textColor = ColorManager.shared.textGrayColor
+    }
+
+    private func addFontObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateFonts), name: .fontSettingsDidChange, object: nil)
+        updateFonts()
+    }
+
+    private func addColorObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateColors), name: .colorSettingsDidChange, object: nil)
+        updateColors()
     }
     
     //MARK: add Delegate
@@ -75,6 +100,11 @@ final class RecipeSearchBar: UIView, UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentText = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) ?? ""
         delegate?.didChangeSearchQuery(currentText)
+        return true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
         return true
     }
 }

@@ -90,9 +90,11 @@ final class LandingPageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = ColorManager.shared.backgroundColor
-        setupUI()
         
+        addFontObserver()
+        addColorObserver()
+        
+        setupUI()
         updateGreetingText()
         observeAuthenticationState()
         
@@ -100,10 +102,14 @@ final class LandingPageViewController: UIViewController {
         addDelegate()
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     //MARK: - Setup UI
     
     private func setupUI() {
-        
+        view.backgroundColor = ColorManager.shared.backgroundColor
         navigationController?.isNavigationBarHidden = true
         
         addViews()
@@ -113,7 +119,30 @@ final class LandingPageViewController: UIViewController {
         listComponent.isHidden = true
     }
     
+    //MARK: - Accessibility
+    
+    @objc func updateFonts() {
+        greetingLabel.font = FontManager.shared.bodyFont
+        seeAllButton.titleLabel?.font = FontManager.shared.bodyFont
+    }
+    
+    private func addFontObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateFonts), name: .fontSettingsDidChange, object: nil)
+        updateFonts()
+    }
+    
+    @objc func updateColors() {
+        view.backgroundColor = ColorManager.shared.backgroundColor
+        greetingLabel.textColor = ColorManager.shared.textGrayColor
+    }
+
+    private func addColorObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateColors), name: .colorSettingsDidChange, object: nil)
+        updateColors()
+    }
+    
     //MARK: - Add Views
+    
     
     private func addViews() {
         view.addSubview(mainStack)

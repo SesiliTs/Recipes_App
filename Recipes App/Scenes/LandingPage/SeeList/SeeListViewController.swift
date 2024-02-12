@@ -50,6 +50,10 @@ final class SeeListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        addFontObserver()
+        addColorObserver()
+        
         setupUI()
         setupNavigation()
         addDelegate()
@@ -68,6 +72,8 @@ final class SeeListViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - Setup UI
+    
     private func setupUI() {
         
         view.backgroundColor = ColorManager.shared.backgroundColor
@@ -75,11 +81,36 @@ final class SeeListViewController: UIViewController {
         addConstraints()
     }
     
+    //MARK: - Add Views
+    
     private func addViews() {
         view.addSubview(mainStackView)
         view.addSubview(buttonBackgroundView)
         view.addSubview(backButton)
     }
+    
+    //MARK: - Accessibility
+    
+    @objc func updateFonts() {
+        headlineLabel.font = FontManager.shared.headlineFont
+    }
+
+    @objc func updateColors() {
+        view.backgroundColor = ColorManager.shared.backgroundColor
+        buttonBackgroundView.backgroundColor = ColorManager.shared.backgroundColor
+    }
+
+    private func addFontObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateFonts), name: .fontSettingsDidChange, object: nil)
+        updateFonts()
+    }
+
+    private func addColorObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateColors), name: .colorSettingsDidChange, object: nil)
+        updateColors()
+    }
+    
+    //MARK: - Add Constraints
     
     private func addConstraints() {
         NSLayoutConstraint.activate([
@@ -123,6 +154,8 @@ final class SeeListViewController: UIViewController {
         })), for: .touchUpInside)
     }
 }
+
+//MARK: - Extensions
 
 extension SeeListViewController: RecipeSearchBarDelegate {
     func didChangeSearchQuery(_ query: String?) {

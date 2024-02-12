@@ -16,6 +16,8 @@ final class CategoriesCollectionViewCell: UICollectionViewCell {
         view.heightAnchor.constraint(equalToConstant: 120).isActive = true
         view.widthAnchor.constraint(equalToConstant: 120).isActive = true
         view.layer.cornerRadius = 18
+        view.layer.borderWidth = 1
+        view.layer.borderColor = ColorManager.shared.borderColor.cgColor
         view.clipsToBounds = true
         return view
     }()
@@ -40,10 +42,17 @@ final class CategoriesCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         addSubviews()
         addConstraints()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateFontAndColor), name: .fontSettingsDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateFontAndColor), name: .colorSettingsDidChange, object: nil)
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 
     private func addSubviews() {
@@ -72,6 +81,13 @@ final class CategoriesCollectionViewCell: UICollectionViewCell {
     func configure(with image: UIImage?, label: String) {
         imageView.image = image
         self.label.text = label
+        updateFontAndColor()
+    }
+
+    @objc private func updateFontAndColor() {
+        label.font = FontManager.shared.bodyFont
+        label.textColor = ColorManager.shared.textGrayColor
+        shapeView.layer.borderColor = ColorManager.shared.borderColor.cgColor
     }
     
 }

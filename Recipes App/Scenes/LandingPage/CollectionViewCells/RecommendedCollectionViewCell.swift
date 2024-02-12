@@ -17,6 +17,8 @@ final class RecommendedCollectionViewCell: UICollectionViewCell {
         view.heightAnchor.constraint(equalToConstant: 145).isActive = true
         view.widthAnchor.constraint(equalToConstant: 120).isActive = true
         view.layer.cornerRadius = 18
+        view.layer.borderWidth = 1
+        view.layer.borderColor = ColorManager.shared.borderColor.cgColor
         view.clipsToBounds = true
         return view
     }()
@@ -86,6 +88,8 @@ final class RecommendedCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         addSubviews()
         addConstraints()
+        addFontObserver()
+        addColorObserver()
     }
     
     required init?(coder: NSCoder) {
@@ -134,6 +138,31 @@ final class RecommendedCollectionViewCell: UICollectionViewCell {
             mainStack.topAnchor.constraint(equalTo: topAnchor)
             
         ])
+    }
+    
+    //MARK: - Accessibility
+    
+    @objc func updateFonts() {
+        nameLabel.font = FontManager.shared.bodyFont
+        timeLabel.font = FontManager.shared.bodyFont?.withSize(10)
+    }
+
+    @objc func updateColors() {
+        shapeView.layer.borderColor = ColorManager.shared.borderColor.cgColor
+        nameLabel.textColor = ColorManager.shared.textGrayColor
+        timeLabel.textColor = ColorManager.shared.textLightGray
+        clockSymbol.tintColor = ColorManager.shared.textLightGray
+        arrowSymbol.tintColor = ColorManager.shared.textLightGray
+    }
+
+    private func addFontObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateFonts), name: .fontSettingsDidChange, object: nil)
+        updateFonts()
+    }
+
+    private func addColorObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateColors), name: .colorSettingsDidChange, object: nil)
+        updateColors()
     }
     
     //MARK: - Configure

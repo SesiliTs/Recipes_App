@@ -92,6 +92,10 @@ final class FavouriteRecipesPageViewController: UIViewController {
     private func userIsLoggedIn() {
         loginRequiredView.isHidden = true
         mainStackView.isHidden = false
+        
+        addColorObserver()
+        addFontObserver()
+        
         setupUI()
         setupNavigation()
         addDelegate()
@@ -129,6 +133,26 @@ final class FavouriteRecipesPageViewController: UIViewController {
             mainStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 80),
             mainStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10),
         ])
+    }
+    
+    //MARK: - Accessibility
+    
+    @objc func updateFonts() {
+        headlineLabel.font = FontManager.shared.headlineFont
+    }
+
+    @objc func updateColors() {
+        view.backgroundColor = ColorManager.shared.backgroundColor
+    }
+
+    private func addFontObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateFonts), name: .fontSettingsDidChange, object: nil)
+        updateFonts()
+    }
+
+    private func addColorObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateColors), name: .colorSettingsDidChange, object: nil)
+        updateColors()
     }
     
     //MARK: - Navigation
