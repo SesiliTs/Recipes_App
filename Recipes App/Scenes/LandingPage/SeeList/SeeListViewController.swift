@@ -9,6 +9,8 @@ import UIKit
 
 final class SeeListViewController: UIViewController {
     
+    //MARK: - Properties
+    
     let recipes: [RecipeData]
     let headlineText: String
     

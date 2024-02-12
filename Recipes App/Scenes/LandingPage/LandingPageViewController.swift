@@ -210,7 +210,8 @@ final class LandingPageViewController: UIViewController {
         setupNavigation()
         
         FireStoreManager.shared.fetchAllRecipes { recipes in
-            self.recipes = recipes
+            let sortedRecipes = self.sortRecipesByTime(recipes)
+            self.recipes = sortedRecipes
             DispatchQueue.main.async {
                 self.recommendationsCollectionView.reloadData()
             }
@@ -221,6 +222,25 @@ final class LandingPageViewController: UIViewController {
         recommendationsCollectionView.register(RecommendedCollectionViewCell.self, forCellWithReuseIdentifier: "recommendCell")
     }
     
+    private func sortRecipesByTime(_ recipes: [RecipeData]) -> [RecipeData] {
+        let calendar = Calendar.current
+        let hour = calendar.component(.hour, from: Date())
+
+        let sortedRecipes = recipes.sorted { recipe1, recipe2 in
+            switch hour {
+            case 6..<12:
+                return recipe1.category == .breakfast
+            case 12..<16:
+                return recipe1.category == .snack
+            case 16..<20:
+                return recipe1.category == .dinner
+            default:
+                return recipe1.category == .dessert
+            }
+        }
+        
+        return sortedRecipes
+    }
     
     //MARK: - Add Constraints
     

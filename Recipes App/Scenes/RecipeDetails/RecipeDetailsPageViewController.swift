@@ -339,14 +339,7 @@ final class RecipeDetailsPageViewController: UIViewController {
         }
         
         if let difficulty = selectedRecipe?.difficulty {
-            switch difficulty {
-            case .easy:
-                difficultyLabel.text = "სირთულე: მარტივი"
-            case .normal:
-                difficultyLabel.text = "სირთულე: საშუალო"
-            case .hard:
-                difficultyLabel.text = "სირთულე: რთული"
-            }
+            difficultyLabel.text = "სირთულე: \(difficulty.rawValue)"
         } else {
             difficultyLabel.text = "სირთულე: უცნობი"
         }

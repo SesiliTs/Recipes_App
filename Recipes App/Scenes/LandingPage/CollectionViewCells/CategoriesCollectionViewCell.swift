@@ -9,6 +9,8 @@ import UIKit
 
 final class CategoriesCollectionViewCell: UICollectionViewCell {
     
+    //MARK: - Properties
+    
     private let shapeView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -37,7 +39,8 @@ final class CategoriesCollectionViewCell: UICollectionViewCell {
         return label
     }()
 
-
+    //MARK: - init
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubviews()
@@ -55,6 +58,8 @@ final class CategoriesCollectionViewCell: UICollectionViewCell {
         NotificationCenter.default.removeObserver(self)
     }
 
+    //MARK: - Setup UI
+    
     private func addSubviews() {
         addSubview(shapeView)
         shapeView.addSubview(label)
@@ -77,12 +82,15 @@ final class CategoriesCollectionViewCell: UICollectionViewCell {
             shapeView.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
     }
+    //MARK: - Configure
     
     func configure(with image: UIImage?, label: String) {
         imageView.image = image
         self.label.text = label
         updateFontAndColor()
     }
+    
+    //MARK: - Accessibility
 
     @objc private func updateFontAndColor() {
         label.font = FontManager.shared.bodyFont
