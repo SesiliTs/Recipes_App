@@ -12,6 +12,8 @@ struct ProfileView: View {
     //MARK: - Properties
     
     @EnvironmentObject var viewModel: AuthViewModel
+    @State private var reloadProfileView = false
+
     @State private var showDeleteConfirmation = false
     @State private var confirmPassword = false
     @State private var wrongPasswordAlert = false
@@ -29,13 +31,19 @@ struct ProfileView: View {
     @State private var currentPassword = ""
     @State private var newPassword = ""
     
+    @State private var background = ColorManager.shared.backgroundColor
+    @State private var textColor = ColorManager.shared.textGrayColor
+    
+    @State private var bodyFont: UIFont? = FontManager.shared.bodyFont
+    @State private var headlineFont: UIFont? = FontManager.shared.headlineFont
+
     //MARK: - Body
     
     var body: some View {
         
         ZStack {
             
-            Color(ColorManager.shared.backgroundColor)
+            Color(background)
                 .ignoresSafeArea()
             
             if let user = viewModel.currentUser {
@@ -83,11 +91,11 @@ struct ProfileView: View {
                             
                             Image(systemName: "envelope")
                                 .font(.system(size: 14))
-                                .foregroundStyle(Color(ColorManager.shared.textGrayColor))
+                                .foregroundStyle(Color(textColor))
                             
                             Text(user.email)
-                                .font(Font(FontManager.shared.bodyFont ?? .systemFont(ofSize: 14)))
-                                .foregroundStyle(Color(ColorManager.shared.textGrayColor))
+                                .font(Font(bodyFont ?? .systemFont(ofSize: 14)))
+                                .foregroundStyle(Color(textColor))
                             
                             Spacer()
                             
@@ -96,7 +104,7 @@ struct ProfileView: View {
                             }, label: {
                                 Image(systemName: "square.and.pencil")
                                     .font(.system(size: 14))
-                                    .foregroundStyle(Color(ColorManager.shared.textGrayColor))
+                                    .foregroundStyle(Color(textColor))
                             })
                         }
                     }
@@ -107,11 +115,11 @@ struct ProfileView: View {
                         HStack(alignment: .center, spacing: 20) {
                             Image(systemName: "lock.rectangle")
                                 .font(.system(size: 14))
-                                .foregroundStyle(Color(ColorManager.shared.textGrayColor))
+                                .foregroundStyle(Color(textColor))
                             
                             Text("* * * * * * * *")
                                 .font(.system(size: 14))
-                                .foregroundStyle(Color(ColorManager.shared.textGrayColor))
+                                .foregroundStyle(Color(textColor))
                                 .onTapGesture {
                                     isEditingEmail.toggle()
                                 }
@@ -124,7 +132,7 @@ struct ProfileView: View {
                             }, label: {
                                 Image(systemName: "square.and.pencil")
                                     .font(.system(size: 14))
-                                    .foregroundStyle(Color(ColorManager.shared.textGrayColor))
+                                    .foregroundStyle(Color(textColor))
                             })
                             .alert(isPresented: $viewModel.showSuccessAlert) {
                                 Alert(
@@ -139,24 +147,24 @@ struct ProfileView: View {
                     Spacer()
                     
                     NavigationLink {
-                        AccessibilityView()
+                        AccessibilityView(reloadProfileView: $reloadProfileView)
                             .navigationBarBackButtonHidden(true)
                     } label: {
                         
                         HStack(alignment: .center, spacing: 20) {
                             Image(systemName: "accessibility")
                                 .font(.system(size: 14))
-                                .foregroundStyle(Color(ColorManager.shared.textGrayColor))
+                                .foregroundStyle(Color(textColor))
                             
                             Text("accessibility")
-                                .font(Font(FontManager.shared.bodyFont ?? .systemFont(ofSize: 14)))
-                                .foregroundStyle(Color(ColorManager.shared.textGrayColor))
+                                .font(Font(bodyFont ?? .systemFont(ofSize: 14)))
+                                .foregroundStyle(Color(textColor))
                             
                             Spacer()
                             
                             Image(systemName: "chevron.forward")
                                 .font(.system(size: 14))
-                                .foregroundStyle(Color(ColorManager.shared.primaryColor))
+                                .foregroundStyle(Color(textColor))
                             
                         }
                     }
@@ -176,6 +184,12 @@ struct ProfileView: View {
             }
             
         }
+        .onChange(of: reloadProfileView) { _ in
+            background = ColorManager.shared.backgroundColor
+            textColor = ColorManager.shared.textGrayColor
+            bodyFont = FontManager.shared.bodyFont
+            headlineFont = FontManager.shared.headlineFont
+        }
         .navigationViewStyle(StackNavigationViewStyle())
         .fullScreenCover(isPresented: $shouldShowImagePicker, onDismiss: nil) {
             ImagePicker(image: $image)
@@ -194,14 +208,14 @@ struct ProfileView: View {
     private func nameView(user: User) -> some View {
         HStack {
             Text(user.fullname.uppercased())
-                .font(Font(FontManager.shared.headlineFont ?? .systemFont(ofSize: 16)))
+                .font(Font(headlineFont ?? .systemFont(ofSize: 16)))
             
             Button(action: {
                 isEditingName.toggle()
             }, label: {
                 Image(systemName: "square.and.pencil")
                     .font(.system(size: 14))
-                    .foregroundStyle(Color(ColorManager.shared.textGrayColor))
+                    .foregroundStyle(Color(textColor))
             })
         }
     }
@@ -210,7 +224,7 @@ struct ProfileView: View {
         HStack {
             TextField("შეიყვანე სახელი და გვარი", text: $newName)
                 .padding(.horizontal)
-                .font(Font(FontManager.shared.bodyFont ?? .systemFont(ofSize: 16)))
+                .font(Font(bodyFont ?? .systemFont(ofSize: 16)))
                 .autocorrectionDisabled()
                 .textInputAutocapitalization(.never)
             
@@ -246,12 +260,12 @@ struct ProfileView: View {
             VStack(alignment: .leading, spacing: 20) {
                 TextField("შეიყვანე ახალი მეილი", text: $newEmail)
                     .padding(.horizontal)
-                    .font(Font(FontManager.shared.bodyFont ?? .systemFont(ofSize: 14)))
+                    .font(Font(bodyFont ?? .systemFont(ofSize: 14)))
                     .autocorrectionDisabled()
                     .textInputAutocapitalization(.never)
                 SecureField("შეიყვანე პაროლი", text: $currentPassword)
                     .padding(.horizontal)
-                    .font(Font(FontManager.shared.bodyFont ?? .systemFont(ofSize: 14)))
+                    .font(Font(bodyFont ?? .systemFont(ofSize: 14)))
                     .autocorrectionDisabled()
                     .textInputAutocapitalization(.never)
             }
@@ -290,13 +304,13 @@ struct ProfileView: View {
             VStack(alignment: .leading, spacing: 20) {
                 SecureField("შეიყვანე ძველი პაროლი", text: $currentPassword)
                     .padding(.horizontal)
-                    .font(Font(FontManager.shared.bodyFont ?? .systemFont(ofSize: 14)))
+                    .font(Font(bodyFont ?? .systemFont(ofSize: 14)))
                     .autocorrectionDisabled()
                     .textInputAutocapitalization(.never)
                 
                 SecureField("შეიყვანე ახალი პაროლი", text: $newPassword)
                     .padding(.horizontal)
-                    .font(Font(FontManager.shared.bodyFont ?? .systemFont(ofSize: 14)))
+                    .font(Font(bodyFont ?? .systemFont(ofSize: 14)))
                     .autocorrectionDisabled()
                     .textInputAutocapitalization(.never)
             }
@@ -346,7 +360,7 @@ struct ProfileView: View {
             showDeleteConfirmation = true
         }, label: {
             Text("ანგარიშის გაუქმება")
-                .font(Font(FontManager.shared.bodyFont ?? .systemFont(ofSize: 12)))
+                .font(Font(bodyFont ?? .systemFont(ofSize: 12)))
                 .foregroundStyle(Color(ColorManager.shared.primaryColor))
         })
         .alert(isPresented: $showDeleteConfirmation) {

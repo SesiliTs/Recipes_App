@@ -13,10 +13,7 @@ struct AccessibilityView: View {
     
     @StateObject private var viewModel = AccessibilityViewModel()
     @Environment(\.dismiss) var dismiss
-    
-    @State private var fontSize: CGFloat = 12
-    @State private var isHighContrastEnabled = false
-    @State private var isBoldTextEnabled = false
+    @Binding var reloadProfileView: Bool
     
     @State private var background = ColorManager.shared.backgroundColor
     @State private var textColor = ColorManager.shared.textGrayColor
@@ -33,23 +30,23 @@ struct AccessibilityView: View {
             VStack(alignment: .leading, spacing: 50) {
                 
                 Text("Accessibility".uppercased())
-                    .font(Font(FontManager.shared.headlineFont?.withSize(fontSize + 6) ?? .systemFont(ofSize: fontSize + 6)))
+                    .font(Font(FontManager.shared.headlineFont?.withSize(viewModel.fontSize + 6) ?? .systemFont(ofSize: viewModel.fontSize + 6)))
                     .padding(.top, 30)
                 
                 Spacer()
                 
-                Toggle("მაღალი კონტრასტი", isOn: $isHighContrastEnabled)
-                    .font(Font(bodyFont?.withSize(fontSize) ?? .systemFont(ofSize: 12)))
+                Toggle("მაღალი კონტრასტი", isOn: $viewModel.isHighContrastEnabled)
+                    .font(Font(bodyFont?.withSize(viewModel.fontSize) ?? .systemFont(ofSize: 12)))
                     .foregroundStyle(Color(textColor))
-                    .onChange(of: isHighContrastEnabled, perform: { value in
+                    .onChange(of: viewModel.isHighContrastEnabled, perform: { value in
                         background = value ? .white : ColorManager.shared.backgroundColor
                         textColor = value ? .black : ColorManager.shared.textGrayColor
                     })
                 
-                Toggle("მუქი ტექსტი", isOn: $isBoldTextEnabled)
-                    .font(Font(bodyFont?.withSize(fontSize) ?? .systemFont(ofSize: 12)))
+                Toggle("მუქი ტექსტი", isOn: $viewModel.isBoldTextEnabled)
+                    .font(Font(bodyFont?.withSize(viewModel.fontSize) ?? .systemFont(ofSize: 12)))
                     .foregroundStyle(Color(textColor))
-                    .onChange(of: isBoldTextEnabled, perform: { value in
+                    .onChange(of: viewModel.isBoldTextEnabled, perform: { value in
                         if value {
                             bodyFont = FontManager.shared.headlineFont
                         } else {
@@ -66,6 +63,7 @@ struct AccessibilityView: View {
                 ButtonComponentView(text: "შენახვა") {
                     Task {
                         await saveAccessibilitySettings()
+                        reloadProfileView.toggle()
                         dismiss()
                     }
                 }
@@ -74,15 +72,35 @@ struct AccessibilityView: View {
             }
             .padding(20)
         }
+        .onAppear {
+            fetchAccessibilitySettings()
+        }
     }
     
     //MARK: - Button Action
     
     private func saveAccessibilitySettings() async {
         do {
-            try await viewModel.updateAccessibilitySettings(highContrast: isHighContrastEnabled, boldText: isBoldTextEnabled, fontSize: fontSize)
+            try await viewModel.updateAccessibilitySettings(highContrast: viewModel.isHighContrastEnabled, boldText: viewModel.isBoldTextEnabled, fontSize: viewModel.fontSize)
         } catch {
             print("Failed to save accessibility settings: \(error.localizedDescription)")
+        }
+    }
+    
+    //MARK: - Fetch Settings
+    
+    private func fetchAccessibilitySettings() {
+        viewModel.fetchAccessibilitySettings { [self] settings, error in
+            guard let settings = settings else {
+                print("Error fetching accessibility settings: \(error?.localizedDescription ?? "Unknown error")")
+                return
+            }
+
+            DispatchQueue.main.async {
+                self.viewModel.isHighContrastEnabled = settings.highContrast
+                self.viewModel.isBoldTextEnabled = settings.boldText
+                self.viewModel.fontSize = settings.fontSize
+            }
         }
     }
     
@@ -92,14 +110,14 @@ struct AccessibilityView: View {
         VStack(alignment: .leading, spacing: 30) {
             
             Text("ტექსტის ზომა")
-                .font(Font(bodyFont?.withSize(fontSize) ?? .systemFont(ofSize: 12)))
+                .font(Font(bodyFont?.withSize(viewModel.fontSize) ?? .systemFont(ofSize: 12)))
                 .foregroundStyle(Color(textColor))
             
             
             HStack(spacing: 10) {
                 Text("A")
                     .font(.system(size: 12))
-                Slider(value: $fontSize, in: 12...16, step: 1)
+                Slider(value: $viewModel.fontSize, in: 12...16, step: 1)
                     .tint(Color(ColorManager.shared.primaryColor))
                 
                 Text("A")
@@ -109,6 +127,6 @@ struct AccessibilityView: View {
     }
 }
 
-#Preview {
-    AccessibilityView()
-}
+//#Preview {
+//    AccessibilityView()
+//}
