@@ -50,6 +50,8 @@ final class LoginRequiredView: UIView {
         self.navigationController = navigationController
         setupUI()
         addAction()
+        addColorObserver()
+        addFontObserver()
     }
     
     required init?(coder: NSCoder) {
@@ -77,6 +79,27 @@ final class LoginRequiredView: UIView {
             button.leadingAnchor.constraint(equalTo: mainStack.leadingAnchor),
             button.trailingAnchor.constraint(equalTo: mainStack.trailingAnchor)
         ])
+    }
+    
+    //MARK: - Accessibility
+    
+    @objc func updateFonts() {
+        label.font = FontManager.shared.bodyFontMedium
+        button.titleLabel?.font = FontManager.shared.bodyFontMedium
+    }
+
+    @objc func updateColors() {
+        backgroundColor = ColorManager.shared.backgroundColor
+    }
+
+    private func addFontObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateFonts), name: .fontSettingsDidChange, object: nil)
+        updateFonts()
+    }
+
+    private func addColorObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateColors), name: .colorSettingsDidChange, object: nil)
+        updateColors()
     }
     
     //MARK: - Add Action
