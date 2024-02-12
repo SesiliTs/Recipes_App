@@ -56,9 +56,9 @@ After logging in, a 'like' button appears in recipe details. This feature allows
 
 Enjoy enhanced accessibility options in the Recipes App for a more user-friendly experience. Your accessibility preferences are securely stored in Firebase, ensuring consistency across sessions and devices.
 
-- **Font Size Adjustment: Customize the text size to suit your preferences for improved readability.
-- **Bold Text: Easily identify important information with the option to toggle bold text.
-- **High Contrast Mode: Enhance visibility with high contrast mode, featuring a white background and black text for improved legibility.
+- Font Size Adjustment: Customize the text size to suit your preferences for improved readability.
+- Bold Text: Easily identify important information with the option to toggle bold text.
+- High Contrast Mode: Enhance visibility with high contrast mode, featuring a white background and black text for improved legibility.
 
 
 <p float="left">
