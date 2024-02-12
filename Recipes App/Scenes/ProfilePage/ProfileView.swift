@@ -171,7 +171,7 @@ struct ProfileView: View {
                     
                 }
                 .padding(.horizontal, 16)
-                .padding(.bottom, 30)
+                .padding(.bottom, 50)
                 
             }
             
