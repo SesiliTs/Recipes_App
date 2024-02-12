@@ -92,6 +92,8 @@ final class LandingPageViewController: UIViewController {
         super.viewDidLoad()
         
         addFontObserver()
+        addColorObserver()
+        
         setupUI()
         updateGreetingText()
         observeAuthenticationState()
@@ -124,12 +126,23 @@ final class LandingPageViewController: UIViewController {
         seeAllButton.titleLabel?.font = FontManager.shared.bodyFont
     }
     
-    //MARK: - Add Views
-    
     private func addFontObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(updateFonts), name: .fontSettingsDidChange, object: nil)
         updateFonts()
     }
+    
+    @objc func updateColors() {
+        view.backgroundColor = ColorManager.shared.backgroundColor
+        greetingLabel.textColor = ColorManager.shared.textGrayColor
+    }
+
+    private func addColorObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateColors), name: .colorSettingsDidChange, object: nil)
+        updateColors()
+    }
+    
+    //MARK: - Add Views
+    
     
     private func addViews() {
         view.addSubview(mainStack)
