@@ -16,6 +16,8 @@ final class RecipesListTableViewCell: UITableViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
         view.layer.cornerRadius = 18
+        view.layer.borderWidth = 1
+        view.layer.borderColor = ColorManager.shared.borderColor.cgColor
         view.layer.masksToBounds = true
         return view
     }()
@@ -128,6 +130,8 @@ final class RecipesListTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
+        addColorObserver()
+        addFontObserver()
     }
     
     required init?(coder: NSCoder) {
@@ -170,6 +174,35 @@ final class RecipesListTableViewCell: UITableViewCell {
             mainStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: 10),
             mainStackView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
         ])
+    }
+    
+    //MARK: - Accessibility
+    
+    @objc func updateFonts() {
+        nameLabel.font = FontManager.shared.bodyFontMedium
+        timeLabel.font = FontManager.shared.bodyFont?.withSize(10)
+        difficultyLabel.font = FontManager.shared.bodyFont?.withSize(10)
+        portionLabel.font = FontManager.shared.bodyFont?.withSize(10)
+    }
+
+    @objc func updateColors() {
+        containerView.layer.borderColor = ColorManager.shared.borderColor.cgColor
+        timeLabel.textColor = ColorManager.shared.textLightGray
+        portionLabel.textColor = ColorManager.shared.textLightGray
+        difficultyLabel.textColor = ColorManager.shared.textLightGray
+        clockSymbol.tintColor = ColorManager.shared.textLightGray
+        gearSymbol.tintColor = ColorManager.shared.textLightGray
+        peopleSymbol.tintColor = ColorManager.shared.textLightGray
+    }
+
+    private func addFontObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateFonts), name: .fontSettingsDidChange, object: nil)
+        updateFonts()
+    }
+
+    private func addColorObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateColors), name: .colorSettingsDidChange, object: nil)
+        updateColors()
     }
     
     //MARK: - Configure

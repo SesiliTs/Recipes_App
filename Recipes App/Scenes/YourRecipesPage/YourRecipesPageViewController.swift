@@ -108,10 +108,36 @@ final class YourRecipesPageViewController: UIViewController {
         view.backgroundColor = ColorManager.shared.backgroundColor
         view.addSubview(mainStackView)
         view.addSubview(plusButton)
+        
         setupCollectionView()
         addConstraints()
         setupPlusButton()
+        
+        addFontObserver()
+        addColorObserver()
     }
+    
+    //MARK: - Accessibility
+    
+    @objc func updateFonts() {
+        headlineLabel.font = FontManager.shared.headlineFont
+    }
+
+    @objc func updateColors() {
+        view.backgroundColor = ColorManager.shared.backgroundColor
+    }
+
+    private func addFontObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateFonts), name: .fontSettingsDidChange, object: nil)
+        updateFonts()
+    }
+
+    private func addColorObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateColors), name: .colorSettingsDidChange, object: nil)
+        updateColors()
+    }
+    
+    //MARK: - Setup Collection View
     
     private func setupCollectionView() {
         collectionView.dataSource = self
@@ -123,6 +149,8 @@ final class YourRecipesPageViewController: UIViewController {
     private func registerCollectionViewCell() {
         collectionView.register(RecipeCollectionViewCell.self, forCellWithReuseIdentifier: "RecipeCell")
     }
+    
+    //MARK: - Add Constraints
     
     private func addConstraints() {
         NSLayoutConstraint.activate([
@@ -143,11 +171,15 @@ final class YourRecipesPageViewController: UIViewController {
         ])
     }
     
+    //MARK: - button action
+    
     private func setupPlusButton() {
         plusButton.addAction((UIAction(handler: { [self] _ in
             addButtonTapped()
         })), for: .touchUpInside)
     }
+    
+    //MARK: - Fetch Recipes
     
     private func fetchRecipes() async {
         await viewModel.fetchUserRecipes()
@@ -215,6 +247,8 @@ extension YourRecipesPageViewController: UICollectionViewDataSource, UICollectio
         navigationController?.pushViewController(detailsViewController, animated: true)
     }
 }
+
+//MARK: - Search Bar
 
 extension YourRecipesPageViewController: RecipeCollectionViewCellDelegate {
     func didDeleteRecipe(cell: RecipeCollectionViewCell) {

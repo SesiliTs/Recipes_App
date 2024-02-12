@@ -150,9 +150,9 @@ final class RecommendedCollectionViewCell: UICollectionViewCell {
     @objc func updateColors() {
         shapeView.layer.borderColor = ColorManager.shared.borderColor.cgColor
         nameLabel.textColor = ColorManager.shared.textGrayColor
-        timeLabel.textColor = ColorManager.shared.textGrayColor
-        clockSymbol.tintColor = ColorManager.shared.textGrayColor
-        arrowSymbol.tintColor = ColorManager.shared.textGrayColor
+        timeLabel.textColor = ColorManager.shared.textLightGray
+        clockSymbol.tintColor = ColorManager.shared.textLightGray
+        arrowSymbol.tintColor = ColorManager.shared.textLightGray
     }
 
     private func addFontObserver() {
