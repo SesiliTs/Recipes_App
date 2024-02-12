@@ -279,16 +279,9 @@ final class RecipeCollectionViewCell: UICollectionViewCell {
         }
         
         if let difficulty = recipe?.difficulty {
-            switch difficulty {
-            case .easy:
-                difficultyLabel.text = "მარტივი"
-            case .normal:
-                difficultyLabel.text = "საშუალო"
-            case .hard:
-                difficultyLabel.text = "რთული"
-            }
+            difficultyLabel.text = "სირთულე: \(difficulty.rawValue)"
         } else {
-            difficultyLabel.text = "უცნობი"
+            difficultyLabel.text = "სირთულე: უცნობი"
         }
     }
     
