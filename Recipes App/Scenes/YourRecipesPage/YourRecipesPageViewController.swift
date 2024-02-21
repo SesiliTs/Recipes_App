@@ -112,6 +112,7 @@ final class YourRecipesPageViewController: UIViewController {
         setupCollectionView()
         addConstraints()
         setupPlusButton()
+        setupNavigation()
         
         addFontObserver()
         addColorObserver()
