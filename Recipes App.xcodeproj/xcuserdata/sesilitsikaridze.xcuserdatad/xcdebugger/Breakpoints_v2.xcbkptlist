@@ -7,79 +7,33 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "12BCC7A6-B3D0-4E4D-A3D6-FDEBFDDACE48"
+            uuid = "0793797F-9584-44D5-9F62-B2A08ADB95F3"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Recipes App/Scenes/YourRecipesPage/CollectionView Cell/RecipeCollectionViewCell.swift"
+            filePath = "Recipes App/Scenes/YourRecipesPage/YourRecipesPageViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "140"
-            endingLineNumber = "140"
-            landmarkName = "trashButton"
-            landmarkType = "24">
-            <Locations>
-               <Location
-                  uuid = "12BCC7A6-B3D0-4E4D-A3D6-FDEBFDDACE48 - 36caae9d67ee806e"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; __C.UIButton in variable initialization expression of Recipes_App.RecipeCollectionViewCell.trashButton : __C.UIButton"
-                  moduleName = "Recipes App"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sesilitsikaridze/Desktop/TBC%20iOS/Recipes%20App/Recipes%20App/Scenes/YourRecipesPage/CollectionView%20Cell/RecipeCollectionViewCell.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "141"
-                  endingLineNumber = "141"
-                  offsetFromSymbolStart = "29">
-               </Location>
-               <Location
-                  uuid = "12BCC7A6-B3D0-4E4D-A3D6-FDEBFDDACE48 - 9cfd77e4851626f7"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Recipes_App.RecipeCollectionViewCell.init(frame: __C.CGRect) -&gt; Recipes_App.RecipeCollectionViewCell"
-                  moduleName = "Recipes App"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sesilitsikaridze/Desktop/TBC%20iOS/Recipes%20App/Recipes%20App/Scenes/YourRecipesPage/CollectionView%20Cell/RecipeCollectionViewCell.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "140"
-                  endingLineNumber = "140"
-                  offsetFromSymbolStart = "1153">
-               </Location>
-               <Location
-                  uuid = "12BCC7A6-B3D0-4E4D-A3D6-FDEBFDDACE48 - 5b00211149f4456b"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Recipes_App.RecipeCollectionViewCell.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;Recipes_App.RecipeCollectionViewCell&gt;"
-                  moduleName = "Recipes App"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sesilitsikaridze/Desktop/TBC%20iOS/Recipes%20App/Recipes%20App/Scenes/YourRecipesPage/CollectionView%20Cell/RecipeCollectionViewCell.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "140"
-                  endingLineNumber = "140"
-                  offsetFromSymbolStart = "999">
-               </Location>
-               <Location
-                  uuid = "12BCC7A6-B3D0-4E4D-A3D6-FDEBFDDACE48 - 9cfd77e4851626f7"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Recipes_App.RecipeCollectionViewCell.init(frame: __C.CGRect) -&gt; Recipes_App.RecipeCollectionViewCell"
-                  moduleName = "Recipes App"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sesilitsikaridze/Desktop/TBC%20iOS/Recipes%20App/Recipes%20App/Scenes/YourRecipesPage/CollectionView%20Cell/RecipeCollectionViewCell.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "140"
-                  endingLineNumber = "140"
-                  offsetFromSymbolStart = "1151">
-               </Location>
-            </Locations>
+            startingLineNumber = "255"
+            endingLineNumber = "255"
+            landmarkName = "didDeleteRecipe(cell:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9281C711-857D-464E-9064-F22ECAA7C42A"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Recipes App/Scenes/YourRecipesPage/YourRecipesPageViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "257"
+            endingLineNumber = "257"
+            landmarkName = "didDeleteRecipe(cell:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

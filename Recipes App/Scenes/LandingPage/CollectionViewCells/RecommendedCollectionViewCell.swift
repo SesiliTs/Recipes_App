@@ -52,7 +52,7 @@ final class RecommendedCollectionViewCell: UICollectionViewCell {
     private let timeLabel = {
         let label = UILabel()
         label.textColor = ColorManager.shared.textLightGray
-        label.font = FontManager.shared.bodyFont?.withSize(9)
+        label.font = FontManager.shared.bodyFontSmall
         return label
     }()
     
@@ -144,7 +144,7 @@ final class RecommendedCollectionViewCell: UICollectionViewCell {
     
     @objc func updateFonts() {
         nameLabel.font = FontManager.shared.bodyFont
-        timeLabel.font = FontManager.shared.bodyFont?.withSize(10)
+        timeLabel.font = FontManager.shared.bodyFontSmall
     }
 
     @objc func updateColors() {

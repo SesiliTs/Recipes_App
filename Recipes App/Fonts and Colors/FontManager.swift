@@ -18,9 +18,10 @@ class FontManager {
     
     static let shared = FontManager()
     
-    var bodyFont = UIFont(name: "HelveticaNeueLTGEO-55ROMAN", size: 12.0)
-    var bodyFontMedium = UIFont(name: "HelveticaNeueLTGEO-65Medium", size: 14.0)
-    var headlineFont = UIFont(name: "HelveticaNeueLTGEO-85Heavy", size: 18.0)
+    var bodyFontSmall = UIFont(name: "HelveticaNeueLTGEO-55ROMAN", size: 12.0)
+    var bodyFont = UIFont(name: "HelveticaNeueLTGEO-55ROMAN", size: 14.0)
+    var bodyFontMedium = UIFont(name: "HelveticaNeueLTGEO-65Medium", size: 16.0)
+    var headlineFont = UIFont(name: "HelveticaNeueLTGEO-85Heavy", size: 20.0)
     
     private var userListener: ListenerRegistration?
     
@@ -61,17 +62,17 @@ class FontManager {
         }
         
         if let isBold = data["boldText"] as? Bool, isBold {
-            self.bodyFont = UIFont(name: "HelveticaNeueLTGEO-85Heavy", size: self.bodyFont?.pointSize ?? 12.0)
-            self.bodyFontMedium = UIFont(name: "HelveticaNeueLTGEO-85Heavy", size: self.bodyFontMedium?.pointSize ?? 14.0)
-            self.headlineFont = UIFont(name: "HelveticaNeueLTGEO-85Heavy", size: self.headlineFont?.pointSize ?? 18.0)
+            self.bodyFont = UIFont(name: "HelveticaNeueLTGEO-85Heavy", size: self.bodyFont?.pointSize ?? 14.0)
+            self.bodyFontMedium = UIFont(name: "HelveticaNeueLTGEO-85Heavy", size: self.bodyFontMedium?.pointSize ?? 16.0)
+            self.headlineFont = UIFont(name: "HelveticaNeueLTGEO-85Heavy", size: self.headlineFont?.pointSize ?? 20.0)
             NotificationCenter.default.post(name: .fontSettingsDidChange, object: nil)
         }
     }
     
     private func setDefaultFonts() {
-        self.bodyFont = UIFont(name: "HelveticaNeueLTGEO-55ROMAN", size: 12.0)
-        self.bodyFontMedium = UIFont(name: "HelveticaNeueLTGEO-65Medium", size: 14.0)
-        self.headlineFont = UIFont(name: "HelveticaNeueLTGEO-85Heavy", size: 18.0)
+        self.bodyFont = UIFont(name: "HelveticaNeueLTGEO-55ROMAN", size: 14.0)
+        self.bodyFontMedium = UIFont(name: "HelveticaNeueLTGEO-65Medium", size: 16.0)
+        self.headlineFont = UIFont(name: "HelveticaNeueLTGEO-85Heavy", size: 20.0)
         NotificationCenter.default.post(name: .fontSettingsDidChange, object: nil)
     }
     

@@ -140,7 +140,13 @@ final class RecipeCollectionViewCell: UICollectionViewCell {
     private let trashButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(systemName: "minus.circle.fill"), for: .normal)
+        button.backgroundColor = UIColor.white
+        button.widthAnchor.constraint(equalToConstant: 18).isActive = true
+        button.heightAnchor.constraint(equalToConstant: 18).isActive = true
+        button.layer.cornerRadius = 4
+        let config = UIImage.SymbolConfiguration(pointSize: 10, weight: .bold)
+        let minusImage = UIImage(systemName: "xmark", withConfiguration: config)
+        button.setImage(minusImage, for: .normal)
         button.tintColor = ColorManager.shared.primaryColor
         button.isUserInteractionEnabled = true
         return button

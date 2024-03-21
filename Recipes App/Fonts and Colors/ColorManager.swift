@@ -18,7 +18,7 @@ class ColorManager {
     var backgroundColor: UIColor = UIColor(hexString: "#F9F9F9")
     var primaryColor: UIColor = UIColor(hexString: "#F55A51")
     var textGrayColor: UIColor = UIColor(hexString: "#666666")
-    var textLightGray: UIColor = UIColor(hexString: "#BDBDBD")
+    var textLightGray: UIColor = UIColor(hexString: "#B1B1B1")
     var borderColor: UIColor = UIColor(.clear)
 
     private var userListener: ListenerRegistration?
@@ -68,7 +68,7 @@ class ColorManager {
         backgroundColor = UIColor(hexString: "#F9F9F9")
         primaryColor = UIColor(hexString: "#F55A51")
         textGrayColor = UIColor(hexString: "#666666")
-        textLightGray = UIColor(hexString: "#BDBDBD")
+        textLightGray = UIColor(hexString: "#B1B1B1")
         borderColor = UIColor(.clear)
         NotificationCenter.default.post(name: .colorSettingsDidChange, object: nil)
     }

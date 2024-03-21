@@ -20,7 +20,7 @@ final class IngredientTableViewCell: UITableViewCell {
     
     private let ingredientLabel = {
         let label = UILabel()
-        label.font = FontManager.shared.bodyFont?.withSize(14)
+        label.font = FontManager.shared.bodyFont
         label.textColor = ColorManager.shared.textGrayColor
         return label
     }()
