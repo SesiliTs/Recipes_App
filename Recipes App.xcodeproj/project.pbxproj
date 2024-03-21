@@ -131,6 +131,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0B0DA9AB2BAC36DD00770221 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				0B70FE632B70F9CA009B1FDC /* FireStoreManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
 		0B85A5782B66C5BC00B06DAE /* AddRecipe */ = {
 			isa = PBXGroup;
 			children = (
@@ -199,6 +207,7 @@
 				0BBCC9132B5A7454001C198D /* Scenes */,
 				0BBCC98E2B5EA8DD001C198D /* Components */,
 				0BBCC95D2B5A85F1001C198D /* Extensions */,
+				0B0DA9AB2BAC36DD00770221 /* Manager */,
 				0BBCC95A2B5A7D56001C198D /* Fonts and Colors */,
 				0BBCC9122B5A7447001C198D /* Assets */,
 				0BBCC9082B5A73D6001C198D /* Info.plist */,
@@ -244,7 +253,6 @@
 			children = (
 				0BBCC8FE2B5A73D2001C198D /* LandingPageViewController.swift */,
 				0BBCC9692B5B0ADE001C198D /* LandingPageViewModel.swift */,
-				0B70FE632B70F9CA009B1FDC /* FireStoreManager.swift */,
 				0BA550882B6A9E47001B86DF /* SeeList */,
 				0BBCC96E2B5B0CF4001C198D /* CollectionViewCells */,
 			);

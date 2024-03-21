@@ -82,7 +82,7 @@ final class RecipeDetailsPageViewController: UIViewController {
     private let timeLabel = {
         let label = UILabel()
         label.textColor = ColorManager.shared.textLightGray
-        label.font = FontManager.shared.bodyFontMedium?.withSize(12)
+        label.font = FontManager.shared.bodyFontSmall
         return label
     }()
     
@@ -105,7 +105,7 @@ final class RecipeDetailsPageViewController: UIViewController {
     private let difficultyLabel = {
         let label = UILabel()
         label.textColor = ColorManager.shared.textLightGray
-        label.font = FontManager.shared.bodyFontMedium?.withSize(12)
+        label.font = FontManager.shared.bodyFontSmall
         return label
     }()
     
@@ -128,7 +128,7 @@ final class RecipeDetailsPageViewController: UIViewController {
     private let portionLabel = {
         let label = UILabel()
         label.textColor = ColorManager.shared.textLightGray
-        label.font = FontManager.shared.bodyFontMedium?.withSize(12)
+        label.font = FontManager.shared.bodyFontSmall
         return label
     }()
     
@@ -154,7 +154,7 @@ final class RecipeDetailsPageViewController: UIViewController {
     private let ingredientsLabel = {
         let label = UILabel()
         label.text = "ინგრედიენტები".uppercased()
-        label.font = FontManager.shared.bodyFontMedium?.withSize(18)
+        label.font = FontManager.shared.bodyFontMedium
         return label
     }()
     
@@ -163,14 +163,14 @@ final class RecipeDetailsPageViewController: UIViewController {
     private let rulesLabel = {
         let label = UILabel()
         label.text = "მომზადების წესი".uppercased()
-        label.font = FontManager.shared.bodyFontMedium?.withSize(18)
+        label.font = FontManager.shared.bodyFontMedium
         return label
     }()
     
     private let recipeLabel = {
         let label = UILabel()
         label.textColor = ColorManager.shared.textGrayColor
-        label.font = FontManager.shared.bodyFont?.withSize(14)
+        label.font = FontManager.shared.bodyFont
         label.numberOfLines = 0
         return label
     }()

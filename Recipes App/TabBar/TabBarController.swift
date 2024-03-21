@@ -22,7 +22,7 @@ final class TabBarController: UITabBarController {
     //MARK: - Setup TabBar
     
     private func setupTabs() {
-        let landing = createNavigation(image: UIImage(named: "House"), selectedImage: UIImage(named: "HouseFilled"), viewController: LandingPageViewController())
+        let landing = createNavigation(image: UIImage(named: "House"), selectedImage: UIImage.houseFilled, viewController: LandingPageViewController())
         let save = createNavigation(image: UIImage(named: "Cook"), selectedImage: UIImage(named: "CookFilled"), viewController: YourRecipesPageViewController())
         let favourites = createNavigation(image: UIImage(named: "Heart"), selectedImage: UIImage(named: "HeartFilled"), viewController: FavouriteRecipesPageViewController())
         
