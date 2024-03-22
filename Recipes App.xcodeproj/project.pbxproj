@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0B018A192B666D8F007FD344 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 0B018A182B666D8F007FD344 /* FirebaseStorage */; };
+		0B0DA9AE2BADA9F500770221 /* CommunityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0DA9AD2BADA9F500770221 /* CommunityViewController.swift */; };
+		0B0DA9B02BADAABA00770221 /* CommunityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0DA9AF2BADAABA00770221 /* CommunityTableViewCell.swift */; };
 		0B5539A52B69172400B235E7 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5539A42B69172400B235E7 /* TabBarController.swift */; };
 		0B70FE622B7009A0009B1FDC /* FavouriteRecipesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B70FE612B7009A0009B1FDC /* FavouriteRecipesViewModel.swift */; };
 		0B70FE642B70F9CA009B1FDC /* FireStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B70FE632B70F9CA009B1FDC /* FireStoreManager.swift */; };
@@ -63,6 +65,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0B0DA9AD2BADA9F500770221 /* CommunityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityViewController.swift; sourceTree = "<group>"; };
+		0B0DA9AF2BADAABA00770221 /* CommunityTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityTableViewCell.swift; sourceTree = "<group>"; };
 		0B5539A42B69172400B235E7 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TabBarController.swift; path = "Recipes App/TabBar/TabBarController.swift"; sourceTree = SOURCE_ROOT; };
 		0B70FE612B7009A0009B1FDC /* FavouriteRecipesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteRecipesViewModel.swift; sourceTree = "<group>"; };
 		0B70FE632B70F9CA009B1FDC /* FireStoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireStoreManager.swift; sourceTree = "<group>"; };
@@ -137,6 +141,15 @@
 				0B70FE632B70F9CA009B1FDC /* FireStoreManager.swift */,
 			);
 			path = Manager;
+			sourceTree = "<group>";
+		};
+		0B0DA9AC2BADA9CF00770221 /* CommunityPage */ = {
+			isa = PBXGroup;
+			children = (
+				0B0DA9AD2BADA9F500770221 /* CommunityViewController.swift */,
+				0B0DA9AF2BADAABA00770221 /* CommunityTableViewCell.swift */,
+			);
+			path = CommunityPage;
 			sourceTree = "<group>";
 		};
 		0B85A5782B66C5BC00B06DAE /* AddRecipe */ = {
@@ -238,10 +251,12 @@
 		0BBCC9132B5A7454001C198D /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				0BBCC9792B5BE185001C198D /* TabBar */,
 				0BBCC9142B5A7462001C198D /* LandingPage */,
 				0BBCC9852B5D3488001C198D /* RecipeDetails */,
 				0BBCC97C2B5BE298001C198D /* YourRecipesPage */,
 				0BBCC97D2B5BE2BF001C198D /* FavouriteRecipesPage */,
+				0B0DA9AC2BADA9CF00770221 /* CommunityPage */,
 				0BBCC97E2B5BE2FB001C198D /* ProfilePage */,
 				0BE1BCA92B64050300873512 /* Authentication */,
 			);
@@ -294,7 +309,6 @@
 				0BBCC96C2B5B0B16001C198D /* RecipeModel.swift */,
 				0BBCC9712B5B0F05001C198D /* CategoryModel.swift */,
 				0BE1BCA72B63F3A300873512 /* UserModel.swift */,
-				0BBCC9792B5BE185001C198D /* TabBar */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -532,6 +546,7 @@
 				0BD4576A2B66578D0074FC00 /* ImagePicker.swift in Sources */,
 				0BBCC8FB2B5A73D2001C198D /* AppDelegate.swift in Sources */,
 				0BBCC9802B5BE33C001C198D /* YourRecipesPageViewController.swift in Sources */,
+				0B0DA9AE2BADA9F500770221 /* CommunityViewController.swift in Sources */,
 				0BA5508F2B6BF2BE001B86DF /* LoginRequiredView.swift in Sources */,
 				0BBCC9612B5A86D7001C198D /* ColorManager.swift in Sources */,
 				0B70FE622B7009A0009B1FDC /* FavouriteRecipesViewModel.swift in Sources */,
@@ -544,6 +559,7 @@
 				0BBCC96D2B5B0B16001C198D /* RecipeModel.swift in Sources */,
 				0BE1BCAD2B6406C200873512 /* ButtonComponentView.swift in Sources */,
 				0BE1BC982B5EEC0700873512 /* RecipeDetailsViewModel.swift in Sources */,
+				0B0DA9B02BADAABA00770221 /* CommunityTableViewCell.swift in Sources */,
 				0BBCC98A2B5D576B001C198D /* IngredientTableViewCell.swift in Sources */,
 				0BE1BCA22B63E1A700873512 /* LoginView.swift in Sources */,
 				0BC33B452B780121002A7114 /* YourRecipesViewModel.swift in Sources */,

@@ -22,14 +22,15 @@ final class TabBarController: UITabBarController {
     //MARK: - Setup TabBar
     
     private func setupTabs() {
-        let landing = createNavigation(image: UIImage(named: "House"), selectedImage: UIImage.houseFilled, viewController: LandingPageViewController())
-        let save = createNavigation(image: UIImage(named: "Cook"), selectedImage: UIImage(named: "CookFilled"), viewController: YourRecipesPageViewController())
-        let favourites = createNavigation(image: UIImage(named: "Heart"), selectedImage: UIImage(named: "HeartFilled"), viewController: FavouriteRecipesPageViewController())
+        let landing = createNavigation(image: UIImage.house, selectedImage: UIImage.houseFilled, viewController: LandingPageViewController())
+        let save = createNavigation(image: UIImage.cook, selectedImage: UIImage.cookFilled, viewController: YourRecipesPageViewController())
+        let favourites = createNavigation(image: UIImage.heart, selectedImage: UIImage.heartFilled, viewController: FavouriteRecipesPageViewController())
+        let community = createNavigation(image: UIImage.chat, selectedImage: UIImage.chatFilled, viewController: CommunityViewController())
         
         let profileHostingController = UIHostingController(rootView: ProfilePage().environmentObject(AuthViewModel()))
-        let profile = createNavigation(image: UIImage(named: "Person"), selectedImage: UIImage(named: "PersonFilled"), viewController: profileHostingController)
+        let profile = createNavigation(image: UIImage.person, selectedImage: UIImage.personFilled, viewController: profileHostingController)
 
-        setViewControllers([landing, save, favourites, profile], animated: true)
+        setViewControllers([landing, save, favourites, community, profile], animated: true)
     }
 
     private func createNavigation(image: UIImage?, selectedImage: UIImage?, viewController: UIViewController) -> UINavigationController {
