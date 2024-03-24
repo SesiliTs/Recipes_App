@@ -12,15 +12,6 @@ class PostDetailsViewController: UIViewController {
     var selectedPost: Post?
 
     //MARK: Properties
-    
-    private let containerView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
-        view.layer.cornerRadius = 18
-        view.layer.masksToBounds = true
-        return view
-    }()
 
     let profileImage = {
         let imageView = UIImageView()
@@ -107,13 +98,46 @@ class PostDetailsViewController: UIViewController {
         return label
     }()
     
-    private lazy var mainStack = {
+    private lazy var postStack = {
         let stackView = UIStackView (arrangedSubviews: [detailsStack, questionLabel, bodyLabel])
-        stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.spacing = 10
         stackView.axis = .vertical
         return stackView
     }()
+    
+    private let addCommentField = {
+        let textField = UITextField()
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: textField.frame.height))
+        textField.leftView = paddingView
+        textField.leftViewMode = .always
+        textField.heightAnchor.constraint(equalToConstant: 45).isActive = true
+        textField.placeholder = "დაწერე კომენტარი..."
+        textField.font = FontManager.shared.bodyFont
+        textField.layer.cornerRadius = 18
+        textField.autocapitalizationType = .none
+        textField.autocapitalizationType = .none
+        textField.backgroundColor = .white
+        textField.clearButtonMode = .whileEditing
+        return textField
+    }()
+    
+    private lazy var commentStack = {
+        let stackView = UIStackView (arrangedSubviews: [addCommentField])
+        stackView.spacing = 10
+        stackView.axis = .vertical
+        return stackView
+    }()
+    
+    private lazy var mainStack = {
+        let stackView = UIStackView (arrangedSubviews: [postStack, commentStack])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.spacing = 50
+        stackView.axis = .vertical
+        return stackView
+    }()
+
+    
+    //MARK: - View LifeCycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -130,20 +154,14 @@ class PostDetailsViewController: UIViewController {
     }
     
     private func addViews() {
-        view.addSubview(containerView)
-        containerView.addSubview(mainStack)
+        view.addSubview(mainStack)
     }
     
     private func addConstraints() {
         NSLayoutConstraint.activate([
-            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            containerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 80),
-    
-            mainStack.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 15),
-            mainStack.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 15),
-            mainStack.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15),
-            mainStack.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -15)
+            mainStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            mainStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            mainStack.topAnchor.constraint(equalTo: view.topAnchor, constant: 80),
         ])
     }
         
