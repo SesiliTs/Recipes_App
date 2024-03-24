@@ -62,6 +62,8 @@
 		0BE1BCAB2B64053400873512 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE1BCAA2B64053400873512 /* AuthViewModel.swift */; };
 		0BE1BCAD2B6406C200873512 /* ButtonComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE1BCAC2B6406C200873512 /* ButtonComponentView.swift */; };
 		0BE1BCAF2B6410E200873512 /* ProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE1BCAE2B6410E200873512 /* ProfilePage.swift */; };
+		0BE9E1872BB034B30098E696 /* PostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE9E1862BB034B30098E696 /* PostModel.swift */; };
+		0BE9E18B2BB055AC0098E696 /* PostDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE9E18A2BB055AC0098E696 /* PostDetailsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -118,6 +120,8 @@
 		0BE1BCAA2B64053400873512 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		0BE1BCAC2B6406C200873512 /* ButtonComponentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonComponentView.swift; sourceTree = "<group>"; };
 		0BE1BCAE2B6410E200873512 /* ProfilePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePage.swift; sourceTree = "<group>"; };
+		0BE9E1862BB034B30098E696 /* PostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostModel.swift; sourceTree = "<group>"; };
+		0BE9E18A2BB055AC0098E696 /* PostDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,8 +150,8 @@
 		0B0DA9AC2BADA9CF00770221 /* CommunityPage */ = {
 			isa = PBXGroup;
 			children = (
-				0B0DA9AD2BADA9F500770221 /* CommunityViewController.swift */,
-				0B0DA9AF2BADAABA00770221 /* CommunityTableViewCell.swift */,
+				0BE9E1882BB055640098E696 /* MainPage */,
+				0BE9E1892BB055750098E696 /* PostDetails */,
 			);
 			path = CommunityPage;
 			sourceTree = "<group>";
@@ -309,6 +313,7 @@
 				0BBCC96C2B5B0B16001C198D /* RecipeModel.swift */,
 				0BBCC9712B5B0F05001C198D /* CategoryModel.swift */,
 				0BE1BCA72B63F3A300873512 /* UserModel.swift */,
+				0BE9E1862BB034B30098E696 /* PostModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -442,6 +447,23 @@
 			path = Authentication;
 			sourceTree = "<group>";
 		};
+		0BE9E1882BB055640098E696 /* MainPage */ = {
+			isa = PBXGroup;
+			children = (
+				0B0DA9AD2BADA9F500770221 /* CommunityViewController.swift */,
+				0B0DA9AF2BADAABA00770221 /* CommunityTableViewCell.swift */,
+			);
+			path = MainPage;
+			sourceTree = "<group>";
+		};
+		0BE9E1892BB055750098E696 /* PostDetails */ = {
+			isa = PBXGroup;
+			children = (
+				0BE9E18A2BB055AC0098E696 /* PostDetailsViewController.swift */,
+			);
+			path = PostDetails;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -527,10 +549,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				0BBCC9782B5BB8ED001C198D /* ImageFromURL.swift in Sources */,
+				0BE9E18B2BB055AC0098E696 /* PostDetailsViewController.swift in Sources */,
 				0BAACED62B791E96006D003C /* AccessibilityView.swift in Sources */,
 				0BBCC9742B5B176F001C198D /* RecommendedCollectionViewCell.swift in Sources */,
 				0B85A57A2B66C5D500B06DAE /* AddRecipeView.swift in Sources */,
 				0BE1BC912B5EB1BB00873512 /* RecipesListComponentView.swift in Sources */,
+				0BE9E1872BB034B30098E696 /* PostModel.swift in Sources */,
 				0BE1BCA82B63F3A300873512 /* UserModel.swift in Sources */,
 				0BE1BC9A2B615E0A00873512 /* RecipeSearchBar.swift in Sources */,
 				0BA5508A2B6A9E64001B86DF /* SeeListViewController.swift in Sources */,

@@ -1,15 +1,17 @@
 //
-//  CommunityTableViewCell.swift
+//  PostDetailsViewController.swift
 //  Recipes App
 //
-//  Created by Sesili Tsikaridze on 22.03.24.
+//  Created by Sesili Tsikaridze on 24.03.24.
 //
 
 import UIKit
 
-class CommunityTableViewCell: UITableViewCell {
+class PostDetailsViewController: UIViewController {
+    
+    var selectedPost: Post?
 
-    //MARK: - Properties
+    //MARK: Properties
     
     private let containerView: UIView = {
         let view = UIView()
@@ -19,19 +21,13 @@ class CommunityTableViewCell: UITableViewCell {
         view.layer.masksToBounds = true
         return view
     }()
-    
-    let circleContainer = {
-        let view = UIView()
-        view.backgroundColor = .systemPink
-        view.layer.cornerRadius = 20
-        view.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        view.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        view.layer.masksToBounds = true
-        return view
-    }()
 
-    let contentImageView = {
+    let profileImage = {
         let imageView = UIImageView()
+        imageView.layer.cornerRadius = 20
+        imageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        imageView.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        imageView.layer.masksToBounds = true
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         return imageView
@@ -39,7 +35,6 @@ class CommunityTableViewCell: UITableViewCell {
     
     private let userNameLabel = {
         let label = UILabel()
-        label.text = "სესილი წიქარიძე"
         label.font = FontManager.shared.bodyFont
         label.textColor = ColorManager.shared.textGrayColor
         return label
@@ -47,9 +42,6 @@ class CommunityTableViewCell: UITableViewCell {
     
     private let dateLabel = {
         let label = UILabel()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.MM.yyyy, HH:mm"
-        label.text = dateFormatter.string(from: Date())
         label.font = FontManager.shared.bodyFont
         label.textColor = ColorManager.shared.textGrayColor
         return label
@@ -63,8 +55,7 @@ class CommunityTableViewCell: UITableViewCell {
     }()
     
     private lazy var imageStack = {
-        circleContainer.addSubview(contentImageView)
-        let stackView = UIStackView (arrangedSubviews: [circleContainer, nameStack])
+        let stackView = UIStackView (arrangedSubviews: [profileImage, nameStack])
         stackView.spacing = 10
         stackView.alignment = .center
         return stackView
@@ -82,7 +73,6 @@ class CommunityTableViewCell: UITableViewCell {
     
     private let commentsLabel = {
         let label = UILabel()
-        label.text = "12"
         label.textColor = ColorManager.shared.textLightGray
         label.font = FontManager.shared.bodyFont
         return label
@@ -105,70 +95,66 @@ class CommunityTableViewCell: UITableViewCell {
     
     private let questionLabel = {
         let label = UILabel()
-        label.text = "რა შეიძლება გამოვიყენოთ გამაფხვიერებლის ნაცვლად? რა შეიძლება გამოვიყენოთ გამაფხვიერებლის ნაცვლად?".uppercased()
-        label.numberOfLines = 3
+        label.numberOfLines = 0
         label.font = FontManager.shared.headlineFont
         return label
     }()
     
+    private let bodyLabel = {
+        let label = UILabel()
+        label.numberOfLines = 9
+        label.font = FontManager.shared.bodyFont
+        return label
+    }()
+    
     private lazy var mainStack = {
-        let stackView = UIStackView (arrangedSubviews: [detailsStack, questionLabel])
+        let stackView = UIStackView (arrangedSubviews: [detailsStack, questionLabel, bodyLabel])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.spacing = 10
         stackView.axis = .vertical
         return stackView
     }()
 
-    
-    // MARK: - init
-    
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override func viewDidLoad() {
+        super.viewDidLoad()
         setupUI()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    // MARK: - Prepare For Reuse
-
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        userNameLabel.text = nil
     }
     
     // MARK: - Private Methods
     
     private func setupUI() {
-        backgroundColor = .clear
+        view.backgroundColor = ColorManager.shared.backgroundColor
         addViews()
         addConstraints()
+        configure()
     }
     
     private func addViews() {
-        contentView.addSubview(containerView)
+        view.addSubview(containerView)
         containerView.addSubview(mainStack)
     }
     
     private func addConstraints() {
         NSLayoutConstraint.activate([
-            containerView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            containerView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            containerView.topAnchor.constraint(equalTo: topAnchor),
-            containerView.heightAnchor.constraint(equalToConstant: 130),
-            
+            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            containerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 80),
+    
             mainStack.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 15),
             mainStack.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 15),
-            mainStack.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15)
+            mainStack.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15),
+            mainStack.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -15)
         ])
     }
-    
-    //MARK: - Configure
-    
-    
-    func configure(userName: String) {
-        userNameLabel.text = userName.uppercased()
+        
+    func configure() {
+        guard let selectedPost else { return }
+        userNameLabel.text = selectedPost.userName
+        profileImage.load(urlString: selectedPost.imageURL)
+        dateLabel.text = selectedPost.date
+        commentsLabel.text = "\(selectedPost.commentsQuantity)"
+        questionLabel.text = selectedPost.question.uppercased()
+        bodyLabel.text = selectedPost.body
     }
 
 }

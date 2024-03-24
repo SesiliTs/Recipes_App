@@ -68,18 +68,27 @@ class CommunityViewController: UIViewController {
 
     extension CommunityViewController: UITableViewDataSource, UITableViewDelegate {
         func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            5
+            samplePosts.count
         }
         
         func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as? CommunityTableViewCell else { return UITableViewCell()}
             cell.selectionStyle = .none
+            let currentPost = samplePosts[indexPath.row]
+            cell.configure(post: currentPost)
             return cell
             
         }
         
+        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+            let currentPost = samplePosts[indexPath.row]
+            let postDetailsViewController = PostDetailsViewController()
+            postDetailsViewController.selectedPost = currentPost
+            navigationController?.pushViewController(postDetailsViewController, animated: true)
+        }
+        
         func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-            160
+            140
         }
 
 }
