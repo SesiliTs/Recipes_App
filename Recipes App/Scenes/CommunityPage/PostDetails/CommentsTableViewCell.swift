@@ -32,7 +32,7 @@ class CommentsTableViewCell: UITableViewCell {
     private let dateLabel = {
         let label = UILabel()
         label.font = FontManager.shared.bodyFont
-        label.textColor = ColorManager.shared.textGrayColor
+        label.textColor = ColorManager.shared.textLightGray
         return label
 
     }()
@@ -112,8 +112,21 @@ class CommentsTableViewCell: UITableViewCell {
     func configure(post: Post) {
         userNameLabel.text = post.userName
         profileImage.load(urlString: post.imageURL)
-        dateLabel.text = post.date
-        commentLabel.text = post.question
+        
+        if let date = DateFormatter.postDateFormatter().date(from: post.date) {
+            let currentDate = Date()
+            if currentDate.timeIntervalSince(date) <= (24 * 60 * 60) {
+                let timeFormatter = DateFormatter()
+                timeFormatter.dateFormat = "HH:mm"
+                dateLabel.text = timeFormatter.string(from: date)
+            } else {
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "dd.MM.yyyy"
+                dateLabel.text = dateFormatter.string(from: date)
+            }
+        }
+        
+        commentLabel.text = post.question        
     }
 
 }

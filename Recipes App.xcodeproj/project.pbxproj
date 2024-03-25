@@ -65,6 +65,7 @@
 		0BE9E1872BB034B30098E696 /* PostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE9E1862BB034B30098E696 /* PostModel.swift */; };
 		0BE9E18B2BB055AC0098E696 /* PostDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE9E18A2BB055AC0098E696 /* PostDetailsViewController.swift */; };
 		0BE9E18D2BB0AFD90098E696 /* CommentsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE9E18C2BB0AFD90098E696 /* CommentsTableViewCell.swift */; };
+		0BE9E18F2BB18CC10098E696 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE9E18E2BB18CC10098E696 /* DateFormatter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -124,6 +125,7 @@
 		0BE9E1862BB034B30098E696 /* PostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostModel.swift; sourceTree = "<group>"; };
 		0BE9E18A2BB055AC0098E696 /* PostDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailsViewController.swift; sourceTree = "<group>"; };
 		0BE9E18C2BB0AFD90098E696 /* CommentsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsTableViewCell.swift; sourceTree = "<group>"; };
+		0BE9E18E2BB18CC10098E696 /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -305,6 +307,7 @@
 				0BBCC95E2B5A8606001C198D /* ColorFromHex.swift */,
 				0BBCC9672B5AB0D7001C198D /* TextToImage.swift */,
 				0BBCC9772B5BB8ED001C198D /* ImageFromURL.swift */,
+				0BE9E18E2BB18CC10098E696 /* DateFormatter.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -575,6 +578,7 @@
 				0BBCC9802B5BE33C001C198D /* YourRecipesPageViewController.swift in Sources */,
 				0B0DA9AE2BADA9F500770221 /* CommunityViewController.swift in Sources */,
 				0BA5508F2B6BF2BE001B86DF /* LoginRequiredView.swift in Sources */,
+				0BE9E18F2BB18CC10098E696 /* DateFormatter.swift in Sources */,
 				0BBCC9612B5A86D7001C198D /* ColorManager.swift in Sources */,
 				0B70FE622B7009A0009B1FDC /* FavouriteRecipesViewModel.swift in Sources */,
 				0B70FE642B70F9CA009B1FDC /* FireStoreManager.swift in Sources */,
