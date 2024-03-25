@@ -128,10 +128,12 @@ class PostDetailsViewController: UIViewController {
         return stackView
     }()
     
+    private let tableView = UITableView()
+    
     private lazy var mainStack = {
-        let stackView = UIStackView (arrangedSubviews: [postStack, commentStack])
+        let stackView = UIStackView (arrangedSubviews: [postStack, commentStack, tableView])
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.spacing = 50
+        stackView.spacing = 20
         stackView.axis = .vertical
         return stackView
     }()
@@ -142,6 +144,8 @@ class PostDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        tableView.estimatedRowHeight = 140
+        tableView.rowHeight = UITableView.automaticDimension
     }
     
     // MARK: - Private Methods
@@ -150,6 +154,7 @@ class PostDetailsViewController: UIViewController {
         view.backgroundColor = ColorManager.shared.backgroundColor
         addViews()
         addConstraints()
+        setupTableView()
         configure()
     }
     
@@ -162,7 +167,30 @@ class PostDetailsViewController: UIViewController {
             mainStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             mainStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             mainStack.topAnchor.constraint(equalTo: view.topAnchor, constant: 80),
+            mainStack.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80),
         ])
+    }
+    
+    //MARK: Setup TableView
+    
+    private func setupTableView() {
+        registerCell()
+        addDelegate()
+        setupTableViewUI()
+    }
+    
+    private func registerCell() {
+        tableView.register(CommentsTableViewCell.self, forCellReuseIdentifier: "CommentCell")
+    }
+    
+    private func setupTableViewUI() {
+        tableView.backgroundColor = .white
+        tableView.layer.cornerRadius = 18
+    }
+    
+    private func addDelegate() {
+        tableView.delegate = self
+        tableView.dataSource = self
     }
         
     func configure() {
@@ -173,6 +201,26 @@ class PostDetailsViewController: UIViewController {
         commentsLabel.text = "\(selectedPost.commentsQuantity)"
         questionLabel.text = selectedPost.question.uppercased()
         bodyLabel.text = selectedPost.body
+    }
+
+}
+
+extension PostDetailsViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        samplePosts.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath) as? CommentsTableViewCell else { return UITableViewCell()}
+        cell.selectionStyle = .none
+        let currentPost = samplePosts[indexPath.row]
+        cell.configure(post: currentPost)
+        return cell
+        
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        UITableView.automaticDimension
     }
 
 }
