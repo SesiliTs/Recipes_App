@@ -66,6 +66,7 @@
 		0BE9E18B2BB055AC0098E696 /* PostDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE9E18A2BB055AC0098E696 /* PostDetailsViewController.swift */; };
 		0BE9E18D2BB0AFD90098E696 /* CommentsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE9E18C2BB0AFD90098E696 /* CommentsTableViewCell.swift */; };
 		0BE9E18F2BB18CC10098E696 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE9E18E2BB18CC10098E696 /* DateFormatter.swift */; };
+		0BE9E1912BB2F1200098E696 /* CommunityPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE9E1902BB2F1200098E696 /* CommunityPageViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -126,6 +127,7 @@
 		0BE9E18A2BB055AC0098E696 /* PostDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailsViewController.swift; sourceTree = "<group>"; };
 		0BE9E18C2BB0AFD90098E696 /* CommentsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsTableViewCell.swift; sourceTree = "<group>"; };
 		0BE9E18E2BB18CC10098E696 /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
+		0BE9E1902BB2F1200098E696 /* CommunityPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityPageViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +158,7 @@
 			children = (
 				0BE9E1882BB055640098E696 /* MainPage */,
 				0BE9E1892BB055750098E696 /* PostDetails */,
+				0BE9E1902BB2F1200098E696 /* CommunityPageViewModel.swift */,
 			);
 			path = CommunityPage;
 			sourceTree = "<group>";
@@ -559,6 +562,7 @@
 				0BAACED62B791E96006D003C /* AccessibilityView.swift in Sources */,
 				0BBCC9742B5B176F001C198D /* RecommendedCollectionViewCell.swift in Sources */,
 				0B85A57A2B66C5D500B06DAE /* AddRecipeView.swift in Sources */,
+				0BE9E1912BB2F1200098E696 /* CommunityPageViewModel.swift in Sources */,
 				0BE1BC912B5EB1BB00873512 /* RecipesListComponentView.swift in Sources */,
 				0BE9E1872BB034B30098E696 /* PostModel.swift in Sources */,
 				0BE1BCA82B63F3A300873512 /* UserModel.swift in Sources */,

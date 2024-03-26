@@ -9,6 +9,8 @@ import UIKit
 
 class PostDetailsViewController: UIViewController {
     
+    private let viewModel = CommunityPageViewModel()
+    private var comments = [Comment]()
     var selectedPost: Post?
 
     //MARK: Properties
@@ -144,8 +146,7 @@ class PostDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        tableView.estimatedRowHeight = 140
-        tableView.rowHeight = UITableView.automaticDimension
+        fetchData()
     }
     
     // MARK: - Private Methods
@@ -186,19 +187,35 @@ class PostDetailsViewController: UIViewController {
     private func setupTableViewUI() {
         tableView.backgroundColor = .white
         tableView.layer.cornerRadius = 18
+        tableView.estimatedRowHeight = 140
+        tableView.rowHeight = UITableView.automaticDimension
     }
     
     private func addDelegate() {
         tableView.delegate = self
         tableView.dataSource = self
     }
-        
+    
+    //MARK: - Fetch Comments
+    
+    private func fetchData() {
+        guard let selectedPost else { return }
+        viewModel.fetchComments(for: selectedPost.id) { comments in
+            self.comments = comments
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
+     
+    //MARK: - Configure
+    
     func configure() {
         guard let selectedPost else { return }
         userNameLabel.text = selectedPost.userName
         profileImage.load(urlString: selectedPost.imageURL)
         dateLabel.text = selectedPost.date
-        commentsLabel.text = "\(selectedPost.commentsQuantity)"
+//        commentsLabel.text = "\(selectedPost.comments.count)"
         questionLabel.text = selectedPost.question.uppercased()
         bodyLabel.text = selectedPost.body
     }
@@ -207,14 +224,14 @@ class PostDetailsViewController: UIViewController {
 
 extension PostDetailsViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        samplePosts.count
+        comments.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath) as? CommentsTableViewCell else { return UITableViewCell()}
         cell.selectionStyle = .none
-        let currentPost = samplePosts[indexPath.row]
-        cell.configure(post: currentPost)
+        let currentComment = comments[indexPath.row]
+        cell.configure(comment: currentComment)
         return cell
         
     }

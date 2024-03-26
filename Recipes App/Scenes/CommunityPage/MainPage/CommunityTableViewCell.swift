@@ -158,7 +158,7 @@ class CommunityTableViewCell: UITableViewCell {
         userNameLabel.text = post.userName
         profileImage.load(urlString: post.imageURL)
         dateLabel.text = post.date
-        commentsLabel.text = "\(post.commentsQuantity)"
+//        commentsLabel.text = "\(post.comments.count)"
         questionLabel.text = post.question.uppercased()
     }
 

@@ -109,11 +109,11 @@ class CommentsTableViewCell: UITableViewCell {
     
     //MARK: - Configure
     
-    func configure(post: Post) {
-        userNameLabel.text = post.userName
-        profileImage.load(urlString: post.imageURL)
+    func configure(comment: Comment) {
+        userNameLabel.text = comment.userName
+        profileImage.load(urlString: comment.imageURL)
         
-        if let date = DateFormatter.postDateFormatter().date(from: post.date) {
+        if let date = DateFormatter.postDateFormatter().date(from: comment.date) {
             let currentDate = Date()
             if currentDate.timeIntervalSince(date) <= (24 * 60 * 60) {
                 let timeFormatter = DateFormatter()
@@ -126,7 +126,7 @@ class CommentsTableViewCell: UITableViewCell {
             }
         }
         
-        commentLabel.text = post.question        
+        commentLabel.text = comment.comment
     }
 
 }
