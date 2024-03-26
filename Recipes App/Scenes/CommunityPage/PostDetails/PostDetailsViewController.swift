@@ -238,7 +238,7 @@ class PostDetailsViewController: UIViewController {
     private func fetchData() {
         guard let selectedPost else { return }
         viewModel.fetchComments(for: selectedPost.id) { comments in
-            self.comments = comments
+            self.comments = comments.sorted(by: { $0.date > $1.date })
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }

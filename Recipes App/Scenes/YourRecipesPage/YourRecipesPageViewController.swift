@@ -180,6 +180,18 @@ final class YourRecipesPageViewController: UIViewController {
         })), for: .touchUpInside)
     }
     
+    private func addButtonTapped() {
+        let viewController = UIHostingController(
+            rootView: AddRecipeView(dismissAction: {
+                Task {
+                    await self.fetchRecipes()
+                    self.dismiss(animated: true)
+                }
+            })
+        )
+        present(viewController, animated: true)
+    }
+    
     //MARK: - Fetch Recipes
     
     private func fetchRecipes() async {
@@ -192,18 +204,6 @@ final class YourRecipesPageViewController: UIViewController {
     
     private func addDelegate() {
         recipeSearchBar.delegate = self
-    }
-    
-    private func addButtonTapped() {
-        let viewController = UIHostingController(
-            rootView: AddRecipeView(dismissAction: {
-                Task {
-                    await self.fetchRecipes()
-                    self.dismiss(animated: true)
-                }
-            })
-        )
-        present(viewController, animated: true)
     }
     
     //MARK: - Navigation

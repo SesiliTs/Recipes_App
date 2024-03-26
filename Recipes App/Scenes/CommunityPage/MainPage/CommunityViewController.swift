@@ -9,6 +9,8 @@ import UIKit
 
 final class CommunityViewController: UIViewController {
     
+    //MARK: - Properties
+    
     private let viewModel = CommunityPageViewModel()
     private lazy var posts = [Post]()
     private let headline = HeadlineTextComponentView(text: "კითხვები")
@@ -23,10 +25,27 @@ final class CommunityViewController: UIViewController {
         return stackView
     }()
     
+    private let plusButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        button.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        button.setImage(UIImage(systemName: "plus"), for: .normal)
+        button.tintColor = .white
+        button.backgroundColor = ColorManager.shared.primaryColor
+        button.layer.cornerRadius = 25
+        return button
+    }()
+    
+    //MARK: - ViewLifeCycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        setupPlusButton()
     }
+    
+    //MARK: - Private Functions
     
     private func setupUI() {
         view.backgroundColor = ColorManager.shared.backgroundColor
@@ -37,13 +56,7 @@ final class CommunityViewController: UIViewController {
     
     private func addViews() {
         view.addSubview(mainStack)
-    }
-    
-    private func setupTableView() {
-        registerCell()
-        addDelegate()
-        setupTableViewUI()
-        fetchData()
+        view.addSubview(plusButton)
     }
     
     private func fetchData() {
@@ -53,6 +66,36 @@ final class CommunityViewController: UIViewController {
                 self.tableView.reloadData()
             }
         }
+    }
+    
+    //MARK: - button action
+    
+    private func setupPlusButton() {
+        plusButton.addAction((UIAction(handler: { [self] _ in
+            addButtonTapped()
+        })), for: .touchUpInside)
+    }
+    
+    private func addButtonTapped() {
+//        let viewController = UIHostingController(
+//            rootView: AddRecipeView(dismissAction: {
+//                Task {
+//                    await self.fetchRecipes()
+//                    self.dismiss(animated: true)
+//                }
+//            })
+//        )
+//        present(viewController, animated: true)
+        print("plus tapped")
+    }
+    
+    //MARK: - TableView Setup
+    
+    private func setupTableView() {
+        registerCell()
+        addDelegate()
+        setupTableViewUI()
+        fetchData()
     }
     
     private func registerCell() {
@@ -69,15 +112,23 @@ final class CommunityViewController: UIViewController {
         tableView.dataSource = self
     }
     
+    //MARK: - Constraints
+    
     private func addConstraints() {
         NSLayoutConstraint.activate([
             mainStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             mainStack.topAnchor.constraint(equalTo: view.topAnchor, constant: 80),
             mainStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            mainStack.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80)
+            mainStack.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80),
+            
+            plusButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            plusButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
+
         ])
     }
 }
+
+//MARK: - Extensions
 
 extension CommunityViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
