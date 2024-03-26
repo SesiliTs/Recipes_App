@@ -14,6 +14,21 @@ class PostDetailsViewController: UIViewController {
     var selectedPost: Post?
 
     //MARK: Properties
+    
+    private let backButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "chevron.backward"), for: .normal)
+        button.tintColor = ColorManager.shared.primaryColor
+        return button
+    }()
+    
+    let buttonBackgroundView = {
+        let buttonBackgroundView = UIView()
+        buttonBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        buttonBackgroundView.backgroundColor = ColorManager.shared.backgroundColor
+        return buttonBackgroundView
+    }()
 
     let profileImage = {
         let imageView = UIImageView()
@@ -153,22 +168,36 @@ class PostDetailsViewController: UIViewController {
     
     private func setupUI() {
         view.backgroundColor = ColorManager.shared.backgroundColor
+        navigationController?.isNavigationBarHidden = true
         addViews()
         addConstraints()
         setupTableView()
+        setupBackButton()
         configure()
     }
     
     private func addViews() {
         view.addSubview(mainStack)
+        view.addSubview(buttonBackgroundView)
+        view.addSubview(backButton)
+        view.bringSubviewToFront(backButton)
     }
     
     private func addConstraints() {
         NSLayoutConstraint.activate([
             mainStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             mainStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            mainStack.topAnchor.constraint(equalTo: view.topAnchor, constant: 80),
+            mainStack.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
             mainStack.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80),
+            
+            backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 60),
+            backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            
+            buttonBackgroundView.topAnchor.constraint(equalTo: view.topAnchor),
+            buttonBackgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            buttonBackgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            buttonBackgroundView.bottomAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 10)
+
         ])
     }
     
@@ -194,6 +223,14 @@ class PostDetailsViewController: UIViewController {
     private func addDelegate() {
         tableView.delegate = self
         tableView.dataSource = self
+    }
+    
+    //MARK: - Setup Back Button
+    
+    private func setupBackButton() {
+        backButton.addAction((UIAction(handler: { [self] _ in
+            navigationController?.popViewController(animated: true)
+        })), for: .touchUpInside)
     }
     
     //MARK: - Fetch Comments

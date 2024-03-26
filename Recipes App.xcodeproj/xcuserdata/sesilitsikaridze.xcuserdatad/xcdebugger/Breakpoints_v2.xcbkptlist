@@ -36,53 +36,5 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "BFB85122-0487-47F4-8AB1-6BE47E3B9229"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Recipes App/Scenes/CommunityPage/PostDetails/PostDetailsViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "206"
-            endingLineNumber = "206"
-            landmarkName = "fetchData()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "BFB85122-0487-47F4-8AB1-6BE47E3B9229 - 84fe7a551cc35053"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Array&lt;Recipes_App.Comment&gt;) -&gt; () in Recipes_App.PostDetailsViewController.fetchData() -&gt; ()"
-                  moduleName = "Recipes App"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sesilitsikaridze/Desktop/TBC%20iOS/Recipes%20App/Recipes%20App/Scenes/CommunityPage/PostDetails/PostDetailsViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "206"
-                  endingLineNumber = "206"
-                  offsetFromSymbolStart = "64">
-               </Location>
-               <Location
-                  uuid = "BFB85122-0487-47F4-8AB1-6BE47E3B9229 - 84fe7a551cc35053"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Array&lt;Recipes_App.Comment&gt;) -&gt; () in Recipes_App.PostDetailsViewController.fetchData() -&gt; ()"
-                  moduleName = "Recipes App"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sesilitsikaridze/Desktop/TBC%20iOS/Recipes%20App/Recipes%20App/Scenes/CommunityPage/PostDetails/PostDetailsViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "206"
-                  endingLineNumber = "206"
-                  offsetFromSymbolStart = "20">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
    </Breakpoints>
 </Bucket>
