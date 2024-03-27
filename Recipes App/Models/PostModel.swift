@@ -14,6 +14,7 @@ struct Post: Identifiable, Codable {
     let userName: String
     let date: String
     let imageURL: String
+    let commentQuantity: Int
 }
 
 

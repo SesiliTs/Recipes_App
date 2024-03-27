@@ -89,7 +89,7 @@ class CommentsTableViewCell: UITableViewCell {
     // MARK: - Private Methods
     
     private func setupUI() {
-        backgroundColor = .clear
+        backgroundColor = .white
         addViews()
         addConstraints()
     }

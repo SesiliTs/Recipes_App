@@ -123,32 +123,43 @@ class PostDetailsViewController: UIViewController {
     }()
     
     private let addCommentField = {
-        let textField = UITextField()
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: textField.frame.height))
-        textField.leftView = paddingView
-        textField.leftViewMode = .always
-        textField.heightAnchor.constraint(equalToConstant: 45).isActive = true
-        textField.placeholder = "დაწერე კომენტარი..."
-        textField.font = FontManager.shared.bodyFont
-        textField.layer.cornerRadius = 18
-        textField.autocapitalizationType = .none
-        textField.autocapitalizationType = .none
-        textField.backgroundColor = .white
-        textField.clearButtonMode = .whileEditing
-        return textField
+        let textView = UITextView()
+        textView.font = FontManager.shared.bodyFont
+        textView.layer.cornerRadius = 18
+        textView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        textView.heightAnchor.constraint(greaterThanOrEqualToConstant: 45).isActive = true
+        textView.textContainer.maximumNumberOfLines = 8
+        textView.backgroundColor = .white
+        textView.isScrollEnabled = false
+        return textView
     }()
     
-    private lazy var commentStack = {
-        let stackView = UIStackView (arrangedSubviews: [addCommentField])
-        stackView.spacing = 10
-        stackView.axis = .vertical
-        return stackView
+    private let placeholderLabel = {
+        let label = UILabel()
+        label.text = "დაწერე კომენტარი..."
+        label.textColor = ColorManager.shared.textLightGray
+        label.font = FontManager.shared.bodyFont
+        return label
+    }()
+    
+    private let sendButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        button.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        button.setImage(UIImage(systemName: "paperplane"), for: .normal)
+        button.tintColor = .white
+        button.backgroundColor = ColorManager.shared.primaryColor
+        button.layer.cornerRadius = 20
+        button.isEnabled = false
+        button.alpha = 0.5
+        return button
     }()
     
     private let tableView = UITableView()
     
     private lazy var mainStack = {
-        let stackView = UIStackView (arrangedSubviews: [postStack, commentStack, tableView])
+        let stackView = UIStackView (arrangedSubviews: [postStack, addCommentField, tableView])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.spacing = 20
         stackView.axis = .vertical
@@ -174,6 +185,8 @@ class PostDetailsViewController: UIViewController {
         setupTableView()
         setupBackButton()
         configure()
+        setupTextView()
+        setupSendButton()
     }
     
     private func addViews() {
@@ -181,6 +194,7 @@ class PostDetailsViewController: UIViewController {
         view.addSubview(buttonBackgroundView)
         view.addSubview(backButton)
         view.bringSubviewToFront(backButton)
+        view.addSubview(sendButton)
     }
     
     private func addConstraints() {
@@ -196,12 +210,37 @@ class PostDetailsViewController: UIViewController {
             buttonBackgroundView.topAnchor.constraint(equalTo: view.topAnchor),
             buttonBackgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             buttonBackgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            buttonBackgroundView.bottomAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 10)
-
+            buttonBackgroundView.bottomAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 10),
+            
+            sendButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            sendButton.leadingAnchor.constraint(equalTo: addCommentField.trailingAnchor, constant: 10),
+            sendButton.centerYAnchor.constraint(equalTo: addCommentField.centerYAnchor)
         ])
     }
     
-    //MARK: Setup TableView
+    //MARK: - Setup TextView
+    
+    private func setupTextView() {
+        addCommentField.delegate = self
+        placeholderLabel.sizeToFit()
+        addCommentField.addSubview(placeholderLabel)
+        placeholderLabel.frame.origin = CGPoint(x: 14, y: 14)
+        placeholderLabel.isHidden = !addCommentField.text.isEmpty
+    }
+    
+    //MARK: - send button action
+    
+    private func setupSendButton() {
+        sendButton.addAction((UIAction(handler: { [self] _ in
+            sendButtonTapped()
+        })), for: .touchUpInside)
+    }
+    
+    private func sendButtonTapped() {
+        print("send button tapped")
+    }
+    
+    //MARK: - Setup TableView
     
     private func setupTableView() {
         registerCell()
@@ -214,7 +253,7 @@ class PostDetailsViewController: UIViewController {
     }
     
     private func setupTableViewUI() {
-        tableView.backgroundColor = .white
+        tableView.backgroundColor = .clear
         tableView.layer.cornerRadius = 18
         tableView.estimatedRowHeight = 140
         tableView.rowHeight = UITableView.automaticDimension
@@ -252,12 +291,14 @@ class PostDetailsViewController: UIViewController {
         userNameLabel.text = selectedPost.userName
         profileImage.load(urlString: selectedPost.imageURL)
         dateLabel.text = selectedPost.date
-//        commentsLabel.text = "\(selectedPost.comments.count)"
+        commentsLabel.text = "\(selectedPost.commentQuantity)"
         questionLabel.text = selectedPost.question.uppercased()
         bodyLabel.text = selectedPost.body
     }
 
 }
+
+//MARK: - Extensions
 
 extension PostDetailsViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -276,5 +317,18 @@ extension PostDetailsViewController: UITableViewDataSource, UITableViewDelegate 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         UITableView.automaticDimension
     }
+}
 
+extension PostDetailsViewController : UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        placeholderLabel.isHidden = !textView.text.isEmpty
+        sendButton.isEnabled = !textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        sendButton.alpha = sendButton.isEnabled ? 1.0 : 0.5
+    }
+    func textViewDidEndEditing(_ textView: UITextView) {
+        placeholderLabel.isHidden = !textView.text.isEmpty
+    }
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        placeholderLabel.isHidden = true
+    }
 }
