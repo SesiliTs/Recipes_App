@@ -39,6 +39,7 @@ class CommentsTableViewCell: UITableViewCell {
     
     private lazy var nameStack = {
         let stackView = UIStackView (arrangedSubviews: [userNameLabel, dateLabel])
+        stackView.spacing = 30
         return stackView
     }()
     

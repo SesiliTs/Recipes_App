@@ -19,6 +19,31 @@ final class TabBarController: UITabBarController {
         setupTabUI()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setupOnboarding()
+    }
+    
+    // MARK: - Setup Onboarding
+    private func setupOnboarding() {
+        let hasCompletedOnboarding = UserDefaults.standard.bool(forKey: "hasCompletedOnboarding")
+        if !hasCompletedOnboarding {
+            presentOnboardingView()
+        }
+    }
+
+    private func presentOnboardingView() {
+        let onboardingView = OnboardingView(dismissTabView: { [weak self] in
+            self?.dismiss(animated: true, completion: nil)
+            UserDefaults.standard.set(true, forKey: "hasCompletedOnboarding")
+        })
+        
+        let hostingController = UIHostingController(rootView: onboardingView)
+        hostingController.modalPresentationStyle = .fullScreen
+        
+        present(hostingController, animated: true, completion: nil)
+    }
+    
     //MARK: - Setup TabBar
     
     private func setupTabs() {
@@ -29,10 +54,10 @@ final class TabBarController: UITabBarController {
         
         let profileHostingController = UIHostingController(rootView: ProfilePage().environmentObject(AuthViewModel()))
         let profile = createNavigation(image: UIImage.person, selectedImage: UIImage.personFilled, viewController: profileHostingController)
-
+        
         setViewControllers([landing, save, favourites, community, profile], animated: true)
     }
-
+    
     private func createNavigation(image: UIImage?, selectedImage: UIImage?, viewController: UIViewController) -> UINavigationController {
         let navigation = UINavigationController(rootViewController: viewController)
         
@@ -41,7 +66,7 @@ final class TabBarController: UITabBarController {
         
         return navigation
     }
-
+    
     
     private func setupTabUI() {
         tabBar.backgroundColor = .white
