@@ -77,16 +77,8 @@ final class CommunityViewController: UIViewController {
     }
     
     private func addButtonTapped() {
-//        let viewController = UIHostingController(
-//            rootView: AddRecipeView(dismissAction: {
-//                Task {
-//                    await self.fetchRecipes()
-//                    self.dismiss(animated: true)
-//                }
-//            })
-//        )
-//        present(viewController, animated: true)
-        print("plus tapped")
+        let viewController = AddPostViewController()
+        present(viewController, animated: true)
     }
     
     //MARK: - TableView Setup

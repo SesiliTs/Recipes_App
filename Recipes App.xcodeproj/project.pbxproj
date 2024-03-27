@@ -67,6 +67,7 @@
 		0BE9E18D2BB0AFD90098E696 /* CommentsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE9E18C2BB0AFD90098E696 /* CommentsTableViewCell.swift */; };
 		0BE9E18F2BB18CC10098E696 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE9E18E2BB18CC10098E696 /* DateFormatter.swift */; };
 		0BE9E1912BB2F1200098E696 /* CommunityPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE9E1902BB2F1200098E696 /* CommunityPageViewModel.swift */; };
+		0BE9E1952BB328B80098E696 /* AddPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE9E1942BB328B80098E696 /* AddPostViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -128,6 +129,7 @@
 		0BE9E18C2BB0AFD90098E696 /* CommentsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsTableViewCell.swift; sourceTree = "<group>"; };
 		0BE9E18E2BB18CC10098E696 /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		0BE9E1902BB2F1200098E696 /* CommunityPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityPageViewModel.swift; sourceTree = "<group>"; };
+		0BE9E1942BB328B80098E696 /* AddPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPostViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -459,6 +461,7 @@
 			isa = PBXGroup;
 			children = (
 				0B0DA9AD2BADA9F500770221 /* CommunityViewController.swift */,
+				0BE9E1942BB328B80098E696 /* AddPostViewController.swift */,
 				0B0DA9AF2BADAABA00770221 /* CommunityTableViewCell.swift */,
 			);
 			path = MainPage;
@@ -576,6 +579,7 @@
 				0BE1BC932B5EB2C900873512 /* TextComponentView.swift in Sources */,
 				0BBCC8FF2B5A73D2001C198D /* LandingPageViewController.swift in Sources */,
 				0BE1BC962B5EB82800873512 /* RecipesListTableViewCell.swift in Sources */,
+				0BE9E1952BB328B80098E696 /* AddPostViewController.swift in Sources */,
 				0BE1BCA62B63F09000873512 /* ProfileView.swift in Sources */,
 				0BD4576A2B66578D0074FC00 /* ImagePicker.swift in Sources */,
 				0BBCC8FB2B5A73D2001C198D /* AppDelegate.swift in Sources */,
