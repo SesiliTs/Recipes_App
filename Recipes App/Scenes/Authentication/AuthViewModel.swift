@@ -76,7 +76,7 @@ class AuthViewModel: ObservableObject {
                 persistImageToStorage(image: image)
             }
             
-            let user = User(id: result.user.uid, fullname: fullname, email: email, photoURL: "", recipes: [], likedRecipes: [], highContrast: false, boldText: false, fontSize: 12)
+            let user = User(id: result.user.uid, fullname: fullname, email: email, photoURL: "", recipes: [], likedRecipes: [], posts: [], highContrast: false, boldText: false, fontSize: 12)
             let encodedUser = try Firestore.Encoder().encode(user)
             try await Firestore.firestore().collection("users").document(user.id).setData(encodedUser)
             await fetchUser()
@@ -146,7 +146,7 @@ class AuthViewModel: ObservableObject {
         }
         
         do {
-            let updatedUser = User(id: currentUser.id, fullname: newFullname, email: currentUser.email, photoURL: currentUser.photoURL, recipes: currentUser.recipes, likedRecipes: currentUser.likedRecipes, highContrast: currentUser.highContrast, boldText: currentUser.boldText, fontSize: currentUser.fontSize)
+            let updatedUser = User(id: currentUser.id, fullname: newFullname, email: currentUser.email, photoURL: currentUser.photoURL, recipes: currentUser.recipes, likedRecipes: currentUser.likedRecipes, posts: currentUser.posts, highContrast: currentUser.highContrast, boldText: currentUser.boldText, fontSize: currentUser.fontSize)
             
             let encodedUser = try Firestore.Encoder().encode(updatedUser)
             try await Firestore.firestore().collection("users").document(currentUser.id).setData(encodedUser, merge: true)

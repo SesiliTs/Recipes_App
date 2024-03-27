@@ -14,6 +14,7 @@ struct User: Identifiable, Codable {
     var photoURL: String
     let recipes: [RecipeData]?
     let likedRecipes: [String]?
+    let posts: [String]
     var highContrast: Bool
     var boldText: Bool
     var fontSize: CGFloat

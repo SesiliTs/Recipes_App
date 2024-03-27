@@ -111,7 +111,14 @@ final class CommunityPageViewModel {
                             print("Error adding document: \(error)")
                             completion(error)
                         } else {
-                            completion(nil)
+                            db.collection("users").document(uid).updateData(["posts": FieldValue.arrayUnion([postId])]) { error in
+                                if let error = error {
+                                    print("Error updating user document: \(error)")
+                                    completion(error)
+                                } else {
+                                    completion(nil)
+                                }
+                            }
                         }
                     }
                 } else {
@@ -156,7 +163,14 @@ final class CommunityPageViewModel {
                             print("Error adding comment: \(error)")
                             completion(error)
                         } else {
-                            completion(nil)
+                            db.collection("posts").document(postId).updateData(["commentQuantity": FieldValue.increment(Int64(1))]) { error in
+                                if let error = error {
+                                    print("Error updating comment quantity: \(error)")
+                                    completion(error)
+                                } else {
+                                    completion(nil)
+                                }
+                            }
                         }
                     }
                 } else {
