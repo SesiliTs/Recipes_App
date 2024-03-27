@@ -12,7 +12,7 @@ class PostDetailsViewController: UIViewController {
     private let viewModel = CommunityPageViewModel()
     private var comments = [Comment]()
     var selectedPost: Post?
-
+    
     //MARK: Properties
     
     private let backButton: UIButton = {
@@ -29,7 +29,7 @@ class PostDetailsViewController: UIViewController {
         buttonBackgroundView.backgroundColor = ColorManager.shared.backgroundColor
         return buttonBackgroundView
     }()
-
+    
     let profileImage = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 20
@@ -53,7 +53,7 @@ class PostDetailsViewController: UIViewController {
         label.font = FontManager.shared.bodyFont
         label.textColor = ColorManager.shared.textGrayColor
         return label
-
+        
     }()
     
     private lazy var nameStack = {
@@ -165,10 +165,10 @@ class PostDetailsViewController: UIViewController {
         stackView.axis = .vertical
         return stackView
     }()
-
+    
     
     //MARK: - View LifeCycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -237,7 +237,15 @@ class PostDetailsViewController: UIViewController {
     }
     
     private func sendButtonTapped() {
-        print("send button tapped")
+        guard let selectedPost else { return }
+        viewModel.addComment(to: selectedPost.id, comment: addCommentField.text) { error in
+            if error != nil {
+                print("error saving data")
+            } else {
+                self.fetchData()
+                self.addCommentField.text = nil
+            }
+        }
     }
     
     //MARK: - Setup TableView
@@ -278,12 +286,10 @@ class PostDetailsViewController: UIViewController {
         guard let selectedPost else { return }
         viewModel.fetchComments(for: selectedPost.id) { comments in
             self.comments = comments.sorted(by: { $0.date > $1.date })
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
+            self.tableView.reloadData()
         }
     }
-     
+    
     //MARK: - Configure
     
     func configure() {
@@ -295,7 +301,7 @@ class PostDetailsViewController: UIViewController {
         questionLabel.text = selectedPost.question.uppercased()
         bodyLabel.text = selectedPost.body
     }
-
+    
 }
 
 //MARK: - Extensions

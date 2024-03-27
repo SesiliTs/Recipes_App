@@ -127,6 +127,7 @@ final class AddPostViewController: UIViewController {
     private func saveButtonTapped() {
         viewModel.addPost(question: questionTextView.text, body: bodyTextView.text) { error in
             if error != nil {
+                print("error saving data")
             } else {
                 self.dismissAction()
             }

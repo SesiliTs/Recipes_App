@@ -11,14 +11,20 @@ import FirebaseAuth
 
 final class CommunityPageViewModel {
     
+    //MARK: - Properties
+    
     @Published var allPosts = [Post]()
     private var currentUser: User?
+    
+    //MARK: - Init
     
     init() {
         fetchPosts { posts in
             self.allPosts = posts
         }
     }
+    
+    //MARK: - Fetch Data
     
     func fetchPosts(completion: @escaping ([Post]) -> Void) {
         let db = Firestore.firestore()
@@ -70,25 +76,7 @@ final class CommunityPageViewModel {
         }
     }
     
-    //    func addPost(_ post: Post, completion: @escaping (Error?) -> Void) {
-    //        let db = Firestore.firestore()
-    //
-    //        do {
-    //            let postData = try Firestore.Encoder().encode(post)
-    //
-    //            db.collection("posts").addDocument(data: postData) { error in
-    //                if let error = error {
-    //                    print("Error adding document: \(error)")
-    //                    completion(error)
-    //                } else {
-    //                    completion(nil)
-    //                }
-    //            }
-    //        } catch {
-    //            print("Error encoding post data: \(error)")
-    //            completion(error)
-    //        }
-    //    }
+    //MARK: - Add Post
     
     func addPost(question: String, body: String, completion: @escaping (Error?) -> Void) {
         let db = Firestore.firestore()
@@ -114,12 +102,58 @@ final class CommunityPageViewModel {
                         "body": body,
                         "userName": userName,
                         "date": dateString,
-                        "imageURL": imageURL
+                        "imageURL": imageURL,
+                        "commentQuantity": 0
                     ]
                     
                     db.collection("posts").document(postId).setData(postData) { error in
                         if let error = error {
                             print("Error adding document: \(error)")
+                            completion(error)
+                        } else {
+                            completion(nil)
+                        }
+                    }
+                } else {
+                    let error = NSError(domain: "ViewModel", code: 0, userInfo: [NSLocalizedDescriptionKey: "User data not found"])
+                    completion(error)
+                }
+            } else {
+                let error = NSError(domain: "ViewModel", code: 0, userInfo: [NSLocalizedDescriptionKey: "User document does not exist"])
+                completion(error)
+            }
+        }
+    }
+    
+    //MARK: - Add Comment
+    
+    func addComment(to postId: String, comment: String, completion: @escaping (Error?) -> Void) {
+        let db = Firestore.firestore()
+        
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        db.collection("users").document(uid).getDocument { (snapshot, error) in
+            if let error = error {
+                print("Error fetching user data: \(error)")
+                completion(error)
+            } else if let snapshot = snapshot, snapshot.exists {
+                if let data = snapshot.data(),
+                   let userName = data["fullname"] as? String,
+                   let imageURL = data["photoURL"] as? String {
+                    
+                    let dateFormatter = DateFormatter.postDateFormatter()
+                    let dateString = dateFormatter.string(from: Date())
+                    
+                    let commentData: [String: Any] = [
+                        "userName": userName,
+                        "date": dateString,
+                        "comment": comment,
+                        "imageURL": imageURL
+                    ]
+                    
+                    db.collection("posts").document(postId).collection("comments").addDocument(data: commentData) { error in
+                        if let error = error {
+                            print("Error adding comment: \(error)")
                             completion(error)
                         } else {
                             completion(nil)
