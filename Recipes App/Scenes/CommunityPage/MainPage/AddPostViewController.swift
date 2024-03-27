@@ -11,6 +11,9 @@ final class AddPostViewController: UIViewController {
     
     //MARK: - Properties
     
+    private let viewModel = CommunityPageViewModel()
+    var dismissAction: (() -> Void)
+    
     private let headlineLabel = HeadlineTextComponentView(text: "დაამატე კითხვა")
     
     private let questionLabel = {
@@ -73,6 +76,16 @@ final class AddPostViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        setupSaveButton()
+    }
+    
+    init(dismissAction: @escaping () -> Void) {
+        self.dismissAction = dismissAction
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     //MARK: - Private Functions
@@ -96,6 +109,24 @@ final class AddPostViewController: UIViewController {
             mainStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             mainStack.topAnchor.constraint(equalTo: view.topAnchor, constant: 30),
         ])
+    }
+    
+    //MARK: - button action
+    
+    private func setupSaveButton() {
+        saveButton.addAction((UIAction(handler: { [self] _ in
+            saveButtonTapped()
+        })), for: .touchUpInside)
+    }
+    
+    private func saveButtonTapped() {
+        viewModel.addPost(question: questionTextView.text, body: bodyTextView.text) { error in
+            if error != nil {
+                // Handle error
+            } else {
+                self.dismissAction()
+            }
+        }
     }
 
 }

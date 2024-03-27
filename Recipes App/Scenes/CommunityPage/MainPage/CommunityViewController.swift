@@ -62,9 +62,7 @@ final class CommunityViewController: UIViewController {
     private func fetchData() {
         viewModel.fetchPosts { posts in
             self.posts = posts
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
+            self.tableView.reloadData()
         }
     }
     
@@ -77,7 +75,10 @@ final class CommunityViewController: UIViewController {
     }
     
     private func addButtonTapped() {
-        let viewController = AddPostViewController()
+        let viewController = AddPostViewController(dismissAction: {
+            self.dismiss(animated: true)
+            self.fetchData()
+        })
         present(viewController, animated: true)
     }
     
@@ -115,7 +116,7 @@ final class CommunityViewController: UIViewController {
             
             plusButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             plusButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
-
+            
         ])
     }
 }
