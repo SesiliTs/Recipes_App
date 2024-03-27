@@ -94,6 +94,9 @@ final class CommunityPageViewModel {
         let db = Firestore.firestore()
         let postId = UUID().uuidString
         
+        let dateFormatter = DateFormatter.postDateFormatter()
+        let dateString = dateFormatter.string(from: Date())
+        
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         db.collection("users").document(uid).getDocument { (snapshot, error) in
@@ -110,7 +113,7 @@ final class CommunityPageViewModel {
                         "question": question,
                         "body": body,
                         "userName": userName,
-                        "date": "25.03.2024, 14:20",
+                        "date": dateString,
                         "imageURL": imageURL
                     ]
                     
