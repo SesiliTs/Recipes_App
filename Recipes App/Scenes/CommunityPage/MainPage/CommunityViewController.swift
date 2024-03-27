@@ -61,7 +61,7 @@ final class CommunityViewController: UIViewController {
     
     private func fetchData() {
         viewModel.fetchPosts { posts in
-            self.posts = posts
+            self.posts = posts.sorted(by: { $0.date > $1.date })
             self.tableView.reloadData()
         }
     }

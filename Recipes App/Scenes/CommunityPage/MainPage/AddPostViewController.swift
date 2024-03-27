@@ -60,6 +60,8 @@ final class AddPostViewController: UIViewController {
         button.titleLabel?.textColor = .white
         button.heightAnchor.constraint(equalToConstant: 45).isActive = true
         button.layer.cornerRadius = 18
+        button.isEnabled = false
+        button.alpha = 0.5
         return button
     }()
     
@@ -117,16 +119,30 @@ final class AddPostViewController: UIViewController {
         saveButton.addAction((UIAction(handler: { [self] _ in
             saveButtonTapped()
         })), for: .touchUpInside)
+        
+        updateSaveButtonState()
+        questionTextView.delegate = self
     }
     
     private func saveButtonTapped() {
         viewModel.addPost(question: questionTextView.text, body: bodyTextView.text) { error in
             if error != nil {
-                // Handle error
             } else {
                 self.dismissAction()
             }
         }
     }
+    
+    private func updateSaveButtonState() {
+        saveButton.isEnabled = !questionTextView.text.isEmpty
+        saveButton.alpha = saveButton.isEnabled ? 1.0 : 0.5
+    }
+}
 
+//MARK: - Extensions
+
+extension AddPostViewController: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        updateSaveButtonState()
+    }
 }
