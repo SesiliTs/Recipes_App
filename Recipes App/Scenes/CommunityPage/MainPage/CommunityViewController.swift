@@ -19,8 +19,21 @@ final class CommunityViewController: UIViewController {
     private let searchBar = RecipeSearchBar(placeholder: "მოძებნე კითხვა...")
     private lazy var tableView = PostsComponentView(posts: posts)
     
+    private let dotsButton = {
+        let button = UIButton()
+        button.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        button.setImage(UIImage(systemName: "ellipsis"), for: .normal)
+        button.tintColor = ColorManager.shared.primaryColor
+        return button
+    }()
+    
+    private lazy var headlineStack = {
+        let stackView = UIStackView(arrangedSubviews: [headline, dotsButton])
+        return stackView
+    }()
+    
     private lazy var mainStack = {
-        let stackView = UIStackView(arrangedSubviews: [headline, searchBar, tableView])
+        let stackView = UIStackView(arrangedSubviews: [headlineStack, searchBar, tableView])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 20
@@ -40,7 +53,7 @@ final class CommunityViewController: UIViewController {
     }()
     
     private lazy var loginRequiredView = LoginRequiredView(navigationController: self.navigationController)
-
+    
     //MARK: - ViewLifeCycle
     
     override func viewDidLoad() {
@@ -58,6 +71,7 @@ final class CommunityViewController: UIViewController {
         addConstraints()
         setupNavigation()
         addDelegate()
+        setupDotsButton()
     }
     
     private func addViews() {
@@ -129,6 +143,42 @@ final class CommunityViewController: UIViewController {
             self.fetchData()
         })
         present(viewController, animated: true)
+    }
+    
+    //MARK: - dots button action
+    
+    private func setupDotsButton() {
+        dotsButton.addAction(UIAction(handler: { [self] _ in
+            showDropdownMenu()
+        }), for: .touchUpInside)
+    }
+    
+    private func showDropdownMenu() {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let allAction = UIAlertAction(title: "ყველა", style: .default) { [weak self] _ in
+            self?.fetchData()
+        }
+        alertController.addAction(allAction)
+        
+        let myPostsAction = UIAlertAction(title: "ჩემი კითხვები", style: .default) { [weak self] _ in
+            self?.fetchMyPosts()
+        }
+        alertController.addAction(myPostsAction)
+        
+        let cancelAction = UIAlertAction(title: "გაუქმება", style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    private func fetchMyPosts() {
+        viewModel.fetchPosts { [weak self] posts in
+            guard let currentUser = Auth.auth().currentUser else { return }
+            let currentUserID = Auth.auth().currentUser?.uid
+            let myPosts = posts.filter { $0.userID == currentUserID }
+            self?.tableView.posts = myPosts
+        }
     }
     
     //MARK: - Constraints
