@@ -22,7 +22,7 @@ final class YourRecipesPageViewController: UIViewController {
         return label
     }()
     
-    private let recipeSearchBar = RecipeSearchBar()
+    private let recipeSearchBar = RecipeSearchBar(placeholder: "მოძებნე რეცეპტი...")
     
     private lazy var collectionView = {
         let layout = UICollectionViewFlowLayout()

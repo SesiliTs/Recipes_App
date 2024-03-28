@@ -14,15 +14,16 @@ final class CommunityViewController: UIViewController {
     
     private let viewModel = CommunityPageViewModel()
     private lazy var posts = [Post]()
-    private let headline = HeadlineTextComponentView(text: "კითხვები")
     
+    private let headline = HeadlineTextComponentView(text: "კითხვები")
+    private let searchBar = RecipeSearchBar(placeholder: "მოძებნე კითხვა...")
     private lazy var tableView = PostsComponentView(posts: posts)
     
     private lazy var mainStack = {
-        let stackView = UIStackView(arrangedSubviews: [headline, tableView])
+        let stackView = UIStackView(arrangedSubviews: [headline, searchBar, tableView])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.spacing = 50
+        stackView.spacing = 20
         return stackView
     }()
     
@@ -56,6 +57,7 @@ final class CommunityViewController: UIViewController {
         addViews()
         addConstraints()
         setupNavigation()
+        addDelegate()
     }
     
     private func addViews() {
@@ -143,5 +145,26 @@ final class CommunityViewController: UIViewController {
             
         ])
     }
+    
+    //MARK: - Delegate
+    
+    private func addDelegate() {
+        searchBar.delegate = self
+    }
 }
 
+
+//MARK: - Extensions
+
+extension CommunityViewController: RecipeSearchBarDelegate {
+    func didChangeSearchQuery(_ query: String?) {
+        if let query = query, !query.isEmpty {
+            viewModel.fetchPosts { [weak self] posts in
+                let filteredPosts = posts.filter { $0.question.contains(query) }
+                self?.tableView.posts = filteredPosts
+            }
+        } else {
+            fetchData()
+        }
+    }
+}

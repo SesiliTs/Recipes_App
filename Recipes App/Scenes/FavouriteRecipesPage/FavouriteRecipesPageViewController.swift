@@ -11,7 +11,7 @@ import Firebase
 final class FavouriteRecipesPageViewController: UIViewController {
     
     private let viewModel = FavouriteRecipesViewModel()
-    
+        
     var currentUser = Auth.auth().currentUser
     
     //MARK: - Properties
@@ -23,7 +23,7 @@ final class FavouriteRecipesPageViewController: UIViewController {
         return label
     }()
     
-    private let recipeSearchBar = RecipeSearchBar()
+    private let recipeSearchBar = RecipeSearchBar(placeholder: "მოძებნე რეცეპტი...")
     
     private lazy var listComponent = RecipesListComponentView(recipes: viewModel.recipes)
     
@@ -189,7 +189,6 @@ extension FavouriteRecipesPageViewController: RecipeSearchBarDelegate {
             viewModel.fetchLikedRecipes { [weak self] recipes in
                 let filteredRecipes = recipes?.filter { $0.name.contains(query) } ?? []
                 self?.listComponent.configure(recipes: filteredRecipes)
-                self?.headlineLabel.text = "ძიების შედეგები: ".uppercased()
             }
         } else {
             reloadLikedRecipes()

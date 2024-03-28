@@ -34,7 +34,7 @@ final class LandingPageViewController: UIViewController {
         return stackView
     }()
     
-    private let recipeSearchBar = RecipeSearchBar()
+    private let recipeSearchBar = RecipeSearchBar(placeholder: "მოძებნე რეცეპტი...")
     
     private lazy var listComponent = RecipesListComponentView(recipes: recipes)
     

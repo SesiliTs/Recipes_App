@@ -19,7 +19,6 @@ final class RecipeSearchBar: UIView, UITextFieldDelegate {
     
     private let textField: UITextField = {
         let textField = PaddedSearchIcon()
-        textField.placeholder = "მოძებნე რეცეპტი..."
         textField.clearButtonMode = .whileEditing
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
@@ -27,12 +26,13 @@ final class RecipeSearchBar: UIView, UITextFieldDelegate {
     
     //MARK: - init
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(placeholder: String) {
+        super.init(frame: .zero)
         setupUI()
         addDelegate()
         addFontObserver()
         addColorObserver()
+        textField.placeholder = placeholder
     }
     
     required init?(coder: NSCoder) {

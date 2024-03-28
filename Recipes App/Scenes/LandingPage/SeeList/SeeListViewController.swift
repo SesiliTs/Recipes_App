@@ -36,7 +36,7 @@ final class SeeListViewController: UIViewController {
         return label
     }()
     
-    private let recipeSearchBar = RecipeSearchBar()
+    private let recipeSearchBar = RecipeSearchBar(placeholder: "მოძებნე რეცეპტი...")
     
     private lazy var listComponent = RecipesListComponentView(recipes: recipes)
     
