@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 final class CommunityViewController: UIViewController {
     
@@ -37,12 +38,15 @@ final class CommunityViewController: UIViewController {
         return button
     }()
     
+    private lazy var loginRequiredView = LoginRequiredView(navigationController: self.navigationController)
+
     //MARK: - ViewLifeCycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         setupPlusButton()
+        checkLoggedUser()
     }
     
     //MARK: - Private Functions
@@ -57,6 +61,38 @@ final class CommunityViewController: UIViewController {
     private func addViews() {
         view.addSubview(mainStack)
         view.addSubview(plusButton)
+        view.addSubview(loginRequiredView)
+    }
+    
+    private func checkLoggedUser() {
+        Auth.auth().addStateDidChangeListener { [weak self] (_, user) in
+            if let _ = user {
+                self?.userIsLoggedIn()
+            } else {
+                self?.userIsLoggedOut()
+            }
+        }
+    }
+    
+    private func userIsLoggedIn() {
+        loginRequiredView.isHidden = true
+        mainStack.isHidden = false
+        plusButton.isHidden = false
+        fetchData()
+    }
+    
+    private func userIsLoggedOut() {
+        loginRequiredView.isHidden = false
+        mainStack.isHidden = true
+        plusButton.isHidden = true
+        
+        loginRequiredView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            loginRequiredView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            loginRequiredView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            loginRequiredView.topAnchor.constraint(equalTo: view.topAnchor),
+            loginRequiredView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
     
     private func fetchData() {

@@ -12,6 +12,7 @@ struct Post: Identifiable, Codable {
     let question: String
     let body: String
     let userName: String
+    var userID: String
     let date: String
     let imageURL: String
     let commentQuantity: Int
