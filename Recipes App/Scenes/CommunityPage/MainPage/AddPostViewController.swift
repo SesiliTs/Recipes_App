@@ -31,6 +31,8 @@ final class AddPostViewController: UIViewController {
         textView.heightAnchor.constraint(greaterThanOrEqualToConstant: 45).isActive = true
         textView.textContainer.maximumNumberOfLines = 5
         textView.backgroundColor = .white
+        textView.layer.borderWidth = 1
+        textView.layer.borderColor = ColorManager.shared.borderColor.cgColor
         textView.isScrollEnabled = false
         return textView
     }()
@@ -49,6 +51,8 @@ final class AddPostViewController: UIViewController {
         textView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         textView.heightAnchor.constraint(equalToConstant: 200).isActive = true
         textView.backgroundColor = .white
+        textView.layer.borderWidth = 1
+        textView.layer.borderColor = ColorManager.shared.borderColor.cgColor
         return textView
     }()
     

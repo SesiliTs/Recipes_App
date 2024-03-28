@@ -226,6 +226,7 @@
 			isa = PBXGroup;
 			children = (
 				0BBACAE62BB5302C0093C05D /* PostsComponentView.swift */,
+				0B0DA9AF2BADAABA00770221 /* CommunityTableViewCell.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -485,7 +486,6 @@
 			children = (
 				0B0DA9AD2BADA9F500770221 /* CommunityViewController.swift */,
 				0BE9E1942BB328B80098E696 /* AddPostViewController.swift */,
-				0B0DA9AF2BADAABA00770221 /* CommunityTableViewCell.swift */,
 			);
 			path = MainPage;
 			sourceTree = "<group>";

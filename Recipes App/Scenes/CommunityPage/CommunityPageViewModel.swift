@@ -94,6 +94,7 @@ final class CommunityPageViewModel {
             } else if let snapshot = snapshot, snapshot.exists {
                 if let data = snapshot.data(),
                    let userName = data["fullname"] as? String,
+                   let userID = data["id"] as? String,
                    let imageURL = data["photoURL"] as? String {
                     
                     let postData: [String: Any] = [
@@ -101,6 +102,7 @@ final class CommunityPageViewModel {
                         "question": question,
                         "body": body,
                         "userName": userName,
+                        "userID": userID,
                         "date": dateString,
                         "imageURL": imageURL,
                         "commentQuantity": 0

@@ -130,6 +130,8 @@ class PostDetailsViewController: UIViewController {
         textView.heightAnchor.constraint(greaterThanOrEqualToConstant: 45).isActive = true
         textView.textContainer.maximumNumberOfLines = 8
         textView.backgroundColor = .white
+        textView.layer.borderWidth = 1
+        textView.layer.borderColor = ColorManager.shared.borderColor.cgColor
         textView.isScrollEnabled = false
         return textView
     }()

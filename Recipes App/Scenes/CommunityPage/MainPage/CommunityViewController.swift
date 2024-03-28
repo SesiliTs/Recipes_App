@@ -174,10 +174,11 @@ final class CommunityViewController: UIViewController {
     
     private func fetchMyPosts() {
         viewModel.fetchPosts { [weak self] posts in
-            guard let currentUser = Auth.auth().currentUser else { return }
+            guard Auth.auth().currentUser != nil else { return }
             let currentUserID = Auth.auth().currentUser?.uid
             let myPosts = posts.filter { $0.userID == currentUserID }
-            self?.tableView.posts = myPosts
+            let sortedPosts = myPosts.sorted(by: { $0.date > $1.date })
+            self?.tableView.posts = sortedPosts
         }
     }
     

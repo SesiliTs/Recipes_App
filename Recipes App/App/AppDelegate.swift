@@ -15,6 +15,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        #warning("turned off onboarding userDefaults for testing")
+        
+        UserDefaults.standard.removeObject(forKey: "hasCompletedOnboarding")
         FirebaseApp.configure()
         return true
     }

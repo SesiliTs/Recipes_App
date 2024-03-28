@@ -17,6 +17,8 @@ class CommunityTableViewCell: UITableViewCell {
         view.backgroundColor = .white
         view.layer.cornerRadius = 18
         view.layer.masksToBounds = true
+        view.layer.borderColor = ColorManager.shared.borderColor.cgColor
+        view.layer.borderWidth = 1
         return view
     }()
 
@@ -131,6 +133,8 @@ class CommunityTableViewCell: UITableViewCell {
         backgroundColor = .clear
         addViews()
         addConstraints()
+        addColorObserver()
+        addFontObserver()
     }
     
     private func addViews() {
@@ -150,6 +154,30 @@ class CommunityTableViewCell: UITableViewCell {
             mainStack.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15),
             
         ])
+    }
+    
+    //MARK: - Accessibility
+    
+    @objc func updateFonts() {
+        userNameLabel.font = FontManager.shared.bodyFontMedium
+        dateLabel.font = FontManager.shared.bodyFont
+        questionLabel.font = FontManager.shared.headlineFont
+    }
+
+    @objc func updateColors() {
+        containerView.layer.borderColor = ColorManager.shared.borderColor.cgColor
+        dateLabel.textColor = ColorManager.shared.textGrayColor
+        userNameLabel.textColor = ColorManager.shared.textGrayColor
+    }
+
+    private func addFontObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateFonts), name: .fontSettingsDidChange, object: nil)
+        updateFonts()
+    }
+
+    private func addColorObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateColors), name: .colorSettingsDidChange, object: nil)
+        updateColors()
     }
     
     //MARK: - Configure
