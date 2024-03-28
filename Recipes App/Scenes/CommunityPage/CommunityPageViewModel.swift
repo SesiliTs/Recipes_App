@@ -8,6 +8,7 @@
 import Foundation
 import FirebaseFirestore
 import FirebaseAuth
+import UserNotifications
 
 final class CommunityPageViewModel {
     
@@ -168,6 +169,7 @@ final class CommunityPageViewModel {
                                     print("Error updating comment quantity: \(error)")
                                     completion(error)
                                 } else {
+                                    self.scheduleNotification(for: postId, userName: userName, comment: comment)
                                     completion(nil)
                                 }
                             }
@@ -180,6 +182,26 @@ final class CommunityPageViewModel {
             } else {
                 let error = NSError(domain: "ViewModel", code: 0, userInfo: [NSLocalizedDescriptionKey: "User document does not exist"])
                 completion(error)
+            }
+        }
+    }
+    
+    //MARK: - Add Local notifications
+    
+    private func scheduleNotification(for postId: String, userName: String, comment: String) {
+        let content = UNMutableNotificationContent()
+        content.title = comment
+        content.body = userName
+        content.userInfo = ["postId": postId]
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+        let identifier = postId
+        
+        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+        
+        UNUserNotificationCenter.current().add(request) { error in
+            if let error = error {
+                print("Error scheduling notification: \(error.localizedDescription)")
             }
         }
     }

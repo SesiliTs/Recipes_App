@@ -100,15 +100,6 @@
       }
     },
     {
-      "identity" : "networkmanager",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SesiliTs/NetworkManager",
-      "state" : {
-        "branch" : "main",
-        "revision" : "183558ad209612c0e10d66c6d971b093909b2a0d"
-      }
-    },
-    {
       "identity" : "promises",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/google/promises.git",
