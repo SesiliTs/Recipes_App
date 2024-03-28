@@ -22,6 +22,7 @@
 		0BA5508F2B6BF2BE001B86DF /* LoginRequiredView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA5508E2B6BF2BE001B86DF /* LoginRequiredView.swift */; };
 		0BAACED62B791E96006D003C /* AccessibilityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAACED52B791E96006D003C /* AccessibilityView.swift */; };
 		0BAACED92B793585006D003C /* AccessibilityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAACED82B793585006D003C /* AccessibilityViewModel.swift */; };
+		0BBACAE72BB5302C0093C05D /* PostsComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBACAE62BB5302C0093C05D /* PostsComponentView.swift */; };
 		0BBCC8FB2B5A73D2001C198D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBCC8FA2B5A73D2001C198D /* AppDelegate.swift */; };
 		0BBCC8FD2B5A73D2001C198D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBCC8FC2B5A73D2001C198D /* SceneDelegate.swift */; };
 		0BBCC8FF2B5A73D2001C198D /* LandingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBCC8FE2B5A73D2001C198D /* LandingPageViewController.swift */; };
@@ -86,6 +87,7 @@
 		0BA5508E2B6BF2BE001B86DF /* LoginRequiredView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequiredView.swift; sourceTree = "<group>"; };
 		0BAACED52B791E96006D003C /* AccessibilityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityView.swift; sourceTree = "<group>"; };
 		0BAACED82B793585006D003C /* AccessibilityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityViewModel.swift; sourceTree = "<group>"; };
+		0BBACAE62BB5302C0093C05D /* PostsComponentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsComponentView.swift; sourceTree = "<group>"; };
 		0BBCC8F72B5A73D2001C198D /* Recipes App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Recipes App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BBCC8FA2B5A73D2001C198D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0BBCC8FC2B5A73D2001C198D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 		0B0DA9AC2BADA9CF00770221 /* CommunityPage */ = {
 			isa = PBXGroup;
 			children = (
+				0BBACAE52BB530130093C05D /* Components */,
 				0BE9E1882BB055640098E696 /* MainPage */,
 				0BE9E1892BB055750098E696 /* PostDetails */,
 				0BE9E1902BB2F1200098E696 /* CommunityPageViewModel.swift */,
@@ -217,6 +220,14 @@
 				0BAACED82B793585006D003C /* AccessibilityViewModel.swift */,
 			);
 			path = Accessibility;
+			sourceTree = "<group>";
+		};
+		0BBACAE52BB530130093C05D /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				0BBACAE62BB5302C0093C05D /* PostsComponentView.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		0BBCC8EE2B5A73D2001C198D = {
@@ -602,6 +613,7 @@
 				0B70FE622B7009A0009B1FDC /* FavouriteRecipesViewModel.swift in Sources */,
 				0B70FE642B70F9CA009B1FDC /* FireStoreManager.swift in Sources */,
 				0B5539A52B69172400B235E7 /* TabBarController.swift in Sources */,
+				0BBACAE72BB5302C0093C05D /* PostsComponentView.swift in Sources */,
 				0BE1BC9E2B62B3C600873512 /* RegistrationView.swift in Sources */,
 				0BBCC8FD2B5A73D2001C198D /* SceneDelegate.swift in Sources */,
 				0BBCC96A2B5B0ADE001C198D /* LandingPageViewModel.swift in Sources */,

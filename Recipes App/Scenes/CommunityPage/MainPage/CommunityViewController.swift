@@ -16,7 +16,7 @@ final class CommunityViewController: UIViewController {
     private lazy var posts = [Post]()
     private let headline = HeadlineTextComponentView(text: "კითხვები")
     
-    private let tableView = UITableView()
+    private lazy var tableView = PostsComponentView(posts: posts)
     
     private lazy var mainStack = {
         let stackView = UIStackView(arrangedSubviews: [headline, tableView])
@@ -54,8 +54,8 @@ final class CommunityViewController: UIViewController {
     private func setupUI() {
         view.backgroundColor = ColorManager.shared.backgroundColor
         addViews()
-        setupTableView()
         addConstraints()
+        setupNavigation()
     }
     
     private func addViews() {
@@ -63,6 +63,8 @@ final class CommunityViewController: UIViewController {
         view.addSubview(plusButton)
         view.addSubview(loginRequiredView)
     }
+    
+    //MARK: - Check Login State
     
     private func checkLoggedUser() {
         Auth.auth().addStateDidChangeListener { [weak self] (_, user) in
@@ -95,10 +97,19 @@ final class CommunityViewController: UIViewController {
         ])
     }
     
+    //MARK: - Navigation
+    
+    private func setupNavigation() {
+        tableView.didSelectPost = { [weak self] selectedPost in
+            let detailsViewController = PostDetailsViewController()
+            detailsViewController.selectedPost = selectedPost
+            self?.navigationController?.pushViewController(detailsViewController, animated: true)
+        }
+    }
+    
     private func fetchData() {
         viewModel.fetchPosts { posts in
-            self.posts = posts.sorted(by: { $0.date > $1.date })
-            self.tableView.reloadData()
+            self.tableView.posts = posts.sorted(by: { $0.date > $1.date })
         }
     }
     
@@ -118,29 +129,6 @@ final class CommunityViewController: UIViewController {
         present(viewController, animated: true)
     }
     
-    //MARK: - TableView Setup
-    
-    private func setupTableView() {
-        registerCell()
-        addDelegate()
-        setupTableViewUI()
-        fetchData()
-    }
-    
-    private func registerCell() {
-        tableView.register(CommunityTableViewCell.self, forCellReuseIdentifier: "PostCell")
-    }
-    
-    private func setupTableViewUI() {
-        tableView.separatorStyle = .none
-        tableView.backgroundColor = .clear
-    }
-    
-    private func addDelegate() {
-        tableView.delegate = self
-        tableView.dataSource = self
-    }
-    
     //MARK: - Constraints
     
     private func addConstraints() {
@@ -157,31 +145,3 @@ final class CommunityViewController: UIViewController {
     }
 }
 
-//MARK: - Extensions
-
-extension CommunityViewController: UITableViewDataSource, UITableViewDelegate {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        posts.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as? CommunityTableViewCell else { return UITableViewCell()}
-        cell.selectionStyle = .none
-        let currentPost = posts[indexPath.row]
-        cell.configure(post: currentPost)
-        return cell
-        
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let currentPost = posts[indexPath.row]
-        let postDetailsViewController = PostDetailsViewController()
-        postDetailsViewController.selectedPost = currentPost
-        navigationController?.pushViewController(postDetailsViewController, animated: true)
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        140
-    }
-    
-}
